@@ -1,0 +1,43 @@
+services:
+  mongodb:
+    image: "bitnami/mongodb:7.0.14"
+    volumes:
+      - "./.mongodb/data:/data/db"
+      - "./.mongodb/config:/data/configdb"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MONGODB_USERNAME=bn_parse
+      - MONGODB_DATABASE=bitnami_parse
+      - MONGODB_PASSWORD=bitnami123
+  parse:
+    image: "bitnami/parse:7"
+    ports:
+      - "1337:1337"
+    environment:
+      - PARSE_ENABLE_CLOUD_CODE=yes
+      - PARSE_DATABASE_HOST=mongodb
+      - PARSE_DATABASE_PORT_NUMBER=27017
+      - PARSE_DATABASE_USER=bn_parse
+      - PARSE_DATABASE_NAME=bitnami_parse
+      - PARSE_DATABASE_PASSWORD=bitnami123
+      - PARSE_SERVER_MASTER_KEY_IPS=0.0.0.0/0
+    volumes:
+      - "./.parse/server:/bitnami/parse"
+      - "./packages/lambda:/opt/bitnami/parse/cloud"
+    depends_on:
+      - mongodb
+  parse-dashboard:
+    image: "bitnami/parse-dashboard:5.4.0"
+    ports:
+      - "8080:4040"
+    volumes:
+      - "parse_dashboard_data:/bitnami"
+    depends_on:
+      - parse
+    environment:
+      - PARSE_DASHBOARD_PARSE_HOST=127.0.0.1
+      - PARSE_DASHBOARD_APP_NAME=TestApp
+
+volumes:
+  parse_dashboard_data:
+    driver: local

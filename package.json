@@ -1,0 +1,35 @@
+{
+  "name": "g-gold",
+  "module": "index.ts",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@eslint/js": "^9.9.1",
+    "@types/bun": "latest",
+    "eslint": "^9.9.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.35.0",
+    "globals": "^15.9.0",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.10",
+    "prettier": "3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.6",
+    "typescript-eslint": "^8.4.0"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "prepare": "husky",
+    "compose": "docker compose -f ./compose.dev.yaml --env-file .env --compatibility",
+    "dev": "yarn compose up --build -d",
+    "watch": "yarn compose watch",
+    "ps": "watch -n 5 -t -d yarn compose ps --all",
+    "start": "yarn compose up"
+  }
+}
