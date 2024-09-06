@@ -1,0 +1,26 @@
+---
+// Define props from Astro
+const { value = 0 } = Astro.props;
+
+const Formatter = Intl.NumberFormat("fa-IR", {
+  minimumFractionDigits: 3,
+  maximumFractionDigits: 3,
+});
+
+const frmatted = Formatter.format(value).split("٫");
+
+const pricing = {
+  price: frmatted[0],
+  cents: "٫" + frmatted[1],
+};
+
+// Define TypeScript interface for props
+interface Props {
+  value: number;
+}
+---
+
+<span dir="ltr">
+  <span class="text-6xl font-bold">{pricing.price}</span>
+  <span class="text-lg font-bold">{pricing.cents}</span>
+</span>

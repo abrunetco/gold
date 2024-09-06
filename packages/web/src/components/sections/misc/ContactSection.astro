@@ -9,11 +9,11 @@ import TextAreaInput from "@components/ui/forms/input/TextAreaInput.astro";
 import Icon from "@components/ui/icons/Icon.astro";
 
 // Define the variables that will be used in this component
-const title: string = "Contact us";
-const subTitle: string =
-  "Have questions or want to discuss a project? Reach out, and let's craft the perfect solution with our tools and services.";
-const formTitle: string = "Fill in the form below";
-const formSubTitle: string = "We'll get back to you in 1-2 business days.";
+const title = "تماس با ما";
+const subTitle =
+  "درصورتی که نیاز به کسب اطلاعات بیشتر یا ارسال پیام با صرافی را دارید از طریق فرم زیر اقدام نمایید و یا از طریق اطلاعات تماس ذکر شده اقدام نمایید.";
+const formTitle = "فرم تماس";
+const formSubTitle = "منتظر شنیدن نظرات و انتقادات شما هستیم";
 ---
 
 <!-- Contact Us -->
@@ -41,29 +41,22 @@ const formSubTitle: string = "We'll get back to you in 1-2 business days.";
         <!-- Each field utilizes a different input component for the specific type of input (text, email, phone, and textarea)-->
         <form>
           <div class="grid gap-4">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <TextInput
-                id="hs-firstname-contacts"
-                label="First Name"
-                name="hs-firstname-contacts"
-              />
-              <TextInput
-                id="hs-lastname-contacts"
-                label="Last Name"
-                name="hs-firstname-contacts"
-              />
-            </div>
+            <TextInput
+              id="hs-fullname-contacts"
+              label="نام"
+              name="hs-fullname-contacts"
+            />
             <EmailContactInput id="hs-email-contacts" />
             <PhoneInput id="hs-phone-number" />
             <TextAreaInput
               id="hs-about-contacts"
-              label="Details"
+              label="متن پیام"
               name="hs-about-contacts"
             />
           </div>
 
           <div class="mt-4 grid">
-            <AuthBtn title="Send Message" />
+            <AuthBtn title="ارسال" />
           </div>
 
           <div class="mt-3 text-center">
@@ -76,7 +69,7 @@ const formSubTitle: string = "We'll get back to you in 1-2 business days.";
 
       <!--ContactIconBlocks are used to display different methods of contacting, including visiting office, email, browsing knowledgebase, and FAQ.-->
       <div class="divide-y divide-neutral-300 dark:divide-neutral-700">
-        <ContactIconBlock
+        <!-- <ContactIconBlock
           heading="Knowledgebase"
           content="Browse through all of our knowledgebase articles."
           isLinkVisible={true}
@@ -84,31 +77,44 @@ const formSubTitle: string = "We'll get back to you in 1-2 business days.";
           linkURL="#"
           isArrowVisible={true}
           ><Icon name="question" />
-        </ContactIconBlock>
+        </ContactIconBlock> -->
 
         <ContactIconBlock
-          heading="FAQ"
-          content="Explore our FAQ for quick, clear answers to common queries."
+          heading="سوالات شما"
+          content="پاسخ سوالات پرتکرار شما"
           isLinkVisible={true}
-          linkTitle="Visit FAQ"
+          linkTitle="مشاهده"
           linkURL="#"
           isArrowVisible={true}
           ><Icon name="chatBubble" />
         </ContactIconBlock>
 
         <ContactIconBlock
-          heading="Visit our office"
-          content="UK ScrewFast"
+          heading="تماس حضوری"
+          content="آذربایجان شرقی، میانه"
           isAddressVisible={true}
-          addressContent="72 Union Terrace, E10 4PE London"
+          addressContent="بازار سرپوشیده بعد از ..."
+          isLinkVisible={true}
+          linkTitle="مشاهده"
+          linkURL="https://maps.app.goo.gl/gXCaQmACdDSBLU4q6"
+          isArrowVisible={true}
+          linkTraget="_blank"
           ><Icon name="mapPin" />
         </ContactIconBlock>
 
         <ContactIconBlock
-          heading="Contact us by email"
-          content="Prefer the written word? Drop us an email at"
+          heading="تلفن های تماس"
+          content="روز های اداری، از ۹ صبح تا ۵ عصر"
+          isAddressVisible={true}
+          addressContent="04155555555 - 04155555552"
+          ><Icon name="community" />
+        </ContactIconBlock>
+
+        <ContactIconBlock
+          heading="تماس از طریق ارسال ایمیل"
+          content="در صورت تمایل به مکاتبه از طریق ایمیل، پیام خود را به آدرس زیر ارسال کنید"
           isLinkVisible={true}
-          linkTitle="support@screwfast.uk"
+          linkTitle="g-gold@gmail.com"
           linkURL="#"
           ><Icon name="envelopeOpen" />
         </ContactIconBlock>

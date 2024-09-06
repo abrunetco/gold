@@ -1,5 +1,5 @@
 ---
-const { label= Astro.currentLocale === "fr" ? "Numéro de téléphone" : "Phone Number", id } = Astro.props;
+const { label = "تلفن تماس", id } = Astro.props;
 
 interface Props {
   label?: string;
@@ -10,6 +10,7 @@ interface Props {
 <div>
   <label for={id} class="sr-only">{label}</label>
   <input
+    dir="ltr"
     type="tel"
     name="hs-phone-number"
     id={id}

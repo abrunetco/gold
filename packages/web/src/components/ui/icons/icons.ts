@@ -140,6 +140,23 @@ export const Icons = {
       },
     ],
     class:
+      "h-4 w-4 flex-shrink-0 transition duration-300 group-hover:translate-x-1 rtl:rotate-180",
+    width: 24,
+    height: 24,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    stroke: "currentColor",
+  },
+  arrowLeft: {
+    paths: [
+      {
+        d: "m9 18 6-6-6-6",
+      },
+    ],
+    class:
       "h-4 w-4 flex-shrink-0 transition duration-300 group-hover:translate-x-1",
     width: 24,
     height: 24,

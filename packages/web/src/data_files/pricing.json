@@ -1,7 +1,7 @@
 {
-  "title": "Simple, Transparent Pricing",
+  "title": "محاسبه قیمت طلا",
   "subTitle": "Boost efficiency with ScrewFast's clear, value-driven plans.",
-  "badge": "Best value",
+  "badge": "خرید از صرافی",
   "thirdOption": "Enterprise Solutions?",
   "btnText": "Get a Custom Quote",
 
@@ -21,11 +21,11 @@
   },
 
   "professionalToolbox": {
-    "name": "Professional Toolbox",
-    "description": "Best for large scale uses",
-    "price": "89",
-    "cents": ".00",
-    "billingFrequency": "USD / monthly",
+    "name": "ماشین حساب",
+    "description": "طلای آبشده",
+    "price": "3",
+    "cents": ".642",
+    "billingFrequency": "میلیون تومان / گرم",
     "features": [
       "Premium tool selection",
       "Priority support",

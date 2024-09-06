@@ -13,10 +13,10 @@ export default defineConfig({
     domains: ["images.unsplash.com"],
   },
   // i18n: {
-  //   defaultLocale: "en",
-  //   locales: ["en", "fr"],
+  //   defaultLocale: "fa",
+  //   locales: ["fa"],
   //   fallback: {
-  //     fr: "en",
+  //     fa: "fa",
   //   },
   //   routing: {
   //     prefixDefaultLocale: false,
@@ -27,10 +27,9 @@ export default defineConfig({
     tailwind(),
     sitemap({
       i18n: {
-        defaultLocale: "en", // All urls that don't contain `fr` after `https://screwfast.uk/` will be treated as default locale, i.e. `en`
+        defaultLocale: "fa", // All urls that don't contain `fr` after `https://screwfast.uk/` will be treated as default locale, i.e. `en`
         locales: {
-          en: "en", // The `defaultLocale` value must present in `locales` keys
-          fr: "fr",
+          fa: "fa",
         },
       },
     }),

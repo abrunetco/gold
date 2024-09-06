@@ -1,0 +1,36 @@
+---
+import Icon from "@/components/ui/icons/Icon.astro";
+import FormattedPrice from "./FormattedPrice.astro";
+
+// Define props from Astro
+const { title, price = 0, unit, delta = 0 } = Astro.props;
+
+// Define TypeScript interface for props
+interface Props {
+  title: string;
+  price?: number;
+  unit?: string;
+  delta?: -1 | 0 | 1;
+}
+---
+
+<div
+  class={"w-full rounded-md bg-gradient-to-tr p-3 text-white shadow-xl" +
+    (delta < 0
+      ? " from-[#FF512F] to-[#F09819]"
+      : delta > 0
+        ? " from-[#28c526] to-[#52f019]"
+        : " from-[#787878] to-[#989898]")}
+>
+  <div class="flex flex-col">
+    <div class="flex justify-between">
+      <h3 class="mb-3 font-bold">{title}</h3>
+      <Icon name="arrowUp" />
+    </div>
+
+    <div class="me-auto">
+      <FormattedPrice value={price} />
+    </div>
+    <span class="ms-auto">{unit}</span>
+  </div>
+</div>

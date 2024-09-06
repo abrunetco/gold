@@ -31,6 +31,7 @@ export default {
         600: "#ea580c",
       }, // Primary colors, used mainly for links, buttons and svg icons
       red: colors.red, // Used for bookmark icon
+      green: colors.green, // Used for bookmark icon
       zinc: colors.zinc, // Used mainly for box-shadow
     },
     extend: {
@@ -42,12 +43,17 @@ export default {
   },
   plugins: [
     // require("tailwindcss/nesting"),
-    // require("preline/plugin"),
-    // require("@tailwindcss/forms"),
+    // eslint-disable-next-line
+    require("preline/plugin"),
+    // eslint-disable-next-line
+    require("@tailwindcss/forms"),
+    // eslint-disable-next-line
     require("@tailwindcss/typography"),
+    // eslint-disable-next-line
     require("tailwindcss/plugin")(function ({ addVariant }) {
       addVariant("dark-me", ".dark_&");
     }),
+    // eslint-disable-next-line
     require("tailwindcss-rtl"),
   ],
 };
