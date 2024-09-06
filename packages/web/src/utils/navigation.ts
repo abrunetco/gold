@@ -19,18 +19,18 @@ const footerLinks = [
   {
     section: "پاورقی",
     links: [
-      { name: "راهنمای خرید", url: "/welcome-to-docs/" },
-      { name: "شرایط بازگرداندن کالا", url: "/gallery" },
-      { name: "پرسش و پاسخ", url: "/services" },
-      { name: "قوانین و مقرارت", url: "/services" },
-      { name: "مقالات", url: "/services" },
-      { name: "اصالت کالا", url: "/services" },
+      { name: "راهنمای خرید", url: "/insights/support" },
+      { name: "شرایط بازگرداندن کالا", url: "/insights/return" },
+      { name: "پرسش و پاسخ", url: "/faq" },
+      { name: "قوانین و مقرارت", url: "/insights/terms" },
+      { name: "مقالات", url: "/blog" },
+      { name: "اصالت کالا", url: "/insights/originality" },
     ],
   },
   {
     section: "صرافی",
     links: [
-      { name: "درباره ما", url: "#" },
+      { name: "درباره ما", url: "/about" },
       { name: "پیگیری سفارش", url: "/services" },
       { name: "حساب کاربری من", url: "/users" },
       { name: "دعوت به همکاری", url: "/services" },

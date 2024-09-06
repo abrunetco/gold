@@ -1,10 +1,11 @@
 ---
 // Import the necessary components
+import FAQ from "@/components/sections/misc/FAQ.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
-import ContactSection from "@components/sections/misc/ContactSection.astro";
+import faqs from "@data/faqs.json";
 import { SITE } from "@data/constants";
 
-const pageTitle: string = `تماس با ما | ${SITE.title}`;
+const pageTitle: string = `سوالات متداول | ${SITE.title}`;
 ---
 
 <!--Utilizing MainLayout for the outer layout of the page, and defining meta for SEO purposes-->
@@ -28,5 +29,5 @@ const pageTitle: string = `تماس با ما | ${SITE.title}`;
     inLanguage: "en-US",
   }}
 >
-  <ContactSection />
+  <FAQ title="سوالات متداول خریداران" faqs={faqs} />
 </MainLayout>

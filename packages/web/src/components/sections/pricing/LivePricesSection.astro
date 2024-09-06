@@ -29,12 +29,10 @@ interface Props {
       )
     }
   </div>
-  <div
-    class="flex flex-col items-center justify-center gap-y-2 sm:flex-row sm:gap-x-12 sm:gap-y-0 lg:gap-x-24"
-  >
+  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4 lg:mx-auto">
     <!-- Clients Group SVGs -->
     <!-- First -->
-    <div class="mx-auto h-auto w-32 py-3 sm:mx-0 lg:w-60 lg:py-5">
+    <div class="">
       <LivePriceBox
         title="قیمت سکه"
         price={4.0}
@@ -43,7 +41,7 @@ interface Props {
       />
     </div>
     <!-- Second -->
-    <div class="mx-auto h-auto w-32 py-3 sm:mx-0 lg:w-60 lg:py-5">
+    <div class="">
       <LivePriceBox
         title="طلای آب شده"
         price={3.555}
@@ -52,7 +50,7 @@ interface Props {
       />
     </div>
     <!-- Third -->
-    <div class="mx-auto h-auto w-32 py-3 sm:mx-0 lg:w-60 lg:py-5">
+    <div class="">
       <LivePriceBox
         title="طلای جهانی"
         price={3.423}
@@ -60,7 +58,7 @@ interface Props {
       />
     </div>
     <!-- Fourth -->
-    <div class="mx-auto h-auto w-32 py-3 sm:mx-0 lg:w-60 lg:py-5">
+    <div class="">
       <LivePriceBox
         title="طلای ۲۴ عیار"
         price={3.852}

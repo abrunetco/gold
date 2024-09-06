@@ -8,10 +8,11 @@ import compressor from "astro-compressor";
 // https://astro.build/config
 export default defineConfig({
   // https://docs.astro.build/en/guides/images/#authorizing-remote-images
-  site: "https://screwfast.uk",
   image: {
     domains: ["images.unsplash.com"],
   },
+  base: "/gold",
+  trailingSlash: "never",
   // i18n: {
   //   defaultLocale: "fa",
   //   locales: ["fa"],
