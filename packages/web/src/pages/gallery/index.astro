@@ -17,13 +17,13 @@ const product: CollectionEntry<"products">[] = (
   await getCollection("products")
 ).sort(
   (a: CollectionEntry<"products">, b: CollectionEntry<"products">) =>
-    a.data.main.id - b.data.main.id,
+    a.data.main.id - b.data.main.id
 );
 
 // Define variables for page content
-const title: string = "Products";
+const title: string = "گالری";
 const subTitle: string =
-  "Explore the durability and precision of ScrewFast tools, designed for both professionals and enthusiasts. Each of our products is crafted with precision and built to last, ensuring you have the right tool for every job.";
+  "در گالری طلا و سکه صرافی جروقی، مجموعه‌ای از ارزشمندترین و اصیل‌ترین محصولات طلا و سکه را گرد هم آورده‌ایم. هر قطعه با دقت و ظرافت انتخاب شده تا نه تنها سرمایه‌ای پایدار، بلکه یادگاری ماندگار برای شما باشد.";
 
 // Testimonial data that will be rendered in the component
 const testimonials = [
@@ -59,7 +59,7 @@ const testimonials = [
   },
 ];
 
-const pageTitle: string = `Products | ${SITE.title}`;
+const pageTitle: string = `گالری | ${SITE.title}`;
 ---
 
 <MainLayout
@@ -68,16 +68,18 @@ const pageTitle: string = `Products | ${SITE.title}`;
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": "https://screwfast.uk/products",
-    "url": "https://screwfast.uk/products",
-    "name": "Hardware Tools | ScrewFast",
-    "description": "Explore the durability and precision of ScrewFast tools, designed for both professionals and enthusiasts.",
-    "isPartOf": {
+    url: "https://screwfast.uk/products",
+    name: "Hardware Tools | ScrewFast",
+    description:
+      "Explore the durability and precision of ScrewFast tools, designed for both professionals and enthusiasts.",
+    isPartOf: {
       "@type": "WebSite",
-      "url": "https://screwfast.uk",
-      "name": "ScrewFast",
-      "description": "ScrewFast offers top-tier hardware tools and expert construction services to meet all your project needs."
+      url: "https://screwfast.uk",
+      name: "ScrewFast",
+      description:
+        "ScrewFast offers top-tier hardware tools and expert construction services to meet all your project needs.",
     },
-    "inLanguage": "en-US"
+    inLanguage: "en-US",
   }}
 >
   <div
@@ -98,7 +100,7 @@ const pageTitle: string = `Products | ${SITE.title}`;
           )
         }
       </div>
-      <PrimaryCTA title="Customer Stories" url="#testimonials" noArrow={true} />
+      <!-- <PrimaryCTA title="مشاهده نظرات" url="#testimonials" noArrow={true} /> -->
     </div>
     <!--Displaying products in alternating styles. Alternative product gets different card styling.-->
     <!--Maps through all product entries and displays them with either CardSmall or CardWide based on their position.-->
@@ -117,17 +119,14 @@ const pageTitle: string = `Products | ${SITE.title}`;
   </div>
   <!--Features statistics section-->
   <FeaturesStatsAlt
-    title="Why Choose ScrewFast?"
-    subTitle="Transform your ideas into tangible results with ScrewFast tools. Whether you're starting with a sketch on a napkin or diving into a comprehensive construction project, our tools are engineered to help you build with confidence."
+    title="چرا مشتریان صرافی جروقی را انتخاب می‌کنند؟"
+    subTitle="در صرافی جروقی، ما به ارائه بهترین تجربه خرید و فروش طلا افتخار می‌کنیم. مشتریان ما، ما را به دلیل شفافیت کامل در معاملات، قیمت‌گذاری رقابتی و دقت بی‌نظیر در تحویل سریع و امن انتخاب می‌کنند. اعتماد شما بزرگترین سرمایه ماست و با ارائه خدمات حرفه‌ای، پشتیبانی مشتریان و تضمین اصالت و کیفیت طلا، همواره در تلاشیم تا فراتر از انتظارات شما عمل کنیم. صرافی جروقی همراهی مطمئن برای سرمایه‌گذاری‌های طلایی شماست."
     benefits={[
-      "Robust and reliable tools for long-lasting performance.",
-      "Innovative solutions tailored to modern construction needs.",
-      "Customer support dedicated to your project's success.",
+      "ضمانت اصالت کالا",
+      "قیمت های لحظه ای مطابق با قیمت طلا تهران",
+      "پشتیبانی ۲۴ ساعته",
     ]}
   />
   <!--Testimonials section-->
-  <TestimonialsSectionAlt
-    title="What Our Customers Say"
-    testimonials={testimonials}
-  />
+  <!-- <TestimonialsSectionAlt title="نظرات مشتریان" testimonials={testimonials} /> -->
 </MainLayout>

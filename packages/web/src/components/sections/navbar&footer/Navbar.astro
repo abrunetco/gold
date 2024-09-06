@@ -1,85 +1,43 @@
 ---
 //Import relevant dependencies
+import VertNavLink from "@/components/ui/links/VertNavLink.astro";
+import BrandLogo from "@components/BrandLogo.astro";
 import ThemeIcon from "@components/ThemeIcon.astro";
 import NavLink from "@components/ui/links/NavLink.astro";
+import strings from "@utils/navigation.ts";
 import Authentication from "../misc/Authentication.astro";
-import enStrings from "@utils/navigation.ts";
-import frStrings from "@utils/fr/navigation.ts";
-import BrandLogo from "@components/BrandLogo.astro";
 // import LanguagePicker from "@components/ui/LanguagePicker.astro";
 
 // Select the correct translation based on the page's lang prop:
-const strings = Astro.currentLocale === "fr" ? frStrings : enStrings;
-const homeUrl = Astro.currentLocale === "fr" ? "/fr" : "/";
+const homeUrl = "/";
 ---
 
 <!-- Main header component -->
 <header
-  class="sticky inset-x-0 top-4 z-50 flex w-full flex-wrap text-sm md:flex-nowrap md:justify-start"
+  class="fixed inset-x-0 top-0 z-50 flex w-full flex-wrap text-sm md:top-4 md:flex-nowrap md:justify-start"
 >
   <!-- Navigation container -->
   <nav
-    class="relative mx-2 w-full rounded-[36px] border border-yellow-100/40 bg-yellow-50/60 px-4 py-3 backdrop-blur-md dark:border-neutral-700/40 dark:bg-neutral-800/80 dark:backdrop-blur-md md:flex md:items-center md:justify-between md:px-6 md:py-0 lg:px-8 xl:mx-auto"
+    class="relative flex w-full justify-between border border-yellow-100/40 bg-yellow-50/60 px-4 py-3 backdrop-blur-md dark:border-neutral-700/40 dark:bg-neutral-800/80 dark:backdrop-blur-md md:mx-4 md:flex md:items-center md:justify-between md:rounded-[36px] md:px-6 md:py-0 lg:px-8"
     aria-label="Global"
   >
-    <div class="flex items-center justify-between">
-      <!-- Brand logo -->
+    <div class="flex flex-1 items-center justify-between">
+      <span class="me-8 inline-flex gap-8 md:hidden">
+        <Authentication />
+        <ThemeIcon />
+      </span>
       <a
-        class="flex-none rounded-lg text-xl font-bold outline-none ring-zinc-500 focus-visible:ring dark:ring-zinc-200 dark:focus:outline-none"
+        class="ms-auto flex flex-row-reverse items-center gap-3 text-nowrap rounded-lg text-xl font-bold outline-none ring-zinc-500 focus-visible:ring dark:ring-zinc-200 dark:focus:outline-none md:ms-0 md:flex-row"
         href={homeUrl}
         aria-label="Brand"
       >
-        <BrandLogo class="h-auto w-12" />
+        <BrandLogo class="h-12 w-12" />
+        <span class="hidden sm:inline"> طلا و جواهر جروقی </span>
       </a>
-      <!-- Collapse toggle for smaller screens -->
-      <div class="me-5 ms-auto md:hidden">
-        <button
-          type="button"
-          class="hs-collapse-toggle flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-neutral-600 transition duration-300 hover:bg-neutral-200 disabled:pointer-events-none disabled:opacity-50 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:outline-none"
-          data-hs-collapse="#navbar-collapse-with-animation"
-          aria-controls="navbar-collapse-with-animation"
-          aria-label="Toggle navigation"
-        >
-          <svg
-            class="h-[1.25rem] w-[1.25rem] flex-shrink-0 hs-collapse-open:hidden"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <line x1="3" x2="21" y1="6" y2="6"></line>
-            <line x1="3" x2="21" y1="12" y2="12"></line>
-            <line x1="3" x2="21" y1="18" y2="18"></line>
-          </svg>
-          <svg
-            class="hidden h-[1.25rem] w-[1.25rem] flex-shrink-0 hs-collapse-open:block"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M18 6 6 18"></path>
-            <path d="m6 6 12 12"></path>
-          </svg>
-        </button>
-      </div>
-      <!-- ThemeIcon component specifically for smaller screens -->
-      <span class="inline-block md:hidden">
-        <ThemeIcon />
-      </span>
     </div>
     <!-- Contains navigation links -->
     <div
-      id="navbar-collapse-with-animation"
-      class="hs-collapse hidden grow basis-full overflow-hidden transition-all duration-300 md:block"
+      class="hidden grow basis-full overflow-hidden transition-all duration-300 md:block"
     >
       <!-- Navigation links container -->
       <div
@@ -91,10 +49,10 @@ const homeUrl = Astro.currentLocale === "fr" ? "/fr" : "/";
             <NavLink url={link.url} name={link.name} />
           ))
         }
+        <div class="md:ms-auto">
+          <Authentication />
+        </div>
 
-        <Authentication />
-        <!-- <LanguagePicker /> -->
-        <!-- ThemeIcon component specifically for larger screens -->
         <span class="hidden md:inline-block">
           <ThemeIcon />
         </span>
@@ -102,6 +60,16 @@ const homeUrl = Astro.currentLocale === "fr" ? "/fr" : "/";
     </div>
   </nav>
 </header>
+<!-- buttom nav -->
+<nav
+  class="fixed bottom-[-1px] left-0 flex w-[100vw] justify-evenly rounded-t-lg bg-neutral-100 pt-4 drop-shadow-xl dark:bg-neutral-800 md:hidden"
+>
+  {
+    strings.navBarLinks.map((link) => (
+      <VertNavLink url={link.url} name={link.name} icon="home" />
+    ))
+  }
+</nav>
 <!-- Theme Appearance script to manage light/dark modes -->
 <script is:inline>
   const HSThemeAppearance = {

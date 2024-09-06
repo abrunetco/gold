@@ -10,20 +10,16 @@ import { SITE } from "@data/constants";
 
 // Get all blogs post in English and sort them based on publish date
 
-const englishBlogEntries = await getCollection("blog", ({ id }) => {
-  return id.startsWith("en/");
-});
+const blogEntries = await getCollection("blog");
 
-const englishInsightsEntries = await getCollection("insights", ({ id }) => {
-  return id.startsWith("en/");
-});
+const insightsEntries = await getCollection("insights");
 
-const blogPosts: CollectionEntry<"blog">[] = englishBlogEntries.sort(
+const blogPosts: CollectionEntry<"blog">[] = blogEntries.sort(
   (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
     b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 // Get all insights posts
-const insightPosts: CollectionEntry<"insights">[] = englishInsightsEntries;
+const insightPosts: CollectionEntry<"insights">[] = insightsEntries;
 
 // Separate the most recent post from others
 const mostRecentPost: CollectionEntry<"blog"> = blogPosts[0];

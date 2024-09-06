@@ -6,10 +6,10 @@ import FooterSection from "@components/sections/navbar&footer/FooterSection.astr
 import { SITE } from "@data/constants";
 
 // import '@fontsource-variable/inter'
-import '@fontsource-variable/vazirmatn'
+import "@fontsource-variable/vazirmatn";
 
 // Setting expected props
-const { title = SITE.title, meta, structuredData, lang = "en" } = Astro.props;
+const { title = SITE.title, meta, structuredData, lang = "fa" } = Astro.props;
 
 // Interface to type-check the properties
 interface Props {
@@ -24,7 +24,11 @@ interface Props {
 This is the main structure for the page.
 We set the language of the page to English and add classes for scrollbar and scroll behavior.
 -->
-<html dir="rtl" lang="fa" class="scrollbar-hide lenis lenis-smooth scroll-pt-16">
+<html
+  dir="rtl"
+  lang={lang}
+  class="scrollbar-hide lenis lenis-smooth scroll-pt-16"
+>
   <head>
     <!-- Adding metadata to the HTML document -->
     <Meta meta={meta} structuredData={structuredData} />
@@ -47,7 +51,7 @@ We set the language of the page to English and add classes for scrollbar and scr
     </script>
   </head>
   <body
-    class="bg-neutral-200 selection:bg-yellow-400 selection:text-neutral-700 dark:bg-neutral-800"
+    class="bg-neutral-200 pb-16 selection:bg-yellow-400 selection:text-neutral-700 dark:bg-neutral-800 md:pb-0"
   >
     <!--
     Setting up the main structure of the page.

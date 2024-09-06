@@ -10,9 +10,9 @@ import GoogleBtn from "@components/ui/buttons/GoogleBtn.astro";
 
 const config = {
   id: "hs-toggle-between-modals-login-modal", // Modal IDENTIFIER
-  title: "Sign in", // Main HEADING
-  subTitle: "Don't have an account yet?", // Sub-Heading TEXT
-  registerBtn: "Sign up here", // Text for REGISTRATION BUTTON
+  title: "ورود", // Main HEADING
+  subTitle: "حساب کاربری ندارید؟", // Sub-Heading TEXT
+  registerBtn: "ثبت نام", // Text for REGISTRATION BUTTON
   registerBtnDataHS: "#hs-toggle-between-modals-register-modal", // TARGET LINK for registration button
 };
 ---
@@ -46,7 +46,7 @@ const config = {
             </p>
           </div>
           <div class="mt-5">
-            <GoogleBtn title="Sign in with Google" />
+            <GoogleBtn title="ورود با گوگل" />
 
             <div
               class="flex items-center py-3 text-xs uppercase text-neutral-400 before:me-6 before:flex-[1_1_0%] before:border-t before:border-neutral-200 after:ms-6 after:flex-[1_1_0%] after:border-t after:border-neutral-200 dark:text-neutral-500 dark:before:border-neutral-600 dark:after:border-neutral-600"
@@ -69,7 +69,7 @@ const config = {
                 <!-- The remember-me checkbox -->
                 <Checkbox id="remember-me" />
                 <!-- The sign-in button -->
-                <AuthBtn title="Sign in" />
+                <AuthBtn title="ورود" />
               </div>
             </form>
           </div>

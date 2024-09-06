@@ -1,27 +1,40 @@
 // An array of links for navigation bar
 const navBarLinks = [
-  { name: "خانه", url: "/" },
-  { name: "محصولات", url: "/products" },
-  { name: "خدمات", url: "/services" },
+  { name: "خانه", url: "/", icon: "home" },
+  { name: "گالری", url: "/gallery" },
+  // { name: "پنل کاربری", url: "/users" },
   // { name: "Blog", url: "/blog" },
   { name: "تماس", url: "/contact" },
 ];
+
+// An array of links for user's side bar
+const usersSideBarLinks = [
+  { name: "پیشخوان", url: "/users/", icon: "home" },
+  { name: "پروفایل", url: "/users/profile", icon: "home" },
+  { name: "خرید ها", url: "/users/history", icon: "home" },
+];
+
 // An array of links for footer
 const footerLinks = [
-  // {
-  //   section: "Ecosystem",
-  //   links: [
-  //     { name: "Documentation", url: "/welcome-to-docs/" },
-  //     { name: "Tools & Equipment", url: "/products" },
-  //     { name: "Construction Services", url: "/services" },
-  //   ],
-  // },
+  {
+    section: "پاورقی",
+    links: [
+      { name: "راهنمای خرید", url: "/welcome-to-docs/" },
+      { name: "شرایط بازگرداندن کالا", url: "/gallery" },
+      { name: "پرسش و پاسخ", url: "/services" },
+      { name: "قوانین و مقرارت", url: "/services" },
+      { name: "مقالات", url: "/services" },
+      { name: "اصالت کالا", url: "/services" },
+    ],
+  },
   {
     section: "صرافی",
     links: [
       { name: "درباره ما", url: "#" },
-      // { name: "Blog", url: "/blog" },
-      // { name: "Customers", url: "#" },
+      { name: "پیگیری سفارش", url: "/services" },
+      { name: "حساب کاربری من", url: "/users" },
+      { name: "دعوت به همکاری", url: "/services" },
+      { name: "تماس با ما", url: "/services" },
     ],
   },
 ];
@@ -38,4 +51,5 @@ export default {
   navBarLinks,
   footerLinks,
   socialLinks,
+  usersSideBarLinks,
 };

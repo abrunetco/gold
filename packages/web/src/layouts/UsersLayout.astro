@@ -1,0 +1,64 @@
+---
+// Importing necessary components
+import { SITE } from "@data/constants";
+
+import strings from "@utils/navigation.ts";
+// import '@fontsource-variable/inter'
+import "@fontsource-variable/vazirmatn";
+import MainLayout from "./MainLayout.astro";
+import SideLinks from "@/components/ui/links/SideLinks.astro";
+
+// Setting expected props
+const { title = "حساب کاربری" } = Astro.props;
+
+// Interface to type-check the properties
+interface Props {
+  title?: string;
+  lang?: string;
+}
+const pageTitle: string = `${title} | ${SITE.title}`;
+---
+
+<MainLayout
+  title={pageTitle}
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://screwfast.uk/products",
+    url: "https://screwfast.uk/products",
+    name: "Hardware Tools | ScrewFast",
+    description:
+      "Explore the durability and precision of ScrewFast tools, designed for both professionals and enthusiasts.",
+    isPartOf: {
+      "@type": "WebSite",
+      url: "https://screwfast.uk",
+      name: "ScrewFast",
+      description:
+        "ScrewFast offers top-tier hardware tools and expert construction services to meet all your project needs.",
+    },
+    inLanguage: "en-US",
+  }}
+  lang="fa"
+>
+  <section class="py-6 sm:py-8 lg:py-12">
+    <div class="mx-auto max-w-screen-xl px-4 md:px-8">
+      <div class="grid gap-8 md:grid-cols-4 lg:gap-12">
+        <div>
+          <div
+            class="flex-1 space-y-2 overflow-hidden px-4 hover:overflow-auto"
+          >
+            {
+              strings.usersSideBarLinks.map((link) => (
+                <SideLinks name={link.name} url={link.url} icon={link.icon} />
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="col-span-3 md:pt-8">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

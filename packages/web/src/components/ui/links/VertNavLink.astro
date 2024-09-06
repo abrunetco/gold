@@ -1,0 +1,47 @@
+---
+import { type IconName } from "@components/ui/icons/icons";
+import Icon from "../icons/Icon.astro";
+// Destructure the properties from Astro.props
+const { url, name, icon } = Astro.props;
+
+// Define TypeScript interface for the properties
+interface Props {
+  url: string;
+  name: string;
+  icon: IconName;
+}
+
+function getId(url: string) {
+  return (
+    "side-" +
+    url
+      .trim()
+      .split("/")
+      .filter((a) => !!a)
+      .join("-")
+  );
+}
+
+const navId = getId(url);
+const u = new URL(Astro.request.url);
+const pathId = getId(u.pathname);
+---
+
+<!--
+Re-usable link component for navigation bar. Highlights the active link
+by comparing the current URL with the href of each link.
+We assign an ID matching the URL for easy reference in our script.
+If URL is '/' (home page), assign ID as 'home' 
+-->
+<a
+  id={navId}
+  href={url}
+  data-astro-prefetch
+  class:list={[
+    "flex flex-col items-center justify-center rounded-lg text-base font-medium outline-none focus-visible:ring dark:ring-zinc-200 dark:focus:outline-none",
+    navId === pathId ? "text-blue-500" : "dark:text-blue-100 text-neutral-600",
+  ]}
+>
+  <Icon name={icon} cls="h-8 w-8" s />
+  {name}
+</a>
