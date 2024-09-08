@@ -1,5 +1,6 @@
 ---
 // Importing necessary components
+import Counter from "@/islands/users/Component";
 import UsersLayout from "@/layouts/UsersLayout.astro";
 
 // Importing necessary functions from Astro
@@ -11,10 +12,5 @@ import UsersLayout from "@/layouts/UsersLayout.astro";
   >
     پیشخوان
   </h1>
-
-  <article class="text-pretty text-lg text-neutral-700 dark:text-neutral-300">
-    متاسفیم، به نظر می‌رسد این صفحه دیگر وجود ندارد یا به اشتباه وارد شده‌اید.
-    برای بازگشت به مسیر درست، به صفحه اصلی برگردید یا از منوی بالای صفحه استفاده
-    کنید.
-  </article>
+  <Counter client:load />
 </UsersLayout>

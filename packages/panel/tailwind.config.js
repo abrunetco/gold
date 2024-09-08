@@ -1,7 +1,7 @@
 const { nextui } = require("@nextui-org/react");
-
+const { withTV } = require("tailwind-variants/transformer");
 /** @type {import('tailwindcss').Config} */
-export default {
+export default withTV({
   content: [
     "./index.html",
     "./src/**/*.{ts,tsx}",
@@ -12,4 +12,4 @@ export default {
   },
   darkMode: "class",
   plugins: [nextui()],
-};
+});

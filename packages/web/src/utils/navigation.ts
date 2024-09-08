@@ -9,7 +9,7 @@ const navBarLinks = [
 
 // An array of links for user's side bar
 const usersSideBarLinks = [
-  { name: "پیشخوان", url: "/users/", icon: "home" },
+  { name: "پیشخوان", url: "/users", icon: "home" },
   { name: "پروفایل", url: "/users/profile", icon: "home" },
   { name: "خرید ها", url: "/users/history", icon: "home" },
 ];
@@ -31,10 +31,10 @@ const footerLinks = [
     section: "صرافی",
     links: [
       { name: "درباره ما", url: "/about" },
-      { name: "پیگیری سفارش", url: "/services" },
+      { name: "پیگیری سفارش", url: "/tracking" },
       { name: "حساب کاربری من", url: "/users" },
-      { name: "دعوت به همکاری", url: "/services" },
-      { name: "تماس با ما", url: "/services" },
+      { name: "دعوت به همکاری", url: "/cariers" },
+      { name: "تماس با ما", url: "/contact" },
     ],
   },
 ];
