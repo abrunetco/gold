@@ -106,8 +106,18 @@ module.exports = {
         "99p": "99%",
       },
       fontFamily: {
+        sans: [
+          "Vazirmatn Variable",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+          '"Noto Color Emoji"',
+        ],
         poppins: ["Poppins", "sans-serif"],
-        dm: ["DM Sans", "sans-serif"],
+        dm: ["Vazirmatn Variable", "sans-serif"],
       },
       boxShadow: {
         "3xl": "14px 17px 40px 4px",

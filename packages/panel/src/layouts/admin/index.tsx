@@ -68,7 +68,7 @@ export default function Admin(props: { [x: string]: any }) {
           {/* Routes */}
           <div className="h-full">
             <Navbar
-              onOpenSidenav={() => setOpen(true)}
+              onOpenSidenav={() => setOpen((o) => !o)}
               brandText={currentRoute}
               secondary={getActiveNavbar(routes)}
               {...rest}

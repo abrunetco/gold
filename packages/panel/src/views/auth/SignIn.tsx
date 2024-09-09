@@ -1,5 +1,4 @@
 import InputField from "components/fields/InputField";
-import { FcGoogle } from "react-icons/fc";
 import Checkbox from "components/checkbox";
 
 export default function SignIn() {
@@ -8,12 +7,12 @@ export default function SignIn() {
       {/* Sign in section */}
       <div className="mt-[10vh] w-full max-w-full flex-col items-center md:ps-4 lg:ps-0 xl:max-w-[420px]">
         <h4 className="mb-2.5 text-4xl font-bold text-navy-700 dark:text-white">
-          Sign In
+          ورود
         </h4>
         <p className="mb-9 ms-1 text-base text-gray-600">
-          Enter your email and password to sign in!
+          برای ورود به پنل کاربری رمز عبور خود را وارد کنید!
         </p>
-        <div className="mb-6 flex h-[50px] w-full items-center justify-center gap-2 rounded-xl bg-lightPrimary hover:cursor-pointer dark:bg-navy-800">
+        {/* <div className="mb-6 flex h-[50px] w-full items-center justify-center gap-2 rounded-xl bg-lightPrimary hover:cursor-pointer dark:bg-navy-800">
           <div className="rounded-full text-xl">
             <FcGoogle />
           </div>
@@ -25,12 +24,12 @@ export default function SignIn() {
           <div className="h-px w-full bg-gray-200 dark:bg-navy-700" />
           <p className="text-base text-gray-600 dark:text-white"> or </p>
           <div className="h-px w-full bg-gray-200 dark:bg-navy-700" />
-        </div>
+        </div> */}
         {/* Email */}
         <InputField
           variant="auth"
           extra="mb-3"
-          label="Email*"
+          label="ایمیل*"
           placeholder="mail@simmmple.com"
           id="email"
           type="text"
@@ -40,8 +39,8 @@ export default function SignIn() {
         <InputField
           variant="auth"
           extra="mb-3"
-          label="Password*"
-          placeholder="Min. 8 characters"
+          label="رمزعبور*"
+          placeholder="حداقل ۸ کاراکتر"
           id="password"
           type="password"
         />
@@ -50,20 +49,20 @@ export default function SignIn() {
           <div className="flex items-center">
             <Checkbox />
             <p className="ms-2 text-sm font-medium text-navy-700 dark:text-white">
-              Keep me logged In
+              مرا به خاطر بسپار
             </p>
           </div>
           <a
             className="text-sm font-medium text-brand-500 hover:text-brand-600 dark:text-white"
             href=" "
           >
-            Forgot Password?
+            رمز عبور خود را فراموش کرده اید؟
           </a>
         </div>
         <button className="linear mt-2 w-full rounded-xl bg-brand-500 py-[12px] text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
-          Sign In
+          ورود
         </button>
-        <div className="mt-4">
+        {/* <div className="mt-4">
           <span className="text-sm font-medium text-navy-700 dark:text-gray-600">
             Not registered yet?
           </span>
@@ -73,7 +72,7 @@ export default function SignIn() {
           >
             Create an account
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   );

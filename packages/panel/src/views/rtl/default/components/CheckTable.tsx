@@ -22,7 +22,7 @@ type RowObj = {
 function CheckTable(props: { tableData: any }) {
   const { tableData } = props;
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  let defaultData = tableData;
+  const defaultData = tableData;
   const columns = [
     columnHelper.accessor("name", {
       id: "name",
@@ -33,7 +33,7 @@ function CheckTable(props: { tableData: any }) {
         <div className="flex items-center">
           <Checkbox
             defaultChecked={info.getValue()[1]}
-            colorScheme="brandScheme"
+            // colorScheme="brandScheme"
             me="10px"
           />
           <p className="ms-3 text-sm font-bold text-navy-700 dark:text-white">
