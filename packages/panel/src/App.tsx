@@ -1,15 +1,17 @@
-import Button from "./uikit/button";
-import MainLayout from "./uikit/layout";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-function App() {
+import RtlLayout from "./layouts/rtl";
+import AdminLayout from "./layouts/admin";
+import AuthLayout from "./layouts/auth";
+const App = () => {
   return (
-    <MainLayout>
-      <h1>btn</h1>
-      <Button color="secondary" className="xxxx">
-        Click me
-      </Button>
-    </MainLayout>
+    <Routes>
+      <Route path="auth/*" element={<AuthLayout />} />
+      <Route path="admin/*" element={<AdminLayout />} />
+      <Route path="rtl/*" element={<RtlLayout />} />
+      <Route path="/" element={<Navigate to="/admin" replace />} />
+    </Routes>
   );
-}
+};
 
 export default App;
