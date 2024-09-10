@@ -4,41 +4,41 @@ import { authenticate } from "@feathersjs/authentication";
 import { hooks as schemaHooks } from "@feathersjs/schema";
 
 import {
-  userDataValidator,
-  userPatchValidator,
-  userQueryValidator,
-  userResolver,
-  userExternalResolver,
-  userDataResolver,
-  userPatchResolver,
-  userQueryResolver,
+  categoryDataValidator,
+  categoryPatchValidator,
+  categoryQueryValidator,
+  categoryResolver,
+  categoryExternalResolver,
+  categoryDataResolver,
+  categoryPatchResolver,
+  categoryQueryResolver,
 } from "./schema";
 
 import type { Application } from "../../declarations";
-import { UserService, getOptions } from "./class";
-import { userPath, userMethods } from "./shared";
+import { CategoryService, getOptions } from "./class";
+import { categoryPath, categoryMethods } from "./shared";
 import { commonDataResolver, commonPatchResolver } from "../../resolvers/common";
 
 export * from "./class";
 export * from "./schema";
 
 // A configure function that registers the service and its hooks via `app.configure`
-export const user = (app: Application) => {
+export const category = (app: Application) => {
   // Register our service on the Feathers application
-  app.use(userPath, new UserService(getOptions(app)), {
+  app.use(categoryPath, new CategoryService(getOptions(app)), {
     // A list of all methods this service exposes externally
-    methods: userMethods,
+    methods: categoryMethods,
     // You can add additional custom events to be sent to clients here
     events: [],
   });
   // Initialize hooks
-  app.service(userPath).hooks({
+  app.service(categoryPath).hooks({
     around: {
       all: [
         authenticate('jwt'),
         // schemaHooks.resolveExternal(authManagementExternalResolver),
-        schemaHooks.resolveExternal(userExternalResolver),
-        schemaHooks.resolveResult(userResolver),
+        schemaHooks.resolveExternal(categoryExternalResolver),
+        schemaHooks.resolveResult(categoryResolver),
       ],
       find: [],
       get: [],
@@ -49,19 +49,19 @@ export const user = (app: Application) => {
     },
     before: {
       all: [
-        schemaHooks.validateQuery(userQueryValidator),
-        schemaHooks.resolveQuery(userQueryResolver),
+        schemaHooks.validateQuery(categoryQueryValidator),
+        schemaHooks.resolveQuery(categoryQueryResolver),
       ],
       find: [],
       get: [],
       create: [
-        schemaHooks.validateData(userDataValidator),
-        schemaHooks.resolveData(userDataResolver),
+        schemaHooks.validateData(categoryDataValidator),
+        schemaHooks.resolveData(categoryDataResolver),
         schemaHooks.resolveData(commonDataResolver)
       ],
       patch: [
-        schemaHooks.validateData(userPatchValidator),
-        schemaHooks.resolveData(userPatchResolver),
+        schemaHooks.validateData(categoryPatchValidator),
+        schemaHooks.resolveData(categoryPatchResolver),
         schemaHooks.resolveData(commonPatchResolver),
       ],
       remove: [],
@@ -78,6 +78,6 @@ export const user = (app: Application) => {
 // Add this service to the service type index
 declare module "../../declarations" {
   interface ServiceTypes {
-    [userPath]: UserService;
+    [categoryPath]: CategoryService;
   }
 }

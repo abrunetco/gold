@@ -18,6 +18,7 @@ import {
   MdPerson,
   MdLock,
 } from "react-icons/md";
+import UsersGridTable from "views/admin/users";
 
 const routes = [
   {
@@ -30,7 +31,7 @@ const routes = [
   {
     name: "فروشگاه",
     layout: "/admin",
-    path: "nft-marketplace",
+    path: "market",
     icon: <MdOutlineShoppingCart className="h-6 w-6" />,
     component: <NFTMarketplace />,
     secondary: true,
@@ -39,8 +40,8 @@ const routes = [
     name: "کاربران",
     layout: "/admin",
     icon: <MdBarChart className="h-6 w-6" />,
-    path: "data-tables",
-    component: <DataTables />,
+    path: "users",
+    component: <UsersGridTable />,
   },
   {
     name: "پروفایل",

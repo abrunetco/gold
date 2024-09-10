@@ -31,7 +31,8 @@
   "files": [
     "lib/client.js",
     "lib/**/*.d.ts",
-    "lib/**/*.shared.js"
+    "lib/**/*.shared.js",
+    "lib/**/shared.js"
   ],
   "main": "lib/client",
   "scripts": {
@@ -69,6 +70,7 @@
     "moment-jalaali": "^0.10.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.0.0",
     "@types/migrate-mongo": "^10.0.4",
     "shx": "^0.3.4"
   }

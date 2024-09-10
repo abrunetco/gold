@@ -22,6 +22,7 @@
     "@feathersjs/socketio-client": "^5.0.30",
     "@fontsource-variable/vazirmatn": "^5.0.22",
     "@gold/api": "*",
+    "@tanstack/react-query": "^5.55.4",
     "@tanstack/react-table": "^8.7.9",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
