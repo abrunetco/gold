@@ -3,19 +3,9 @@ import authImg from "assets/img/auth/auth-cover-2.jpg";
 import { Link, Routes, Route, Navigate } from "react-router-dom";
 import routes from "routes";
 import FixedPlugin from "components/fixedPlugin/FixedPlugin";
+import SignIn from "views/auth/SignIn";
 
 export default function Auth() {
-  const getRoutes = (routes: RoutesType[]): any => {
-    return routes.map((prop, key) => {
-      if (prop.layout === "/auth") {
-        return (
-          <Route path={`/${prop.path}`} element={prop.component} key={key} />
-        );
-      } else {
-        return null;
-      }
-    });
-  };
   return (
     <div>
       <div className="relative float-end h-full min-h-screen w-full !bg-white dark:!bg-navy-900">
@@ -25,9 +15,9 @@ export default function Auth() {
             <div className="mx-auto flex min-h-full w-full flex-col justify-start pt-12 md:max-w-[75%] lg:h-screen lg:max-w-[1013px] lg:px-8 lg:pt-0 xl:h-[100vh] xl:max-w-[1383px] xl:px-0 xl:ps-[70px]">
               <div className="mb-auto flex flex-col pe-5 ps-5 md:pe-0 md:ps-12 lg:max-w-[48%] lg:ps-0 xl:max-w-full">
                 <Routes>
-                  {getRoutes(routes)}
+                  <Route path="/auth/sign-in" Component={SignIn} />
                   <Route
-                    path="/"
+                    path="*"
                     element={<Navigate to="/auth/sign-in" replace />}
                   />
                 </Routes>

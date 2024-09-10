@@ -1,7 +1,7 @@
 # development image (STAGE 1/1)
 # FROM node:18-alpine AS development
 FROM oven/bun:alpine AS development
-WORKDIR /app/packages/web
+WORKDIR /wdir/packages/panel
 CMD ["bun", "run", "dev"]
 
 # # production image (STAGE 1/2)

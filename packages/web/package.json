@@ -47,5 +47,9 @@
     "prettier-plugin-tailwindcss": "^0.6.6",
     "tailwindcss-rtl": "^0.9.0",
     "typescript": "^5.5.4"
+  },
+  "overrides": {
+    "@sinclair/typebox": "0.26.8",
+    "moment-jalaali": "^0.10.0"
   }
 }

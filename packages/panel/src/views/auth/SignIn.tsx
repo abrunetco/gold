@@ -1,9 +1,20 @@
 import InputField from "components/fields/InputField";
 import Checkbox from "components/checkbox";
+import { useForm } from "react-hook-form";
+
+type FormData = {
+  strategy: 'local';
+  email: string;
+  password: string;
+};
 
 export default function SignIn() {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>({
+  defaultValues: { strategy: "local" }
+  });
+  const onSubmit = handleSubmit(data => console.log(data));
   return (
-    <div className="mb-16 mt-16 flex h-full w-full items-center justify-center px-2 md:mx-0 md:px-0 lg:mb-10 lg:items-center lg:justify-start">
+    <form onSubmit={onSubmit} className="mb-16 mt-16 flex h-full w-full items-center justify-center px-2 md:mx-0 md:px-0 lg:mb-10 lg:items-center lg:justify-start">
       {/* Sign in section */}
       <div className="mt-[10vh] w-full max-w-full flex-col items-center md:ps-4 lg:ps-0 xl:max-w-[420px]">
         <h4 className="mb-2.5 text-4xl font-bold text-navy-700 dark:text-white">
@@ -33,6 +44,7 @@ export default function SignIn() {
           placeholder="mail@simmmple.com"
           id="email"
           type="text"
+          {...register("email")}
         />
 
         {/* Password */}
@@ -43,6 +55,7 @@ export default function SignIn() {
           placeholder="حداقل ۸ کاراکتر"
           id="password"
           type="password"
+          {...register("password")}
         />
         {/* Checkbox */}
         <div className="mb-4 flex items-center justify-between px-2">
@@ -74,6 +87,6 @@ export default function SignIn() {
           </a>
         </div> */}
       </div>
-    </div>
+    </form>
   );
 }

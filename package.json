@@ -2,6 +2,7 @@
   "name": "g-gold",
   "module": "index.ts",
   "type": "module",
+  "private": true,
   "workspaces": [
     "packages/*"
   ],
@@ -18,18 +19,22 @@
     "prettier-plugin-tailwindcss": "^0.6.6",
     "typescript-eslint": "^8.4.0"
   },
-  "lint-staged": {
+  "-lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "prepare": "husky",
+    "-prepare": "husky",
     "compose": "docker compose -f ./compose.dev.yaml --env-file .env --compatibility",
     "dev": "yarn compose up --build -d",
     "watch": "yarn compose watch",
     "ps": "watch -n 5 -t -d yarn compose ps --all",
     "start": "yarn compose up"
+  },
+  "overrides": {
+    "@sinclair/typebox": "0.26.8",
+    "moment-jalaali": "^0.10.0"
   }
 }
