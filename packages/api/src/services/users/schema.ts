@@ -1,6 +1,6 @@
 // // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
 import { resolve, virtual } from "@feathersjs/schema";
-import { Type, getValidator, querySyntax } from "@feathersjs/typebox";
+import { Type, getValidator } from "@feathersjs/typebox";
 import type { Static } from "@feathersjs/typebox";
 import { passwordHash } from "@feathersjs/authentication-local";
 
@@ -12,6 +12,7 @@ import { authManagementSchema } from "./auth.schema";
 import { userPath } from "./shared";
 import { gendertypeSchema } from "../../shared/fragments/gender-types";
 import { AnyMediaSchema } from "../../shared/fragments/media";
+import { querySyntax } from "../../shared/query";
 
 // Main data model schema
 export const userSchema = Type.Composite([
@@ -73,7 +74,7 @@ export const userQueryProperties = Type.Pick(userSchema, [
   "email",
   "googleId",
 ]);
-export const userQuerySchema = Type.Intersect(
+export const userQuerySchema = Type.Composite(
   [
     querySyntax(userQueryProperties),
     // Add additional query properties here
@@ -81,6 +82,7 @@ export const userQuerySchema = Type.Intersect(
   ],
   { additionalProperties: false },
 );
+
 export type UserQuery = Static<typeof userQuerySchema>;
 export const userQueryValidator = getValidator(userQuerySchema, queryValidator);
 export const userQueryResolver = resolve<UserQuery, HookContext<UserService>>({

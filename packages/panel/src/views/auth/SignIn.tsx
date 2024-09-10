@@ -1,18 +1,30 @@
-import InputField from "components/fields/InputField";
+import client from "api/client";
 import Checkbox from "components/checkbox";
-import { useForm } from "react-hook-form";
+import { TextField } from "components/fields/TextField";
+import { useCallback } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
-type FormData = {
+type FormData2 = {
   strategy: 'local';
   email: string;
   password: string;
 };
 
 export default function SignIn() {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>({
+  const navigate = useNavigate()
+  const { register, handleSubmit, control, formState: { errors } } = useForm<FormData2>({
   defaultValues: { strategy: "local" }
   });
-  const onSubmit = handleSubmit(data => console.log(data));
+  const onSubmit = useCallback(handleSubmit(async data => {
+    try {
+      const res = await client.authenticate(data)
+      console.log('/admin')
+      navigate('/admin')
+    } catch (e) { 
+      console.log('errrr', e);
+     }
+  }), [handleSubmit, navigate])
   return (
     <form onSubmit={onSubmit} className="mb-16 mt-16 flex h-full w-full items-center justify-center px-2 md:mx-0 md:px-0 lg:mb-10 lg:items-center lg:justify-start">
       {/* Sign in section */}
@@ -36,35 +48,51 @@ export default function SignIn() {
           <p className="text-base text-gray-600 dark:text-white"> or </p>
           <div className="h-px w-full bg-gray-200 dark:bg-navy-700" />
         </div> */}
-        {/* Email */}
-        <InputField
-          variant="auth"
-          extra="mb-3"
-          label="ایمیل*"
-          placeholder="mail@simmmple.com"
-          id="email"
-          type="text"
-          {...register("email")}
+        {/* email */}
+        
+        <Controller
+          name="email"
+          control={control}
+          rules={{ required: true }}
+          render={rp => (
+            <TextField
+              type="email"
+              className="mb-3"
+              renderProps={rp}
+
+              label="ایمیل"
+              variant="auth"
+              placeholder="email@example.com"
+              ltr
+            />
+          )}
+        />
+        
+        <Controller
+          name="password"
+          control={control}
+          rules={{ required: true }}
+          render={rp => (
+            <TextField
+              type="password"
+              className="mb-3"
+              renderProps={rp}
+              label="رمزعبور"
+              variant="auth"
+              placeholder="حداقل ۸ کاراکتر"
+              ltr
+            />
+          )}
         />
 
-        {/* Password */}
-        <InputField
-          variant="auth"
-          extra="mb-3"
-          label="رمزعبور*"
-          placeholder="حداقل ۸ کاراکتر"
-          id="password"
-          type="password"
-          {...register("password")}
-        />
         {/* Checkbox */}
         <div className="mb-4 flex items-center justify-between px-2">
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <Checkbox />
             <p className="ms-2 text-sm font-medium text-navy-700 dark:text-white">
               مرا به خاطر بسپار
             </p>
-          </div>
+          </div> */}
           <a
             className="text-sm font-medium text-brand-500 hover:text-brand-600 dark:text-white"
             href=" "

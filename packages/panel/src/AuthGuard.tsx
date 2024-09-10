@@ -1,8 +1,9 @@
-import client from "api/client";
-import { PropsWithChildren, Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import client, { AuthenticationResult } from "api/client";
+import { ComponentType, PropsWithChildren, Suspense, useEffect, useState } from "react";
+import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import AuthLayout from "./layouts/auth";
 import { Routes, Route } from "react-router-dom";
+import BrandLoading from "components/progress/BrandLoading";
 
 async function fakeCall() {
   return new Promise((resolve, reject) => {
@@ -18,72 +19,70 @@ type AuthCall<T> =
   | { t: 'e', e: Error } 
 
 function suspendForCall<T>(fn: () => Promise<T>) {
-      console.log('calllllllll');
   let call: AuthCall<T> = {
     t: "p",
     p: fn.call(null)
   };
   call.p 
     .then((r) => {
-      console.log('succccccccccccc');
-      
       call = { t: 'r', r }
     })
-    // Fetch request has failed
     .catch((e: unknown) => {
-      console.log('errrrrrrrrrrrrrr');
       call = { t: 'e', e: e as Error }
       return false
     });
 
   return () => {
-    if (call.t === "p") {
-      throw call.p; // Suspend(A way to tell React data is still fetching)
-    } else if (call.t === "e") {
-      throw call.e; // Result is an error
-    } else if (call.t === "r") {
-      return call.r; // Result is a fulfilled promise
+    switch (call.t) {
+      case 'e': return call.e
+      case 'r': return call.r
     }
+    return call.p
   };
 }
 
-// const useAuth = suspendForCall(client.reAuthenticate)
-const useAuth = suspendForCall(fakeCall)
+let useAwaitPromise = suspendForCall(client.reAuthenticate)
+// const useAuth = suspendForCall(fakeCall)
 
 const Auth = (props: PropsWithChildren) => {
-  const auth = useAuth()
-  console.log({auth});
-  
-  return (
-    <div>{props.children}</div>
-  )
+  const auth = useAwaitPromise()
+  return props.children
 };
 
-const AuthApp = () => {
-  return (
-    <Routes>
-      <Route path="*" element={<AuthLayout />} />
-    </Routes>
-  );
-};
-
-const AuthApp2 = () => {
+const AuthApp = ({ resetErrorBoundary }: FallbackProps) => {
+  function reload() {
+    useAwaitPromise = suspendForCall(client.reAuthenticate)
+    resetErrorBoundary()
+  }
   return (
     <div>
-      login
+      <button onClick={reload}>reload</button>
     </div>
   );
 };
 
-export default function AuthGuard(props: PropsWithChildren) {
-  // return props.children
-  return (
-    <ErrorBoundary FallbackComponent={AuthApp}>
-      <Suspense fallback={<div>loading...</div>}>
-        <Auth>
-          {props.children}
-        </Auth>
+export default function withAuthGuard(Component: ComponentType) {
+  return (props: PropsWithChildren) => {
+    const [state, setState] = useState<AuthenticationResult | Promise<AuthenticationResult> | Error | undefined>()
+    useEffect(() => {
+      const promise = client.reAuthenticate()
+      setState(promise)
+      promise
+        .then(setState)
+        .catch(e => setState(new Error(e)))
+    }, [])
+    if (state instanceof Promise) return (
+      <BrandLoading />
+    )
+    if (state instanceof Error) return (
+      <Routes>
+        <Route path="*" Component={AuthLayout} />
+      </Routes>
+    )
+    return (
+      <Suspense fallback={<BrandLoading />}>
+        <Component />
       </Suspense>
-    </ErrorBoundary>
-  );
+    )
+  }
 }

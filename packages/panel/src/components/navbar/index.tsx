@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Dropdown from "components/dropdown";
 import { FiAlignJustify } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import navbarimage from "assets/img/layout/Navbar.png";
 import { BsArrowBarUp } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
@@ -11,14 +11,21 @@ import {
   IoMdInformationCircleOutline,
 } from "react-icons/io";
 import avatar from "assets/img/avatars/avatar4.png";
+import client from "api/client";
 
 const Navbar = (props: {
   onOpenSidenav: () => void;
   brandText: string;
   secondary?: boolean | string;
 }) => {
+  const navigate = useNavigate()
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
+
+  const logout = useCallback(async () => {
+    await client.logout()
+    navigate('/auth')
+  }, [])
 
   return (
     <nav className="sticky top-0 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
@@ -212,12 +219,12 @@ const Navbar = (props: {
                 >
                   Newsletter Settings
                 </a>
-                <a
-                  href=" "
+                <button
+                  onClick={logout}
                   className="mt-3 text-sm font-medium text-red-500 hover:text-red-500"
                 >
-                  Log Out
-                </a>
+                  خروج
+                </button>
               </div>
             </div>
           }

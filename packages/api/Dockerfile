@@ -2,7 +2,7 @@
 # FROM node:18-alpine AS development
 FROM oven/bun:alpine AS development
 WORKDIR /wdir/packages/api
-CMD ["bun", "compile", "&", "bun", "dev"]
+CMD ["bun", "compile", "&&", "bun", "dev"]
 
 # production image (STAGE 1/2)
 FROM oven/bun:alpine AS build

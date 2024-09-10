@@ -6,6 +6,8 @@ export const logError = async (context: HookContext, next: NextFunction) => {
   try {
     await next();
   } catch (error: any) {
+    console.log(context.path, context.type, context.method);
+    
     logger.error(error.stack);
 
     // Log validation errors

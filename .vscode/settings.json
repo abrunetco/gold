@@ -2,5 +2,6 @@
   "tailwindCSS.experimental.classRegex": [
     ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]
   ],
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "files.autoSaveWhenNoErrors": true
 }

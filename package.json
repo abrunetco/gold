@@ -19,14 +19,10 @@
     "prettier-plugin-tailwindcss": "^0.6.6",
     "typescript-eslint": "^8.4.0"
   },
-  "-lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
-  },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "-prepare": "husky",
     "compose": "docker compose -f ./compose.dev.yaml --env-file .env --compatibility",
     "dev": "yarn compose up --build -d",
     "watch": "yarn compose watch",

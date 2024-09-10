@@ -1,8 +1,7 @@
 import { Static, Type } from "@feathersjs/typebox"
 import { resolve } from "@feathersjs/schema"
 import { HookContext } from "../declarations"
-import { Common } from "@sms/defs/src/core/common"
-import { TQuerySyntax } from "@sms/defs/src/core/query"
+import { TQuerySyntax } from "../shared/query"
 
 export const textSearchSchema = Type.Object({
   q: Type.String(),

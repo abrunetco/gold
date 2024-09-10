@@ -35,7 +35,7 @@ export const user = (app: Application) => {
   app.service(userPath).hooks({
     around: {
       all: [
-        // authenticate('jwt'),
+        authenticate('jwt'),
         // schemaHooks.resolveExternal(authManagementExternalResolver),
         schemaHooks.resolveExternal(userExternalResolver),
         schemaHooks.resolveResult(userResolver),
@@ -49,6 +49,9 @@ export const user = (app: Application) => {
     },
     before: {
       all: [
+        (ctxt) => {
+          console.log('q', ctxt.params.query);
+        },
         schemaHooks.validateQuery(userQueryValidator),
         schemaHooks.resolveQuery(userQueryResolver),
       ],

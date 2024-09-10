@@ -1,8 +1,8 @@
 import { sortDefinition } from "@feathersjs/typebox";
 import { Kind, TAny, TArray, TBoolean, TComposite, TExtends, TInteger, TObject, TPartial, TRecursive, TSchema, TString, TUnion, TUnsafe, Type } from "@sinclair/typebox";
 import _ from "lodash";
-import { textSearchQuerySchema } from "@sms/api/src/resolvers/text.search";
 import { TCommonQueryProperties, commonQueryProperties } from "./common";
+import { textSearchQuerySchema } from "../resolvers/text.search";
 
 const arrayOfKeys = <T extends TObject>(type: T) => {
   const keys = Object.keys(type.properties);

@@ -1,8 +1,7 @@
 // // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
 import type { Static } from "@sinclair/typebox"
 import { Type } from "@sinclair/typebox"
-import { CORE_KEYS, MODEL_KEYS } from "../service-keys"
-import { MongoDateSchema, RelationSchema } from "./relation"
+import { MongoDateSchema } from "./relation"
 
 // Main data model schema
 export const commonSharedKeys = ["uid", "createdBy", "createdAt", "updatedAt", "deletedAt", "readonly", "stringified"] as const
@@ -32,6 +31,6 @@ export type TCommonQueryProperties = typeof commonQueryProperties
 export type CommonQueryProperties = Static<TCommonQueryProperties>
 
 
-export function isCommon<T extends Common>(data?: T): data is T & { __typename: MODEL_KEYS } {
+export function isCommon<T extends Common>(data?: T): data is T & { __typename: string } {
   return !!data && '__typename' in data
 }

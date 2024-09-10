@@ -15,7 +15,7 @@ export default function Auth() {
             <div className="mx-auto flex min-h-full w-full flex-col justify-start pt-12 md:max-w-[75%] lg:h-screen lg:max-w-[1013px] lg:px-8 lg:pt-0 xl:h-[100vh] xl:max-w-[1383px] xl:px-0 xl:ps-[70px]">
               <div className="mb-auto flex flex-col pe-5 ps-5 md:pe-0 md:ps-12 lg:max-w-[48%] lg:ps-0 xl:max-w-full">
                 <Routes>
-                  <Route path="/auth/sign-in" Component={SignIn} />
+                  <Route path="/sign-in" Component={SignIn} />
                   <Route
                     path="*"
                     element={<Navigate to="/auth/sign-in" replace />}
