@@ -71,6 +71,10 @@ export const userPatchResolver = resolve<User, HookContext<UserService>>({
 // Schema for allowed query properties
 export const userQueryProperties = Type.Pick(userSchema, [
   "uid",
+  "firstName",
+  "lastName",
+  "isVerified",
+  "gender",
   "email",
   "googleId",
 ]);

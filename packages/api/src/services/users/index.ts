@@ -29,7 +29,7 @@ export const user = (app: Application) => {
     // A list of all methods this service exposes externally
     methods: userMethods,
     // You can add additional custom events to be sent to clients here
-    events: [],
+    events: []
   });
   // Initialize hooks
   app.service(userPath).hooks({

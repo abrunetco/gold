@@ -1,5 +1,5 @@
 import CardMenu from "components/card/CardMenu";
-import Checkbox from "components/checkbox";
+import OldCheckbox from "components/fields/checkbox/old";
 import { MdDragIndicator, MdCheckCircle } from "react-icons/md";
 import Card from "components/card";
 
@@ -24,7 +24,7 @@ const TaskCard = () => {
       <div className="h-full w-full">
         <div className="mt-5 flex items-center justify-between p-2">
           <div className="flex items-center justify-center gap-2">
-            <Checkbox />
+            <OldCheckbox />
             <p className="text-base font-bold text-navy-700 dark:text-white">
               Landing Page Design
             </p>
@@ -36,7 +36,7 @@ const TaskCard = () => {
 
         <div className="mt-2 flex items-center justify-between p-2">
           <div className="flex items-center justify-center gap-2">
-            <Checkbox />
+            <OldCheckbox />
             <p className="text-base font-bold text-navy-700 dark:text-white">
               Mobile App Design
             </p>
@@ -48,7 +48,7 @@ const TaskCard = () => {
 
         <div className="mt-2 flex items-center justify-between p-2">
           <div className="flex items-center justify-center gap-2">
-            <Checkbox />
+            <OldCheckbox />
             <p className="text-base font-bold text-navy-700 dark:text-white">
               Dashboard Builder
             </p>
@@ -60,7 +60,7 @@ const TaskCard = () => {
 
         <div className="mt-2 flex items-center justify-between p-2">
           <div className="flex items-center justify-center gap-2">
-            <Checkbox />
+            <OldCheckbox />
             <p className="text-base font-bold text-navy-700 dark:text-white">
               Landing Page Design
             </p>
@@ -72,7 +72,7 @@ const TaskCard = () => {
 
         <div className="mt-2 flex items-center justify-between p-2">
           <div className="flex items-center justify-center gap-2">
-            <Checkbox />
+            <OldCheckbox />
             <p className="text-base font-bold text-navy-700 dark:text-white">
               Dashboard Builder
             </p>

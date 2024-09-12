@@ -1,43 +1,41 @@
-import { Column } from "@tanstack/react-table";
+import { Column, Header } from "@tanstack/react-table";
 import { InputHTMLAttributes, useState, useEffect } from "react";
 import { RowData } from "@tanstack/react-table";
+import { DebouncedTextInput, TextInput } from "components/fields";
+import { useDebounce, useMongoRange, useMongoRegex } from "hooks/input";
 
 declare module '@tanstack/react-table' {
   //allows us to define custom properties for our columns
   interface ColumnMeta<TData extends RowData, TValue> {
-    filterVariant?: 'text' | 'range' | 'select'
+    filterVariant?: 'text' | 'number' | 'select' | 'date'
   }
 }
 
-export default function Filter({ column }: { column: Column<any, unknown> }) {
-  const columnFilterValue = column.getFilterValue()
-  const { filterVariant } = column.columnDef.meta ?? {}
+interface FilterProps<T> {
+  header: Header<T, unknown>,
+}
 
-  return filterVariant === 'range' ? (
-    <div>
-      <div className="flex space-x-2">
-        {/* See faceted column filters example for min max values functionality */}
-        <DebouncedInput
-          type="number"
-          value={(columnFilterValue as [number, number])?.[0] ?? ''}
-          onChange={value =>
-            column.setFilterValue((old: [number, number]) => [value, old?.[1]])
-          }
-          placeholder={`Min`}
-          className="w-24 border shadow rounded"
-        />
-        <DebouncedInput
-          type="number"
-          value={(columnFilterValue as [number, number])?.[1] ?? ''}
-          onChange={value =>
-            column.setFilterValue((old: [number, number]) => [old?.[0], value])
-          }
-          placeholder={`Max`}
-          className="w-24 border shadow rounded"
-        />
-      </div>
-      <div className="h-1" />
+export default function Filter<T>({ header }: FilterProps<T>) {
+  const column = header.column
+  const columnFilterValue = column.getFilterValue()
+  const { filterVariant, options } = column.columnDef.meta ?? {}
+
+  return filterVariant === 'number' ? (
+    <div className="flex space-x-2">
+      <RangeFilter
+        type="number"
+        header={header}
+      />
     </div>
+  ) : filterVariant === 'date' ? (
+    <div className="flex space-x-2">
+      <RangeFilter
+        type="date"
+        header={header}
+      />
+    </div>
+  ) : filterVariant === 'select' && options ? (
+    <EnumFilter header={header}/>
   ) : filterVariant === 'select' ? (
     <select
       onChange={e => column.setFilterValue(e.target.value)}
@@ -50,43 +48,75 @@ export default function Filter({ column }: { column: Column<any, unknown> }) {
       <option value="single">single</option>
     </select>
   ) : (
-    <DebouncedInput
-      className="w-36 border shadow rounded"
-      onChange={value => column.setFilterValue(value)}
-      placeholder={`Search...`}
-      type="text"
-      value={(columnFilterValue ?? '') as string}
-    />
-    // See faceted column filters example for datalist search suggestions
+    <TextFilter header={header}/>
   )
 }
 
-// A typical debounced input react component
-function DebouncedInput({
-  value: initialValue,
-  onChange,
-  debounce = 500,
-  ...props
-}: {
-  value: string | number
-  onChange: (value: string | number) => void
-  debounce?: number
-} & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'>) {
-  const [value, setValue] = useState(initialValue)
-
-  useEffect(() => {
-    setValue(initialValue)
-  }, [initialValue])
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      onChange(value)
-    }, debounce)
-
-    return () => clearTimeout(timeout)
-  }, [value])
-
+function RangeFilter<T>({ header, type }: FilterProps<T> & { type: 'number' | 'date' }) {
+  const columnFilterValue = header.column.getFilterValue()
+  const { lte, setLte, gte, setGte } = useMongoRange(columnFilterValue as any, header.column.setFilterValue)
   return (
-    <input {...props} value={value} onChange={e => setValue(e.target.value)} />
+    <>
+      <DebouncedTextInput
+        className="w-full border shadow rounded"
+        placeholder={`فیلتر...`}
+        type={type}
+        size="sm"
+        value={lte}
+        onValueChange={v => {
+          console.log('on lte change', v, +(new Date(v)));
+          
+          setLte(+(new Date(v)))
+        }}
+        onClick={e => e.stopPropagation()}
+      />
+      <DebouncedTextInput
+        className="w-full border shadow rounded"
+        placeholder={`فیلتر...`}
+        type={type}
+        size="sm"
+        value={gte}
+        onValueChange={v => {
+          console.log('on gte change', v, +(new Date(v)));
+          
+          setGte(+(new Date(v)))
+        }}
+        onClick={e => e.stopPropagation()}
+      />
+    </>
+  )
+}
+
+function TextFilter<T>({ header }: FilterProps<T>) {
+  const columnFilterValue = header.column.getFilterValue()
+  const [value, setValue] = useMongoRegex(columnFilterValue as any, header.column.setFilterValue)
+  return (
+    <DebouncedTextInput
+      className="w-full border shadow rounded"
+      placeholder={`فیلتر...`}
+      type="text"
+      size="sm"
+      value={value}
+      onValueChange={v => setValue(String(v))}
+      onClick={e => e.stopPropagation()}
+    />
+  )
+}
+
+function EnumFilter<T>({ header }: FilterProps<T>) {
+  const column = header.column
+  const columnFilterValue = column.getFilterValue()
+  const { options: _options = {} } = column.columnDef.meta ?? {}
+  const options = Object.entries(_options).filter(([k]) => k !== 'default')
+  return (
+    <select
+      onChange={e => column.setFilterValue(e.target.value)}
+      value={columnFilterValue?.toString()}
+    >
+      <option value="">همه</option>
+      {options.map(([value, label]) => (
+        <option key={value} value={value}>{label}</option>
+      ))}
+    </select>
   )
 }

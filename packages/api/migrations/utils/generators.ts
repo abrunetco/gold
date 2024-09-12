@@ -23,7 +23,8 @@ function makeDemoUser(): User {
         path: faFaker.image.avatar()
       }
     }],
-    gender: Genderypes.MAN,
+    gender: Math.random() > 0.5 ? Genderypes.MAN : Genderypes.WOMAN,
+    isVerified: Math.random() > 0.2,
     email,
     password,
   }

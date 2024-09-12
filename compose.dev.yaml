@@ -71,6 +71,8 @@ services:
       - ./package.json:/wdir/package.json
       - ./node_modules:/wdir/node_modules
       - ./packages:/wdir/packages
+    depends_on:
+      - api
     deploy:
       resources:
         limits:

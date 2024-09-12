@@ -1,4 +1,5 @@
 import { Table } from "@tanstack/react-table";
+import Button from "components/button";
 
 interface TsPaginationProps<T> {
   table: Table<T>
@@ -11,34 +12,30 @@ export default function TsPagination<T>({ table, loading, total, refresh }: TsPa
   return (
     <>
       <div className="flex items-center gap-2">
-        <button
-          className="border rounded p-1"
+        <Button
           onClick={() => table.firstPage()}
           disabled={!table.getCanPreviousPage()}
         >
           {'<<'}
-        </button>
-        <button
-          className="border rounded p-1"
+        </Button>
+        <Button
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
           {'<'}
-        </button>
-        <button
-          className="border rounded p-1"
+        </Button>
+        <Button
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
           {'>'}
-        </button>
-        <button
-          className="border rounded p-1"
+        </Button>
+        <Button
           onClick={() => table.lastPage()}
           disabled={!table.getCanNextPage()}
         >
           {'>>'}
-        </button>
+        </Button>
         <span className="flex items-center gap-1">
           <div>Page</div>
           <strong>
@@ -47,7 +44,7 @@ export default function TsPagination<T>({ table, loading, total, refresh }: TsPa
           </strong>
         </span>
         <span className="flex items-center gap-1">
-          | Go to page:
+          | پرش به:
           <input
             type="number"
             min="1"
@@ -68,19 +65,18 @@ export default function TsPagination<T>({ table, loading, total, refresh }: TsPa
         >
           {[10, 20, 30, 40, 50].map(pageSize => (
             <option key={pageSize} value={pageSize}>
-              Show {pageSize}
+              نمایش {pageSize}
             </option>
           ))}
         </select>
         {loading ? 'Loading...' : null}
+        <div className="mx-auto">
+          نمایش {table.getRowModel().rows.length.toLocaleString()} رکورد از {total.toLocaleString()}
+        </div>
+        {refresh && <div>
+          <Button onClick={refresh}>Force Rerender</Button>
+        </div>}
       </div>
-      <div>
-        Showing {table.getRowModel().rows.length.toLocaleString()} of{' '}
-        {total.toLocaleString()} Rows
-      </div>
-      {refresh && <div>
-        <button onClick={refresh}>Force Rerender</button>
-      </div>}
     </>
   )
 }

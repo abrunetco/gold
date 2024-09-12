@@ -52,7 +52,14 @@ app.hooks({
   around: {
     all: [logError],
   },
-  before: {},
+  before: {
+    all: [
+      (ctxt) => {
+        const m = ctxt.params.mongodb
+        ctxt.params.mongodb = { ...m,collation: { ...m?.collation,locale: 'fa' } }
+      }
+    ]
+  },
   after: {},
   error: {},
 });

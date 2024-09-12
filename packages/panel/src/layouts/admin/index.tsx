@@ -2,7 +2,6 @@ import React from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "components/navbar";
 import Sidebar from "components/sidebar";
-import Footer from "components/footer/Footer";
 import routes from "routes";
 
 export default function Admin(props: { [x: string]: any }) {
@@ -66,14 +65,14 @@ export default function Admin(props: { [x: string]: any }) {
           className={`mx-[12px] h-full flex-none transition-all md:pe-2 xl:ms-[313px]`}
         >
           {/* Routes */}
-          <div className="h-full">
+          <div className="h-[100vh] overflow-y-hidden">
             <Navbar
               onOpenSidenav={() => setOpen((o) => !o)}
               brandText={currentRoute}
               secondary={getActiveNavbar(routes)}
               {...rest}
             />
-            <div className="pt-5s mx-auto mb-auto h-full min-h-[84vh] p-2 md:pe-2">
+            <div className="pt-5s mx-auto mb-auto min-h-[calc(100vh-100px)] p-2 md:pe-2">
               <Routes>
                 {getRoutes(routes)}
 
@@ -82,9 +81,6 @@ export default function Admin(props: { [x: string]: any }) {
                   element={<Navigate to="/admin/default" replace />}
                 />
               </Routes>
-            </div>
-            <div className="p-3">
-              <Footer />
             </div>
           </div>
         </main>

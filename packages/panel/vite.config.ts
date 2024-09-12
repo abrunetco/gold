@@ -16,6 +16,7 @@ export default defineConfig({
       views: path.resolve(__dirname, "./src/views"),
       variables: path.resolve(__dirname, "./src/variables"),
       providers: path.resolve(__dirname, "./src/providers"),
+      hooks: path.resolve(__dirname, "./src/hooks"),
     },
   },
 });

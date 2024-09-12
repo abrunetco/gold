@@ -4,7 +4,7 @@ import { product } from "./products";
 import { account } from "./accounts";
 import { balance } from "./balances";
 import { invoice } from "./invoices";
-import { goldPrice } from "./prices.gold";
+import { goldPrice } from "./prices/gold";
 // For more information about this file see https://dove.feathersjs.com/guides/cli/application.html#configure-functions
 import type { Application } from "../declarations";
 

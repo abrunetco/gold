@@ -1,6 +1,6 @@
 import Card from "components/card";
 import CardMenu from "components/card/CardMenu";
-import Switch from "components/switch";
+import OldSwitch from "components/fields/checkbox/switch.old";
 
 function Notification() {
   return (
@@ -14,7 +14,7 @@ function Notification() {
       <div className="flex flex-col">
         {/* the custom checkbox desing added in src/index.js */}
         <div className="mt-3 flex items-center gap-3">
-          <Switch id="switch1" />
+          <OldSwitch id="switch1" />
           <label
             htmlFor="checkbox1"
             className="text-base font-medium text-navy-700 dark:text-white"
@@ -24,7 +24,7 @@ function Notification() {
         </div>
 
         <div className="mt-4 flex items-center gap-3">
-          <Switch id="switch2" />
+          <OldSwitch id="switch2" />
           <label
             htmlFor="checkbox2"
             className="text-base font-medium text-navy-700 dark:text-white"
@@ -34,7 +34,7 @@ function Notification() {
         </div>
 
         <div className="mt-4 flex items-center gap-3">
-          <Switch id="switch3" />
+          <OldSwitch id="switch3" />
           <label
             htmlFor="checkbox3"
             className="text-base font-medium text-navy-700 dark:text-white"
@@ -44,7 +44,7 @@ function Notification() {
         </div>
 
         <div className="mt-4 flex items-center gap-3">
-          <Switch id="switch4" />
+          <OldSwitch id="switch4" />
           <label
             htmlFor="checkbox4"
             className="text-base font-medium text-navy-700 dark:text-white"
@@ -54,7 +54,7 @@ function Notification() {
         </div>
 
         <div className="mt-4 flex items-center gap-3">
-          <Switch id="switch5" />
+          <OldSwitch id="switch5" />
           <label
             htmlFor="checkbox5"
             className="text-base font-medium text-navy-700 dark:text-white"
@@ -64,7 +64,7 @@ function Notification() {
         </div>
 
         <div className="mt-4 flex items-center gap-3">
-          <Switch id="switch6" />
+          <OldSwitch id="switch6" />
           <label
             htmlFor="checkbox6"
             className="text-base font-medium text-navy-700 dark:text-white"
@@ -73,7 +73,7 @@ function Notification() {
           </label>
         </div>
         <div className="mt-4 flex items-center gap-3">
-          <Switch id="switch7" />
+          <OldSwitch id="switch7" />
           <label
             htmlFor="checkbox7"
             className="text-base font-medium text-navy-700 dark:text-white"
@@ -82,7 +82,7 @@ function Notification() {
           </label>
         </div>
         <div className="mt-4 flex items-center gap-3">
-          <Switch id="switch8" />
+          <OldSwitch id="switch8" />
           <label
             htmlFor="checkbox8"
             className="text-base font-medium text-navy-700 dark:text-white"
@@ -91,7 +91,7 @@ function Notification() {
           </label>
         </div>
         <div className="mt-4 flex items-center gap-3">
-          <Switch id="switch8" />
+          <OldSwitch id="switch8" />
           <label
             htmlFor="checkbox8"
             className="text-base font-medium text-navy-700 dark:text-white"

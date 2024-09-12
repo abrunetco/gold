@@ -1,6 +1,5 @@
 import client from "api/client";
-import Checkbox from "components/checkbox";
-import { TextField } from "components/fields/TextField";
+import { TextFieldControl } from "components/fields";
 import { useCallback } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -55,15 +54,14 @@ export default function SignIn() {
           control={control}
           rules={{ required: true }}
           render={rp => (
-            <TextField
+            <TextFieldControl
               type="email"
               className="mb-3"
               renderProps={rp}
-
               label="ایمیل"
               variant="auth"
               placeholder="email@example.com"
-              ltr
+              dir="ltr"
             />
           )}
         />
@@ -73,14 +71,14 @@ export default function SignIn() {
           control={control}
           rules={{ required: true }}
           render={rp => (
-            <TextField
+            <TextFieldControl
               type="password"
               className="mb-3"
               renderProps={rp}
               label="رمزعبور"
               variant="auth"
               placeholder="حداقل ۸ کاراکتر"
-              ltr
+              dir="ltr"
             />
           )}
         />

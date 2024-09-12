@@ -6,7 +6,7 @@ const migrateKey = '20240909171346-generate-users'
 export const up = async (db: Db, client: MongoClient) => {
   const cols = getColections(db)
   const context = makeContext(migrateKey)
-  addDemoUsers(context)
+  addDemoUsers(context, 500)
   await applyContext(db, context).then(ctxt => console.log(`${ctxt.users.length} added`));
 }
 

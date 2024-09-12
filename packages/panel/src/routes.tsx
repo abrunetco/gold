@@ -19,6 +19,7 @@ import {
   MdLock,
 } from "react-icons/md";
 import UsersGridTable from "views/admin/users";
+import CategoriesGridTable from "views/admin/categories";
 
 const routes = [
   {
@@ -42,6 +43,13 @@ const routes = [
     icon: <MdBarChart className="h-6 w-6" />,
     path: "users",
     component: <UsersGridTable />,
+  },
+  {
+    name: "دسته‌بندی‌ها",
+    layout: "/admin",
+    icon: <MdBarChart className="h-6 w-6" />,
+    path: "categories",
+    component: <CategoriesGridTable />,
   },
   {
     name: "پروفایل",

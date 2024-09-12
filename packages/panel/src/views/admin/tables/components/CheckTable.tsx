@@ -1,6 +1,6 @@
 import React from "react";
 import CardMenu from "components/card/CardMenu";
-import Checkbox from "components/checkbox";
+import OldCheckbox from "components/fields/checkbox/old";
 import Card from "components/card";
 
 import {
@@ -31,7 +31,7 @@ function CheckTable(props: { tableData: any }) {
       ),
       cell: (info: any) => (
         <div className="flex items-center">
-          <Checkbox
+          <OldCheckbox
             defaultChecked={info.getValue()[1]}
             // colorScheme="brandScheme"
             me="10px"

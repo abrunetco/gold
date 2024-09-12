@@ -24,6 +24,7 @@
     "@gold/api": "*",
     "@tanstack/react-query": "^5.55.4",
     "@tanstack/react-table": "^8.7.9",
+    "@tanstack/react-virtual": "^3.10.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",

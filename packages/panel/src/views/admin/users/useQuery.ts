@@ -1,22 +1,36 @@
-import { UserQuery } from "@gold/api";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { ColumnFiltersState, PaginationState, SortingState } from "@tanstack/react-table";
+import { userPath, UserQuery } from "@gold/api";
+import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
+import { ColumnFiltersState, SortingState } from "@tanstack/react-table";
 import client from "api/client";
 
-export default function useUserQuery (p: PaginationState, s: SortingState, f: ColumnFiltersState) {
+export default function useUserQuery (s: SortingState, f: ColumnFiltersState) {
   const sort: { [k: string]: -1 | 1 } = {}
   s.forEach(({ id, desc }) => { sort[id] = desc ? 1 : -1 })
   const filter: { [k: string]: any } = {}
   f.forEach(({ id, value }) => { filter[id] = value })
-  const query: UserQuery = {
-    $limit: p.pageSize,
-    $skip: p.pageIndex * p.pageSize,
-    $sort: sort,
-    ...filter
+
+  function query (page: number): UserQuery {
+    return {
+      $limit: 10,
+      $skip: page * 10,
+      // @ts-ignore
+      $sort: sort,
+      ...filter
+    }
   }
-  return useQuery({
-    queryKey: ['data', p, s],
-    queryFn: () => client.service('users').find({query}),
-    placeholderData: keepPreviousData, // don't have 0 rows flash while changing pages/loading next page
+  return useInfiniteQuery({
+    queryKey: ['users', s, f],
+    queryFn: ({ pageParam }) => client.service(userPath).find({
+      query: query(pageParam),
+      mongodb: {
+        collation: { locale: 'fa' }
+      }
+    }),
+    placeholderData: keepPreviousData,
+    initialPageParam: 0,
+    maxPages: 100,
+    getPreviousPageParam: ({ skip, limit }) => (~~(skip / limit) - 1),
+    getNextPageParam: ({ skip, limit }) => (~~(skip / limit) + 1),
+    refetchOnWindowFocus: false,
   })
 }

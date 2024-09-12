@@ -1,4 +1,4 @@
-import Switch from "components/switch";
+import OldSwitch from "components/fields/checkbox/switch.old";
 
 const SwitchField = (props: {
   id: string;
@@ -21,7 +21,7 @@ const SwitchField = (props: {
         <p className={`text-base text-gray-600`}>{desc}</p>
       </label>
       <div>
-        <Switch id={id} />
+        <OldSwitch id={id} />
       </div>
     </div>
   );
