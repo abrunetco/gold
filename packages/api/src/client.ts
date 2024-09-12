@@ -1,86 +1,52 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/client.html
-import { feathers } from "@feathersjs/feathers";
-import type { TransportConnection, Application, ServiceMixin } from "@feathersjs/feathers";
-import authenticationClient from "@feathersjs/authentication-client";
-import type { AuthenticationClientOptions } from "@feathersjs/authentication-client";
+import { feathers } from '@feathersjs/feathers'
+import type { TransportConnection, Application, ServiceMixin } from '@feathersjs/feathers'
+import authenticationClient from '@feathersjs/authentication-client'
+import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
 
-export { accountPath } from "./services/accounts/shared";
-import { accountPath } from "./services/accounts/shared";
-import { accountClient } from "./services/accounts/shared";
-export type {
-  Account,
-  AccountData,
-  AccountQuery,
-  AccountPatch,
-} from "./services/accounts/shared";
+export { accountPath } from './services/accounts/shared'
+import { accountPath } from './services/accounts/shared'
+import { accountClient } from './services/accounts/shared'
+export type { Account, AccountData, AccountQuery, AccountPatch } from './services/accounts/shared'
 
-export { balancePath } from "./services/balances/shared";
-import { balancePath } from "./services/balances/shared";
-import { balanceClient } from "./services/balances/shared";
-export type {
-  Balance,
-  BalanceData,
-  BalanceQuery,
-  BalancePatch,
-} from "./services/balances/shared";
+export { balancePath } from './services/balances/shared'
+import { balancePath } from './services/balances/shared'
+import { balanceClient } from './services/balances/shared'
+export type { Balance, BalanceData, BalanceQuery, BalancePatch } from './services/balances/shared'
 
-export { categoryPath } from "./services/categories/shared";
-import { categoryPath } from "./services/categories/shared";
-import { categoryClient } from "./services/categories/shared";
-export type {
-  Category,
-  CategoryData,
-  CategoryQuery,
-  CategoryPatch,
-} from "./services/categories/shared";
+export { categoryPath } from './services/categories/shared'
+import { categoryPath } from './services/categories/shared'
+import { categoryClient } from './services/categories/shared'
+export type { Category, CategoryData, CategoryQuery, CategoryPatch } from './services/categories/shared'
 
-export { invoicePath } from "./services/invoices/shared";
-import { invoicePath } from "./services/invoices/shared";
-import { invoiceClient } from "./services/invoices/shared";
-export type {
-  Invoice,
-  InvoiceData,
-  InvoiceQuery,
-  InvoicePatch,
-} from "./services/invoices/shared";
+export { invoicePath } from './services/invoices/shared'
+import { invoicePath } from './services/invoices/shared'
+import { invoiceClient } from './services/invoices/shared'
+export type { Invoice, InvoiceData, InvoiceQuery, InvoicePatch } from './services/invoices/shared'
 
-export { goldPricePath } from "./services/prices/gold/shared";
-import { goldPricePath } from "./services/prices/gold/shared";
-import { goldPriceClient } from "./services/prices/gold/shared";
-export type {
-  GoldPrice,
-  GoldPriceData,
-  GoldPriceQuery,
-  GoldPricePatch,
-} from "./services/prices/gold/shared";
+export { goldPricePath } from './services/prices/gold/shared'
+import { goldPricePath } from './services/prices/gold/shared'
+import { goldPriceClient } from './services/prices/gold/shared'
+export type { GoldPrice, GoldPriceData, GoldPriceQuery, GoldPricePatch } from './services/prices/gold/shared'
 
-export { productPath } from "./services/products/shared";
-import { productPath } from "./services/products/shared";
-import { productClient } from "./services/products/shared";
-export type {
-  Product,
-  ProductData,
-  ProductQuery,
-  ProductPatch,
-} from "./services/products/shared";
+export { productPath } from './services/products/shared'
+import { productPath } from './services/products/shared'
+import { productClient } from './services/products/shared'
+export type { Product, ProductData, ProductQuery, ProductPatch } from './services/products/shared'
 
-export { userPath } from "./services/users/shared";
-import { userPath } from "./services/users/shared";
-import { userClient } from "./services/users/shared";
-export type {
-  User,
-  UserData,
-  UserQuery,
-  UserPatch,
-} from "./services/users/shared";
+export { userPath } from './services/users/shared'
+import { userPath } from './services/users/shared'
+import { userClient } from './services/users/shared'
+export type { User, UserData, UserQuery, UserPatch } from './services/users/shared'
 
 export interface Configuration {
-  connection: TransportConnection<ServiceTypes>;
+  connection: TransportConnection<ServiceTypes>
 }
 
-export interface ServiceTypes {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type, prettier/prettier
+export interface ServiceTypes { }
 
-export type ClientApplication = Application<ServiceTypes, Configuration>;
+export type ClientApplication = Application<ServiceTypes, Configuration>
 
 /**
  * Returns a typed client for the api2 app.
@@ -90,18 +56,18 @@ export type ClientApplication = Application<ServiceTypes, Configuration>;
  * @see https://dove.feathersjs.com/api/client.html
  * @returns The Feathers client application
  */
-export const createClient = <Configuration = any,>(
+export const createClient = (
   connection: TransportConnection<ServiceTypes>,
   authenticationOptions: Partial<AuthenticationClientOptions> = {},
   mixin?: ClientMixin
 ) => {
-  const client: ClientApplication = feathers();
+  const client: ClientApplication = feathers()
 
   if (mixin) client.mixins.push(mixin)
 
-  client.configure(connection);
-  client.configure(authenticationClient(authenticationOptions));
-  client.set("connection", connection);
+  client.configure(connection)
+  client.configure(authenticationClient(authenticationOptions))
+  client.set('connection', connection)
 
   client.configure(accountClient)
   client.configure(balanceClient)
@@ -110,20 +76,19 @@ export const createClient = <Configuration = any,>(
   client.configure(goldPriceClient)
   client.configure(productClient)
   client.configure(userClient)
-  return client;
-};
+  return client
+}
 
 export type ClientMixin = ServiceMixin<ClientApplication>
 export type { AuthenticationParams } from './declarations'
 
-export type EntityName = 
-| typeof accountPath
-| typeof balancePath
-| typeof categoryPath
-| typeof invoicePath
-| typeof goldPricePath
-| typeof productPath
-| typeof userPath
-
+export type EntityName =
+  | typeof accountPath
+  | typeof balancePath
+  | typeof categoryPath
+  | typeof invoicePath
+  | typeof goldPricePath
+  | typeof productPath
+  | typeof userPath
 
 export type { Common } from './shared/common'

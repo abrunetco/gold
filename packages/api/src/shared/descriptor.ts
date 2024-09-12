@@ -1,5 +1,4 @@
-import { Static, TSchema } from '@feathersjs/typebox';
-
+import { Static, TSchema } from '@feathersjs/typebox'
 
 export interface Descriptor<
   ISchemaType extends TSchema,
@@ -7,8 +6,8 @@ export interface Descriptor<
   IQuerySchemaType extends TSchema,
   IPatchSchemaType extends TSchema
 > {
-  S: Static<ISchemaType>;
-  D: Static<IDataSchemaType>;
-  Q: Static<IQuerySchemaType>;
-  P: Static<IPatchSchemaType>;
+  S: Static<ISchemaType>
+  D: Static<IDataSchemaType>
+  Q: Static<IQuerySchemaType>
+  P: Static<IPatchSchemaType>
 }

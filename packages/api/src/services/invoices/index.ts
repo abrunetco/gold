@@ -1,7 +1,7 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
-import { authenticate } from "@feathersjs/authentication";
+import { authenticate } from '@feathersjs/authentication'
 
-import { hooks as schemaHooks } from "@feathersjs/schema";
+import { hooks as schemaHooks } from '@feathersjs/schema'
 
 import {
   invoiceDataValidator,
@@ -11,16 +11,16 @@ import {
   invoiceExternalResolver,
   invoiceDataResolver,
   invoicePatchResolver,
-  invoiceQueryResolver,
-} from "./schema";
+  invoiceQueryResolver
+} from './schema'
 
-import type { Application } from "../../declarations";
-import { InvoiceService, getOptions } from "./class";
-import { invoicePath, invoiceMethods } from "./shared";
-import { commonDataResolver, commonPatchResolver } from "../../resolvers/common";
+import type { Application } from '../../declarations'
+import { InvoiceService, getOptions } from './class'
+import { invoicePath, invoiceMethods } from './shared'
+import { commonDataResolver, commonPatchResolver } from '../../resolvers/common'
 
-export * from "./class";
-export * from "./schema";
+export * from './class'
+export * from './schema'
 
 // A configure function that registers the service and its hooks via `app.configure`
 export const invoice = (app: Application) => {
@@ -29,8 +29,8 @@ export const invoice = (app: Application) => {
     // A list of all methods this service exposes externally
     methods: invoiceMethods,
     // You can add additional custom events to be sent to clients here
-    events: [],
-  });
+    events: []
+  })
   // Initialize hooks
   app.service(invoicePath).hooks({
     around: {
@@ -38,20 +38,17 @@ export const invoice = (app: Application) => {
         authenticate('jwt'),
         // schemaHooks.resolveExternal(authManagementExternalResolver),
         schemaHooks.resolveExternal(invoiceExternalResolver),
-        schemaHooks.resolveResult(invoiceResolver),
+        schemaHooks.resolveResult(invoiceResolver)
       ],
       find: [],
       get: [],
       create: [],
       update: [],
       patch: [],
-      remove: [],
+      remove: []
     },
     before: {
-      all: [
-        schemaHooks.validateQuery(invoiceQueryValidator),
-        schemaHooks.resolveQuery(invoiceQueryResolver),
-      ],
+      all: [schemaHooks.validateQuery(invoiceQueryValidator), schemaHooks.resolveQuery(invoiceQueryResolver)],
       find: [],
       get: [],
       create: [
@@ -62,22 +59,22 @@ export const invoice = (app: Application) => {
       patch: [
         schemaHooks.validateData(invoicePatchValidator),
         schemaHooks.resolveData(invoicePatchResolver),
-        schemaHooks.resolveData(commonPatchResolver),
+        schemaHooks.resolveData(commonPatchResolver)
       ],
-      remove: [],
+      remove: []
     },
     after: {
-      all: [],
+      all: []
     },
     error: {
-      all: [],
-    },
-  });
-};
+      all: []
+    }
+  })
+}
 
 // Add this service to the service type index
-declare module "../../declarations" {
+declare module '../../declarations' {
   interface ServiceTypes {
-    [invoicePath]: InvoiceService;
+    [invoicePath]: InvoiceService
   }
 }

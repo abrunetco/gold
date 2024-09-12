@@ -1,7 +1,7 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
-import { authenticate } from "@feathersjs/authentication";
+import { authenticate } from '@feathersjs/authentication'
 
-import { hooks as schemaHooks } from "@feathersjs/schema";
+import { hooks as schemaHooks } from '@feathersjs/schema'
 
 import {
   userDataValidator,
@@ -11,16 +11,16 @@ import {
   userExternalResolver,
   userDataResolver,
   userPatchResolver,
-  userQueryResolver,
-} from "./schema";
+  userQueryResolver
+} from './schema'
 
-import type { Application } from "../../declarations";
-import { UserService, getOptions } from "./class";
-import { userPath, userMethods } from "./shared";
-import { commonDataResolver, commonPatchResolver } from "../../resolvers/common";
+import type { Application } from '../../declarations'
+import { UserService, getOptions } from './class'
+import { userPath, userMethods } from './shared'
+import { commonDataResolver, commonPatchResolver } from '../../resolvers/common'
 
-export * from "./class";
-export * from "./schema";
+export * from './class'
+export * from './schema'
 
 // A configure function that registers the service and its hooks via `app.configure`
 export const user = (app: Application) => {
@@ -30,7 +30,7 @@ export const user = (app: Application) => {
     methods: userMethods,
     // You can add additional custom events to be sent to clients here
     events: []
-  });
+  })
   // Initialize hooks
   app.service(userPath).hooks({
     around: {
@@ -38,20 +38,17 @@ export const user = (app: Application) => {
         authenticate('jwt'),
         // schemaHooks.resolveExternal(authManagementExternalResolver),
         schemaHooks.resolveExternal(userExternalResolver),
-        schemaHooks.resolveResult(userResolver),
+        schemaHooks.resolveResult(userResolver)
       ],
       find: [],
       get: [],
       create: [],
       update: [],
       patch: [],
-      remove: [],
+      remove: []
     },
     before: {
-      all: [
-        schemaHooks.validateQuery(userQueryValidator),
-        schemaHooks.resolveQuery(userQueryResolver),
-      ],
+      all: [schemaHooks.validateQuery(userQueryValidator), schemaHooks.resolveQuery(userQueryResolver)],
       find: [],
       get: [],
       create: [
@@ -62,22 +59,22 @@ export const user = (app: Application) => {
       patch: [
         schemaHooks.validateData(userPatchValidator),
         schemaHooks.resolveData(userPatchResolver),
-        schemaHooks.resolveData(commonPatchResolver),
+        schemaHooks.resolveData(commonPatchResolver)
       ],
-      remove: [],
+      remove: []
     },
     after: {
-      all: [],
+      all: []
     },
     error: {
-      all: [],
-    },
-  });
-};
+      all: []
+    }
+  })
+}
 
 // Add this service to the service type index
-declare module "../../declarations" {
+declare module '../../declarations' {
   interface ServiceTypes {
-    [userPath]: UserService;
+    [userPath]: UserService
   }
 }

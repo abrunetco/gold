@@ -9,11 +9,11 @@ export type { NextFunction }
 
 // The types for app.get(name) and app.set(name)
 // eslint-disable-next-line
-export interface Configuration extends ApplicationConfiguration {}
+export interface Configuration extends ApplicationConfiguration { }
 
 // A mapping of service names to types. Will be extended in service files.
 // eslint-disable-next-line
-export interface ServiceTypes {}
+export interface ServiceTypes { }
 
 // The application instance type that will be used everywhere else
 export type Application = FeathersApplication<ServiceTypes, Configuration>

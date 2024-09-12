@@ -1,12 +1,15 @@
-import { Static, Type } from "@feathersjs/typebox"
-import { resolve } from "@feathersjs/schema"
-import { HookContext } from "../declarations"
-import { TQuerySyntax } from "../shared/query"
+import { Static, Type } from '@feathersjs/typebox'
+import { resolve } from '@feathersjs/schema'
+import { HookContext } from '../declarations'
+import { TQuerySyntax } from '../shared/query'
 
-export const textSearchSchema = Type.Object({
-  q: Type.String(),
-  // $text: Type.Object({ $search: Type.String() })
-}, { additionalProperties: false })
+export const textSearchSchema = Type.Object(
+  {
+    q: Type.String()
+    // $text: Type.Object({ $search: Type.String() })
+  },
+  { additionalProperties: false }
+)
 export type TTextSearch = typeof textSearchSchema
 export type TextSearch = Static<TTextSearch>
 
@@ -24,5 +27,5 @@ export const templatesQueryResolver = resolve<TQuerySyntax<TTextSearch>, HookCon
   //     return _v
   //   }
   // },
-  q: async (_v, query, ctx, status) => undefined
+  q: async () => undefined
 })

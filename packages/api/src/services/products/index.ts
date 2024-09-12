@@ -1,7 +1,7 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
-import { authenticate } from "@feathersjs/authentication";
+import { authenticate } from '@feathersjs/authentication'
 
-import { hooks as schemaHooks } from "@feathersjs/schema";
+import { hooks as schemaHooks } from '@feathersjs/schema'
 
 import {
   productDataValidator,
@@ -11,16 +11,16 @@ import {
   productExternalResolver,
   productDataResolver,
   productPatchResolver,
-  productQueryResolver,
-} from "./schema";
+  productQueryResolver
+} from './schema'
 
-import type { Application } from "../../declarations";
-import { ProductService, getOptions } from "./class";
-import { productPath, productMethods } from "./shared";
-import { commonDataResolver, commonPatchResolver } from "../../resolvers/common";
+import type { Application } from '../../declarations'
+import { ProductService, getOptions } from './class'
+import { productPath, productMethods } from './shared'
+import { commonDataResolver, commonPatchResolver } from '../../resolvers/common'
 
-export * from "./class";
-export * from "./schema";
+export * from './class'
+export * from './schema'
 
 // A configure function that registers the service and its hooks via `app.configure`
 export const product = (app: Application) => {
@@ -29,8 +29,8 @@ export const product = (app: Application) => {
     // A list of all methods this service exposes externally
     methods: productMethods,
     // You can add additional custom events to be sent to clients here
-    events: [],
-  });
+    events: []
+  })
   // Initialize hooks
   app.service(productPath).hooks({
     around: {
@@ -38,20 +38,17 @@ export const product = (app: Application) => {
         authenticate('jwt'),
         // schemaHooks.resolveExternal(authManagementExternalResolver),
         schemaHooks.resolveExternal(productExternalResolver),
-        schemaHooks.resolveResult(productResolver),
+        schemaHooks.resolveResult(productResolver)
       ],
       find: [],
       get: [],
       create: [],
       update: [],
       patch: [],
-      remove: [],
+      remove: []
     },
     before: {
-      all: [
-        schemaHooks.validateQuery(productQueryValidator),
-        schemaHooks.resolveQuery(productQueryResolver),
-      ],
+      all: [schemaHooks.validateQuery(productQueryValidator), schemaHooks.resolveQuery(productQueryResolver)],
       find: [],
       get: [],
       create: [
@@ -62,22 +59,22 @@ export const product = (app: Application) => {
       patch: [
         schemaHooks.validateData(productPatchValidator),
         schemaHooks.resolveData(productPatchResolver),
-        schemaHooks.resolveData(commonPatchResolver),
+        schemaHooks.resolveData(commonPatchResolver)
       ],
-      remove: [],
+      remove: []
     },
     after: {
-      all: [],
+      all: []
     },
     error: {
-      all: [],
-    },
-  });
-};
+      all: []
+    }
+  })
+}
 
 // Add this service to the service type index
-declare module "../../declarations" {
+declare module '../../declarations' {
   interface ServiceTypes {
-    [productPath]: ProductService;
+    [productPath]: ProductService
   }
 }

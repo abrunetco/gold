@@ -1,4 +1,4 @@
-import { Type } from "@sinclair/typebox";
+import { Type } from '@sinclair/typebox'
 
 export const natIdSchema = Type.String({
   maxLength: 10,
@@ -10,7 +10,7 @@ export const natIdSchema = Type.String({
 export type LinkNonation = `http://${string}` | `https://${string}`
 
 export const linkSchema = Type.Unsafe<LinkNonation>({
-  type: "string",
-  format: "url"
+  type: 'string',
+  format: 'url'
 })
 export const neverObjectSchema = Type.Object({}, { additionalProperties: false })

@@ -1,7 +1,7 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
-import { authenticate } from "@feathersjs/authentication";
+import { authenticate } from '@feathersjs/authentication'
 
-import { hooks as schemaHooks } from "@feathersjs/schema";
+import { hooks as schemaHooks } from '@feathersjs/schema'
 
 import {
   accountDataValidator,
@@ -11,16 +11,16 @@ import {
   accountExternalResolver,
   accountDataResolver,
   accountPatchResolver,
-  accountQueryResolver,
-} from "./schema";
+  accountQueryResolver
+} from './schema'
 
-import type { Application } from "../../declarations";
-import { AccountService, getOptions } from "./class";
-import { accountPath, accountMethods } from "./shared";
-import { commonDataResolver, commonPatchResolver } from "../../resolvers/common";
+import type { Application } from '../../declarations'
+import { AccountService, getOptions } from './class'
+import { accountPath, accountMethods } from './shared'
+import { commonDataResolver, commonPatchResolver } from '../../resolvers/common'
 
-export * from "./class";
-export * from "./schema";
+export * from './class'
+export * from './schema'
 
 // A configure function that registers the service and its hooks via `app.configure`
 export const account = (app: Application) => {
@@ -29,8 +29,8 @@ export const account = (app: Application) => {
     // A list of all methods this service exposes externally
     methods: accountMethods,
     // You can add additional custom events to be sent to clients here
-    events: [],
-  });
+    events: []
+  })
   // Initialize hooks
   app.service(accountPath).hooks({
     around: {
@@ -38,20 +38,17 @@ export const account = (app: Application) => {
         authenticate('jwt'),
         // schemaHooks.resolveExternal(authManagementExternalResolver),
         schemaHooks.resolveExternal(accountExternalResolver),
-        schemaHooks.resolveResult(accountResolver),
+        schemaHooks.resolveResult(accountResolver)
       ],
       find: [],
       get: [],
       create: [],
       update: [],
       patch: [],
-      remove: [],
+      remove: []
     },
     before: {
-      all: [
-        schemaHooks.validateQuery(accountQueryValidator),
-        schemaHooks.resolveQuery(accountQueryResolver),
-      ],
+      all: [schemaHooks.validateQuery(accountQueryValidator), schemaHooks.resolveQuery(accountQueryResolver)],
       find: [],
       get: [],
       create: [
@@ -62,22 +59,22 @@ export const account = (app: Application) => {
       patch: [
         schemaHooks.validateData(accountPatchValidator),
         schemaHooks.resolveData(accountPatchResolver),
-        schemaHooks.resolveData(commonPatchResolver),
+        schemaHooks.resolveData(commonPatchResolver)
       ],
-      remove: [],
+      remove: []
     },
     after: {
-      all: [],
+      all: []
     },
     error: {
-      all: [],
-    },
-  });
-};
+      all: []
+    }
+  })
+}
 
 // Add this service to the service type index
-declare module "../../declarations" {
+declare module '../../declarations' {
   interface ServiceTypes {
-    [accountPath]: AccountService;
+    [accountPath]: AccountService
   }
 }

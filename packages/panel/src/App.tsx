@@ -10,7 +10,7 @@ function AdminRoute() {
   return (
     <AuthProvider onFaild={<Navigate to="/auth" replace />}>
       <Suspense fallback={<BrandLoading />}>
-        <AdminLayout />
+      <AdminLayout />
       </Suspense>
     </AuthProvider>
   )
