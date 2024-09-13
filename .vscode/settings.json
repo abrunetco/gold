@@ -1,9 +1,4 @@
 {
-  "tailwindCSS.experimental.classRegex": [
-    [
-      "([\"'`][^\"'`]*.*?[\"'`])",
-      "[\"'`]([^\"'`]*).*?[\"'`]"
-    ]
-  ],
-  "files.autoSaveWhenNoErrors": true
+  "files.autoSaveWhenNoErrors": true,
+  "editor.fontLigatures": false
 }
