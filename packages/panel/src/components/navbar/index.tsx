@@ -5,9 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BsArrowBarUp } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { RiMoonFill, RiSunFill } from "react-icons/ri";
-import {
-  IoMdNotificationsOutline,
-} from "react-icons/io";
+import { IoMdNotificationsOutline } from "react-icons/io";
 import avatar from "assets/img/avatars/avatar4.png";
 import client from "api/client";
 
@@ -16,14 +14,14 @@ const Navbar = (props: {
   brandText: string;
   secondary?: boolean | string;
 }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
 
   const logout = useCallback(async () => {
-    await client.logout()
-    navigate('/auth')
-  }, [])
+    await client.logout();
+    navigate("/auth");
+  }, []);
 
   return (
     <nav className="sticky top-0 z-40 flex flex-row flex-wrap items-center justify-between rounded-e-full bg-white/10 p-2 pe-4 backdrop-blur-xl dark:bg-[#0b14374d]">

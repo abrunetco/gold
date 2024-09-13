@@ -3,27 +3,30 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import BrandLoading from "components/progress/BrandLoading";
 import AuthProvider from "providers/auth";
 
-const AdminLayout = lazy(() => import("./layouts/admin"))
-const AuthLayout = lazy(() => import("./layouts/auth"))
+const AdminLayout = lazy(() => import("./layouts/admin"));
+const AuthLayout = lazy(() => import("./layouts/auth"));
 
 function AdminRoute() {
   return (
     <AuthProvider onFaild={<Navigate to="/auth" replace />}>
       <Suspense fallback={<BrandLoading />}>
-      <AdminLayout />
+        <AdminLayout />
       </Suspense>
     </AuthProvider>
-  )
+  );
 }
 
 function AuthRoute() {
   return (
-    <AuthProvider onFaild={<Navigate to="/admin" replace />} validate={res => !res}>
+    <AuthProvider
+      onFaild={<Navigate to="/admin" replace />}
+      validate={(res) => !res}
+    >
       <Suspense fallback={<BrandLoading />}>
         <AuthLayout />
       </Suspense>
     </AuthProvider>
-  )
+  );
 }
 
 const App = () => {

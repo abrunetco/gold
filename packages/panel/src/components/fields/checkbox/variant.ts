@@ -1,44 +1,44 @@
-import { tv, VariantProps } from 'tailwind-variants';
+import { tv, VariantProps } from "tailwind-variants";
 
 export const checkboxTV = tv({
-  base: '',
+  base: "",
   variants: {
     variant: {
       th: "",
       td: "",
       auth: "",
-      form: ""
+      form: "",
     },
     disabled: {
-      true: ''
+      true: "",
     },
     severity: {
-      default: '',
-      success: '',
-      error: ''
-    }
+      default: "",
+      success: "",
+      error: "",
+    },
   },
   compoundVariants: [
     {
       disabled: false,
-      severity: 'default',
-      class: ""
+      severity: "default",
+      class: "",
     },
     {
       disabled: false,
-      severity: 'error',
-      class: ""
+      severity: "error",
+      class: "",
     },
     {
       disabled: false,
-      severity: 'success',
-      class: ""
+      severity: "success",
+      class: "",
     },
   ],
   defaultVariants: {
     severity: "default",
-    disabled: false
-  }
+    disabled: false,
+  },
 });
 
-export type CheckboxVariantProps = VariantProps<typeof checkboxTV>
+export type CheckboxVariantProps = VariantProps<typeof checkboxTV>;

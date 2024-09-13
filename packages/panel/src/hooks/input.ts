@@ -1,68 +1,78 @@
-import { Updater } from "@tanstack/react-table"
-import { useState, useEffect } from "react"
+import { Updater } from "@tanstack/react-table";
+import { useState, useEffect } from "react";
 
-export function useDebounce<T>(i: T, cb: ((value: T) => void), t = 500) {
-  const [value, setValue] = useState(i)
+export function useDebounce<T>(i: T, cb: (value: T) => void, t = 500) {
+  const [value, setValue] = useState(i);
 
   useEffect(() => {
-    setValue(i)
-  }, [i])
+    setValue(i);
+  }, [i]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      cb(value)
-    }, t)
+      cb(value);
+    }, t);
 
-    return () => clearTimeout(timeout)
-  }, [value])
+    return () => clearTimeout(timeout);
+  }, [value]);
 
-  return [value, setValue] as const
+  return [value, setValue] as const;
 }
 
 interface IMongoRegex {
-  $regex: string
-  $options: string
+  $regex: string;
+  $options: string;
 }
 
-export function useMongoRegex(outerValue?: IMongoRegex, cb?: ((v?: IMongoRegex) => void), $options = 'xs') {
-  const [value, setValue] = useState(outerValue?.$regex ?? '')
+export function useMongoRegex(
+  outerValue?: IMongoRegex,
+  cb?: (v?: IMongoRegex) => void,
+  $options = "xs",
+) {
+  const [value, setValue] = useState(outerValue?.$regex ?? "");
 
   useEffect(() => {
-    if (outerValue?.$regex !== value)
-    setValue(outerValue?.$regex ?? '')
-  }, [outerValue])
+    if (outerValue?.$regex !== value) setValue(outerValue?.$regex ?? "");
+  }, [outerValue]);
 
   useEffect(() => {
-    if(!value) return cb()
-    const $regex = String(value).trim().split(' ').filter(v => !!v).join('|')
-    return cb({ $regex, $options })
-  }, [value, $options])
+    if (!value) return cb();
+    const $regex = String(value)
+      .trim()
+      .split(" ")
+      .filter((v) => !!v)
+      .join("|");
+    return cb({ $regex, $options });
+  }, [value, $options]);
 
-  return [value, setValue] as const
+  return [value, setValue] as const;
 }
 
 interface IMongoRange {
-  $lte?: number
-  $gte?: number
+  $lte?: number;
+  $gte?: number;
 }
 
-export function useMongoRange(outerValue?: IMongoRange, cb?: ((v?: Updater<IMongoRange>) => void)) {
-  const [lte, setLte] = useState(outerValue?.$lte)
-  const [gte, setGte] = useState(outerValue?.$gte)
+export function useMongoRange(
+  outerValue?: IMongoRange,
+  cb?: (v?: Updater<IMongoRange>) => void,
+) {
+  const [lte, setLte] = useState(outerValue?.$lte);
+  const [gte, setGte] = useState(outerValue?.$gte);
 
   useEffect(() => {
-    if (outerValue?.$lte !== lte) setLte(outerValue?.$lte)
-    if (outerValue?.$gte !== gte) setGte(outerValue?.$gte)
-  }, [outerValue])
+    if (outerValue?.$lte !== lte) setLte(outerValue?.$lte);
+    if (outerValue?.$gte !== gte) setGte(outerValue?.$gte);
+  }, [outerValue]);
 
   useEffect(() => {
-    if(!lte && !gte) return cb()
+    if (!lte && !gte) return cb();
 
     cb({
       $lte: !isNaN(lte) ? lte : undefined,
-      $gte: !isNaN(gte) ? gte : undefined
-    })
-  }, [lte, gte])
+      $gte: !isNaN(gte) ? gte : undefined,
+    });
+  }, [lte, gte]);
 
-  return { lte, setLte, gte, setGte }
+  return { lte, setLte, gte, setGte };
 }

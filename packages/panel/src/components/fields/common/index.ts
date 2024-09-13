@@ -1,3 +1,3 @@
-export * from './fieldset'
-export * from './label'
-export * from './meta'
+export * from "./fieldset";
+export * from "./label";
+export * from "./meta";

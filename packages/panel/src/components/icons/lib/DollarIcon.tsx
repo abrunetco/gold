@@ -1,6 +1,6 @@
 import { StrictIconProps } from "../type";
 
-export default function(props: StrictIconProps) {
+export default function (props: StrictIconProps) {
   return (
     <svg
       data-name={props.name}
@@ -17,4 +17,3 @@ export default function(props: StrictIconProps) {
     </svg>
   );
 }
-

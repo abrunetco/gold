@@ -20,21 +20,18 @@ import { MARKUP_MAP } from "variables/entities";
 
 const columnHelper = createColumnHelper<Category>();
 
-
-const defaultData: Category[] = []
+const defaultData: Category[] = [];
 
 function CategoriesGridTable() {
-  const rerender = React.useReducer(() => ({}), {})[1]
+  const rerender = React.useReducer(() => ({}), {})[1];
   const columns = useCategoryColumns(columnHelper);
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [filters, setFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
+  const [filters, setFilters] = React.useState<ColumnFiltersState>([]);
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
-  })
-  const query = useCategoryQuery(pagination, sorting, filters)
+  });
+  const query = useCategoryQuery(pagination, sorting, filters);
   const table = useReactTable({
     data: query.data?.data ?? defaultData,
     columns,

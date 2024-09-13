@@ -1,12 +1,12 @@
 import { StrictIconProps } from "../type";
 
-export default function(props: StrictIconProps) {
+export default function (props: StrictIconProps) {
   return (
     <svg
       data-name={props.name}
       width={props.size}
       height={props.size}
-        viewBox="0 0 24 24"
+      viewBox="0 0 24 24"
       fill={props.bg}
       xmlns="http://www.w3.org/2000/svg"
     >

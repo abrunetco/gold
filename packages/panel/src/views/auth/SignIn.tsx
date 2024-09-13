@@ -5,27 +5,33 @@ import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 type FormData2 = {
-  strategy: 'local';
+  strategy: "local";
   email: string;
   password: string;
 };
 
 export default function SignIn() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { handleSubmit, control } = useForm<FormData2>({
-  defaultValues: { strategy: "local" }
+    defaultValues: { strategy: "local" },
   });
-  const onSubmit = useCallback(handleSubmit(async data => {
-    try {
-      await client.authenticate(data)
-      console.log('/admin')
-      navigate('/admin')
-    } catch (e) { 
-      console.log('errrr', e);
-     }
-  }), [handleSubmit, navigate])
+  const onSubmit = useCallback(
+    handleSubmit(async (data) => {
+      try {
+        await client.authenticate(data);
+        console.log("/admin");
+        navigate("/admin");
+      } catch (e) {
+        console.log("errrr", e);
+      }
+    }),
+    [handleSubmit, navigate],
+  );
   return (
-    <form onSubmit={onSubmit} className="mb-16 mt-16 flex h-full w-full items-center justify-center px-2 md:mx-0 md:px-0 lg:mb-10 lg:items-center lg:justify-start">
+    <form
+      onSubmit={onSubmit}
+      className="mb-16 mt-16 flex h-full w-full items-center justify-center px-2 md:mx-0 md:px-0 lg:mb-10 lg:items-center lg:justify-start"
+    >
       {/* Sign in section */}
       <div className="mt-[10vh] w-full max-w-full flex-col items-center md:ps-4 lg:ps-0 xl:max-w-[420px]">
         <h4 className="mb-2.5 text-4xl font-bold text-navy-700 dark:text-white">
@@ -48,12 +54,12 @@ export default function SignIn() {
           <div className="h-px w-full bg-gray-200 dark:bg-navy-700" />
         </div> */}
         {/* email */}
-        
+
         <Controller
           name="email"
           control={control}
           rules={{ required: true }}
-          render={rp => (
+          render={(rp) => (
             <TextFieldControl
               type="email"
               className="mb-3"
@@ -65,12 +71,12 @@ export default function SignIn() {
             />
           )}
         />
-        
+
         <Controller
           name="password"
           control={control}
           rules={{ required: true }}
-          render={rp => (
+          render={(rp) => (
             <TextFieldControl
               type="password"
               className="mb-3"

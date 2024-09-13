@@ -1,3 +1,3 @@
 export default function BrandLoading() {
-  return <div>loading...</div>
+  return <div>loading...</div>;
 }

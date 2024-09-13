@@ -1,6 +1,5 @@
-
-import { createClient, AuthenticationParams } from "@gold/api"
-import transport from "./transports/ws.local"
+import { createClient, AuthenticationParams } from "@gold/api";
+import transport from "./transports/ws.local";
 // import { cacheIndexed, getFromCache, rtcUpdateCache } from "./idxdb"
 
 // const mixin: ClientMixin = function (service, path, options) {
@@ -16,16 +15,15 @@ const client = createClient(
     storage: window.localStorage,
   },
   // mixin
-)
+);
 
-export default client
+export default client;
 
 client.hooks({
   around: {
     // all: [cacheIndexed()],
     // get: [getFromCache()]
-  }
-})
+  },
+});
 
-
-export type AuthenticationResult = AuthenticationParams
+export type AuthenticationResult = AuthenticationParams;
