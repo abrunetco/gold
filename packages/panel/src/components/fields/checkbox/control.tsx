@@ -15,9 +15,9 @@ interface CheckboxFieldControlProps<T extends FieldValues = FieldValues, N exten
 
 export function CheckboxFieldControl<T extends FieldValues = FieldValues, N extends FieldPath<T> = FieldPath<T>>
   (props: CheckboxFieldControlProps<T, N>) {
-  const { multiline, renderProps, ...rest } = props;
+  const { renderProps, ...rest } = props;
   const { fieldState, field } = renderProps;
-  const { invalid, isDirty, isTouched, isValidating, error } = fieldState;
+  const { invalid, isDirty, isTouched, error } = fieldState;
   const severity = invalid ? 'error' : isDirty && isTouched ? "success" : "default"
 
   return (

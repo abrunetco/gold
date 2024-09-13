@@ -12,12 +12,12 @@ type FormData2 = {
 
 export default function SignIn() {
   const navigate = useNavigate()
-  const { register, handleSubmit, control, formState: { errors } } = useForm<FormData2>({
+  const { handleSubmit, control } = useForm<FormData2>({
   defaultValues: { strategy: "local" }
   });
   const onSubmit = useCallback(handleSubmit(async data => {
     try {
-      const res = await client.authenticate(data)
+      await client.authenticate(data)
       console.log('/admin')
       navigate('/admin')
     } catch (e) { 

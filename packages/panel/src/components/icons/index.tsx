@@ -1,6 +1,5 @@
-import { ComponentType } from 'react'
 import * as ICONS from './list'
-import { IconProps, StrictIconProps } from './type'
+import { IconProps } from './type'
 
 export default function Icon(props: IconProps) {
   const Component = ICONS[props.name]

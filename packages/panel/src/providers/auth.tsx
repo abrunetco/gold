@@ -1,6 +1,6 @@
 import client, { AuthenticationResult } from "api/client";
 import BrandLoading from "components/progress/BrandLoading";
-import { ComponentType, createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
 
 const Ctxt = createContext<AuthenticationResult | null>(null)
 
@@ -30,9 +30,9 @@ export default function AuthProvider(props: PropsWithChildren<AuthProviderProps>
     setLoading(true)
     client.reAuthenticate()
       .then(setValue)
-      .catch(e => setValue(undefined))
+      .catch(() => setValue(undefined))
       .finally(setLoading.bind(null, false))
-  }, [setValue, setValue])
+  }, [setValue, setLoading])
 
   const isValid = useMemo(() => validate(value), [validate, value])
 

@@ -6,15 +6,12 @@ import {
   ColumnFiltersState,
   ColumnOrderState,
   createColumnHelper,
-  defaultColumnSizing,
   getCoreRowModel,
-  PaginationState,
   SortingState,
   useReactTable
 } from "@tanstack/react-table";
 import TanstackTable from "components/table/TanstackTable";
 import ColumnsMenu from "components/table/ColumnsMenu";
-import TsPagination from "components/table/Pagination";
 import { MARKUP_MAP } from "variables/entities";
 import useUserColumns from "./useColumns";
 import useUserQuery from "./useQuery";
@@ -22,7 +19,7 @@ import Icon from "components/icons";
 
 const columnHelper = createColumnHelper<User>();
 
-function UsersGridTable(props: { tableData?: any[] }) {
+function UsersGridTable() {
   const rerender = React.useReducer(() => ({}), {})[1]
   const columns = useUserColumns(columnHelper);
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -96,7 +93,7 @@ function UsersGridTable(props: { tableData?: any[] }) {
           <ColumnsMenu table={table} />
 
           <button
-            onClick={() => query.refetch()}
+            onClick={rerender}
             className={`flex items-center text-xl hover:cursor-pointer bg-lightPrimary p-2 text-brand-500 hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10 linear justify-center rounded-lg font-bold transition duration-200`}
           >
             <Icon name="Reload" />

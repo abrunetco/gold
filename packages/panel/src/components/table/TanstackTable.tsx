@@ -1,6 +1,6 @@
 import { flexRender, Table } from "@tanstack/react-table";
-import { useVirtualizer, Virtualizer } from '@tanstack/react-virtual';
-import { ForwardedRef, forwardRef, useEffect, useRef } from "react";
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { useEffect, useRef } from "react";
 import ColHeadControl from "./components/ColHeadControl";
 import { Common } from "@gold/api"
 

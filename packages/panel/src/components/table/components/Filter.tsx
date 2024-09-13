@@ -1,11 +1,11 @@
-import { Column, Header } from "@tanstack/react-table";
-import { InputHTMLAttributes, useState, useEffect } from "react";
+import { Header } from "@tanstack/react-table";
 import { RowData } from "@tanstack/react-table";
-import { DebouncedTextInput, TextInput } from "components/fields";
-import { useDebounce, useMongoRange, useMongoRegex } from "hooks/input";
+import { DebouncedTextInput } from "components/fields";
+import { useMongoRange, useMongoRegex } from "hooks/input";
 
 declare module '@tanstack/react-table' {
   //allows us to define custom properties for our columns
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface ColumnMeta<TData extends RowData, TValue> {
     filterVariant?: 'text' | 'number' | 'select' | 'date'
   }

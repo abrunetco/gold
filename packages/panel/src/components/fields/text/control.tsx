@@ -18,7 +18,7 @@ export function TextFieldControl<T extends FieldValues = FieldValues, N extends 
   (props: TextFieldControlProps<T, N>) {
   const { multiline, type = 'text', renderProps, ...rest } = props;
   const { fieldState, field } = renderProps;
-  const { invalid, isDirty, isTouched, isValidating, error } = fieldState;
+  const { invalid, isDirty, isTouched, error } = fieldState;
   const severity = invalid ? 'error' : isDirty && isTouched ? "success" : "default"
 
   if(!multiline) return (

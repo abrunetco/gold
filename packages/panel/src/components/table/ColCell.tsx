@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 
 declare module '@tanstack/react-table' {
   //allows us to define custom properties for our columns
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface ColumnMeta<TData extends RowData, TValue> {
     options?: { [k: string]: ReactNode }
     format?: 'date' | 'currency'
@@ -15,7 +16,7 @@ interface ColCellProps<TData, TValue> {
   ltr?: true
 }
 
-export default function ColCell<TData, TValue extends ReactNode>({ context, ltr, accessor }: ColCellProps<TData, TValue>) {
+export default function ColCell<TData, TValue extends ReactNode>({ context, ltr }: ColCellProps<TData, TValue>) {
   const raw = String(context.getValue())
   let value: ReactNode = raw
   const options = context.column.columnDef.meta?.options

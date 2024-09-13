@@ -24,10 +24,9 @@ const button = tv({
 });
 
 type ButtonVariantProps = VariantProps<typeof button>
-type ExternalButtonVariantProps = Omit<ButtonVariantProps, ''>
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-
 }
 
 export default function Button(props: PropsWithChildren<ButtonProps & ButtonVariantProps>) {

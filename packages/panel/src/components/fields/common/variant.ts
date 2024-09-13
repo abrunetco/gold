@@ -1,5 +1,4 @@
 import { tv, VariantProps } from 'tailwind-variants';
-import { inputTV } from '../text/variant';
 
 export const labelTV = tv({
   base: 'text-sm text-gray-700 dark:text-white',

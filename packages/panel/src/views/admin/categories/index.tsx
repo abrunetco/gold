@@ -3,12 +3,9 @@ import CardMenu from "components/card/CardMenu";
 import Card from "components/card";
 
 import {
-  Column,
   ColumnFiltersState,
   createColumnHelper,
-  flexRender,
   getCoreRowModel,
-  getSortedRowModel,
   PaginationState,
   SortingState,
   useReactTable,
@@ -26,7 +23,7 @@ const columnHelper = createColumnHelper<Category>();
 
 const defaultData: Category[] = []
 
-function CategoriesGridTable(props: { tableData?: any[] }) {
+function CategoriesGridTable() {
   const rerender = React.useReducer(() => ({}), {})[1]
   const columns = useCategoryColumns(columnHelper);
   const [sorting, setSorting] = React.useState<SortingState>([]);

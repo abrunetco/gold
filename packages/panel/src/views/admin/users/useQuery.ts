@@ -13,8 +13,7 @@ export default function useUserQuery (s: SortingState, f: ColumnFiltersState) {
     return {
       $limit: 10,
       $skip: page * 10,
-      // @ts-ignore
-      $sort: sort,
+      $sort: sort as any,
       ...filter
     }
   }

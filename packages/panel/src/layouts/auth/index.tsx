@@ -1,7 +1,6 @@
 import Footer from "components/footer/FooterAuthDefault";
 import authImg from "assets/img/auth/auth-cover-2.jpg";
-import { Link, Routes, Route, Navigate } from "react-router-dom";
-import routes from "routes";
+import { Routes, Route, Navigate } from "react-router-dom";
 import FixedPlugin from "components/fixedPlugin/FixedPlugin";
 import SignIn from "views/auth/SignIn";
 

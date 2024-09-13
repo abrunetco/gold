@@ -1,6 +1,5 @@
 import { LabelHTMLAttributes, PropsWithChildren } from "react";
 import { labelTV, type LabelVariantProps } from "./variant";
-import { log } from "console";
 
 export type FieldLabelProps = LabelHTMLAttributes<HTMLLabelElement>
 

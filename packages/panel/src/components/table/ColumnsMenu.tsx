@@ -1,6 +1,4 @@
 import Card from "components/card";
-import OldCheckbox from "components/fields/checkbox/old";
-import { MdDragIndicator } from "react-icons/md";
 
 import Dropdown from "components/dropdown";
 import React from "react";

@@ -26,7 +26,7 @@ interface DebounceProps {
 
 export function DebouncedTextInput(props: InputProps & ExternalInputVariantProps & DebounceProps) {
   const { debounce = 500, onValueChange, ...field } = props;
-  const [value, setValue] = useDebounce(String(props.value ?? ''), onValueChange)
+  const [value, setValue] = useDebounce(String(props.value ?? ''), onValueChange, debounce)
   return (
     <TextInput {...field} value={value} onChange={(e) => setValue(e.target.value)}/>
   )
