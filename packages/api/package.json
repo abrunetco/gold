@@ -66,6 +66,7 @@
     "migrate-mongo": "^11.0.0",
     "mongodb": "^6.8.0",
     "uid": "^2.0.2",
+    "moment-jalaali": "^0.10.0",
     "winston": "^3.14.2"
   },
   "overrides": {

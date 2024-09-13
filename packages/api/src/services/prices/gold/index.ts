@@ -1,5 +1,5 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
-import { authenticate } from '@feathersjs/authentication'
+// import { authenticate } from '@feathersjs/authentication'
 
 import { hooks as schemaHooks } from '@feathersjs/schema'
 
@@ -35,7 +35,7 @@ export const goldPrice = (app: Application) => {
   app.service(goldPricePath).hooks({
     around: {
       all: [
-        authenticate('jwt'),
+        // authenticate('jwt'),
         // schemaHooks.resolveExternal(authManagementExternalResolver),
         schemaHooks.resolveExternal(goldPriceExternalResolver),
         schemaHooks.resolveResult(goldPriceResolver)
@@ -56,8 +56,8 @@ export const goldPrice = (app: Application) => {
       get: [],
       create: [
         schemaHooks.validateData(goldPriceDataValidator),
-        schemaHooks.resolveData(goldPriceDataResolver),
-        schemaHooks.resolveData(commonDataResolver)
+        schemaHooks.resolveData(commonDataResolver),
+        schemaHooks.resolveData(goldPriceDataResolver)
       ],
       patch: [
         schemaHooks.validateData(goldPricePatchValidator),

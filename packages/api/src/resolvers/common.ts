@@ -14,7 +14,7 @@ export const commonDataResolverWithoutUID = resolve<Common, HookContext>({
   }
 })
 export const commonDataResolver = resolve<Common, HookContext>({
-  uid: async (u) => u ?? uid(8),
+  uid: async (u) => u ?? uid(16),
   createdAt: async () => new Date().getTime(),
   createdBy: async (_value, _data, context) => {
     const [, params] = context.arguments
