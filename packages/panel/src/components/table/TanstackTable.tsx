@@ -60,13 +60,14 @@ export default function TanstackTable<T extends Common>({
                     key={header.id}
                     colSpan={header.colSpan}
                     onClick={header.column.getToggleSortingHandler()}
-                    className="flex flex-1 overflow-hidden border-b border-gray-200 pb-2 pe-4 pt-4 text-start"
+                    className="flex overflow-hidden border-b border-gray-200 pb-2 pe-4 pt-4 text-start"
                     style={{ width: header.getSize() }}
                   >
                     <ColHeadControl header={header} />
                   </th>
                 );
               })}
+              <th className="flex flex-1"></th>
             </tr>
           ))}
         </thead>
@@ -95,7 +96,7 @@ export default function TanstackTable<T extends Common>({
                   return (
                     <td
                       key={cell.id}
-                      className="flex flex-1 overflow-hidden border-white/0 py-3 pe-4"
+                      className="flex overflow-hidden border-white/0 py-3 pe-4"
                       style={{
                         width: cell.column.getSize(),
                       }}
@@ -107,6 +108,7 @@ export default function TanstackTable<T extends Common>({
                     </td>
                   );
                 })}
+                <td className="flex flex-1"></td>
               </tr>
             );
           })}

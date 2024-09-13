@@ -1,7 +1,8 @@
 import { PropsWithChildren, ReactNode, useId } from "react";
 import { CommonFieldset } from "../common/fieldset";
 import { BaseFieldVariants } from "../type";
-import { InputProps, TextInput, TextareaInput, TextareaProps } from "./input";
+import { InputProps, TextInput } from "./input";
+import { TextareaInput, TextareaProps } from "./input";
 
 export interface TextFieldProps extends InputProps, BaseFieldVariants {
   label?: ReactNode;

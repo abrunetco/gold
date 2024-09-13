@@ -1,74 +1,105 @@
-import React from "react";
-import CardMenu from "components/card/CardMenu";
 import Card from "components/card";
+import React from "react";
 
+import { Category, categoryPath } from "@gold/api";
 import {
   ColumnFiltersState,
-  createColumnHelper,
+  ColumnOrderState,
   getCoreRowModel,
-  PaginationState,
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { Category } from "@gold/api";
+import TanstackTable from "components/table/TanstackTable";
+import ColumnsMenu from "components/table/ColumnsMenu";
+import { MARKUP_MAP } from "variables/entities";
 import useCategoryColumns from "./useColumns";
 import useCategoryQuery from "./useQuery";
-import TanstackTable from "components/table/TanstackTable";
-import TsPagination from "components/table/Pagination";
-import { categoryPath } from "@gold/api";
-import { MARKUP_MAP } from "variables/entities";
-
-const columnHelper = createColumnHelper<Category>();
-
-const defaultData: Category[] = [];
+import Icon from "components/icons";
 
 function CategoriesGridTable() {
-  const rerender = React.useReducer(() => ({}), {})[1];
-  const columns = useCategoryColumns(columnHelper);
+  const columns = useCategoryColumns();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [filters, setFilters] = React.useState<ColumnFiltersState>([]);
-  const [pagination, setPagination] = React.useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10,
-  });
-  const query = useCategoryQuery(pagination, sorting, filters);
+  const [columnVisibility, setColumnVisibility] = React.useState({});
+  const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>([]);
+
+  const query = useCategoryQuery(sorting, filters);
+
+  const flatData = React.useMemo<Array<Category | undefined>>(
+    () => (query.data?.pages ?? []).flatMap((page) => page.data),
+    [query.data],
+  );
+
+  const fetchMoreOnEdgeReached = React.useCallback(
+    (containerRefElement?: HTMLDivElement | null) => {
+      const pages = query.data?.pages ?? [];
+      const pagesSize = pages.length ?? 0;
+      const total = pages[0]?.total ?? 0;
+      const limit = pages[0]?.limit ?? 10;
+      const firstPageSkip = pages[0]?.skip ?? 0;
+      const lastPageSkip = pages[pagesSize - 1]?.skip ?? 0;
+      const hasPrevious = firstPageSkip > 0;
+      const hasNext = lastPageSkip + limit < total;
+      if (containerRefElement) {
+        const { scrollHeight, scrollTop, clientHeight } = containerRefElement;
+        const scrollBottom = scrollHeight - scrollTop - clientHeight;
+        if (scrollBottom < 10) {
+          if (!query.isFetching && hasNext) query.fetchNextPage();
+        } else if (scrollTop < 10) {
+          if (!query.isFetching && hasPrevious) query.fetchPreviousPage();
+        }
+      }
+    },
+    [query],
+  );
+
   const table = useReactTable({
-    data: query.data?.data ?? defaultData,
+    data: flatData,
     columns,
     state: {
-      pagination,
       sorting,
+      columnVisibility,
+      columnOrder,
     },
-    rowCount: query.data?.data.length ?? 0,
+    defaultColumn: {
+      size: 200,
+    },
+    onColumnVisibilityChange: setColumnVisibility,
+    onColumnOrderChange: setColumnOrder,
+    rowCount: flatData.length,
     getCoreRowModel: getCoreRowModel(),
-    manualPagination: true,
-    onSortingChange: setSorting,
     manualSorting: true,
-    onPaginationChange: setPagination,
+    onSortingChange: setSorting,
+    // manualPagination: true,
+    // onPaginationChange: setPagination,
     manualFiltering: true,
     onColumnFiltersChange: setFilters,
     maxMultiSortColCount: 2,
     debugTable: true,
   });
+
   return (
-    <Card extra={"w-full pb-10 p-4 h-full"}>
-      <header className="relative flex items-center justify-between">
+    <Card extra="w-full pb-10 p-4 h-full">
+      <header className="relative mb-2 flex items-center justify-between">
         <div className="text-xl font-bold text-navy-700 dark:text-white">
           {MARKUP_MAP[categoryPath].polar}
         </div>
-        <CardMenu />
+        <div className="flex flex-row-reverse gap-2">
+          <ColumnsMenu table={table} />
+
+          <button
+            onClick={() => query.refetch()}
+            disabled={query.isLoading}
+            className={`linear flex items-center justify-center rounded-lg bg-lightPrimary p-2 text-xl font-bold text-brand-500 transition duration-200 hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
+          >
+            <span className={query.isLoading ? "animate-spin" : ""}>
+              <Icon name="Reload" />
+            </span>
+          </button>
+        </div>
       </header>
 
-      <div className="mt-4 overflow-x-scroll xl:overflow-x-hidden">
-        <TanstackTable table={table} />
-      </div>
-      <div className="h-2" />
-      <TsPagination
-        table={table}
-        loading={query.isLoading}
-        total={query.data?.total ?? 0}
-        refresh={() => rerender()}
-      />
+      <TanstackTable table={table} fetchMore={fetchMoreOnEdgeReached} />
     </Card>
   );
 }

@@ -5,7 +5,6 @@ import { User, userPath } from "@gold/api";
 import {
   ColumnFiltersState,
   ColumnOrderState,
-  createColumnHelper,
   getCoreRowModel,
   SortingState,
   useReactTable,
@@ -17,14 +16,10 @@ import useUserColumns from "./useColumns";
 import useUserQuery from "./useQuery";
 import Icon from "components/icons";
 
-const columnHelper = createColumnHelper<User>();
-
 function UsersGridTable() {
-  const rerender = React.useReducer(() => ({}), {})[1];
-  const columns = useUserColumns(columnHelper);
+  const columns = useUserColumns();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [filters, setFilters] = React.useState<ColumnFiltersState>([]);
-
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>([]);
 
@@ -93,10 +88,13 @@ function UsersGridTable() {
           <ColumnsMenu table={table} />
 
           <button
-            onClick={rerender}
+            onClick={() => query.refetch()}
+            disabled={query.isLoading}
             className={`linear flex items-center justify-center rounded-lg bg-lightPrimary p-2 text-xl font-bold text-brand-500 transition duration-200 hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
           >
-            <Icon name="Reload" />
+            <span className={query.isLoading ? "animate-spin" : ""}>
+              <Icon name="Reload" />
+            </span>
           </button>
         </div>
       </header>

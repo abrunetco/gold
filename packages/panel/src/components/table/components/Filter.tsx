@@ -1,7 +1,13 @@
 import { Header } from "@tanstack/react-table";
 import { RowData } from "@tanstack/react-table";
-import { DebouncedTextInput } from "components/fields";
+import {
+  DatepickerInput,
+  DebouncedTextInput,
+  SelectInput,
+} from "components/fields";
 import { useMongoRange, useMongoRegex } from "hooks/input";
+import { useEffect, useState } from "react";
+import { DateObject } from "react-multi-date-picker";
 
 declare module "@tanstack/react-table" {
   //allows us to define custom properties for our columns
@@ -17,39 +23,35 @@ interface FilterProps<T> {
 
 export default function Filter<T>({ header }: FilterProps<T>) {
   const column = header.column;
-  const columnFilterValue = column.getFilterValue();
   const { filterVariant, options } = column.columnDef.meta ?? {};
 
   return filterVariant === "number" ? (
-    <div className="flex space-x-2">
-      <RangeFilter type="number" header={header} />
+    <div className="flex flex-col">
+      <RangeFilter header={header} />
     </div>
   ) : filterVariant === "date" ? (
-    <div className="flex space-x-2">
-      <RangeFilter type="date" header={header} />
-    </div>
+    <DateRangeFilter header={header} />
   ) : filterVariant === "select" && options ? (
-    <EnumFilter header={header} />
+    <SelectFilter header={header} />
   ) : filterVariant === "select" ? (
-    <select
-      onChange={(e) => column.setFilterValue(e.target.value)}
-      value={columnFilterValue?.toString()}
-    >
-      {/* See faceted column filters example for dynamic select options */}
-      <option value="">All</option>
-      <option value="complicated">complicated</option>
-      <option value="relationship">relationship</option>
-      <option value="single">single</option>
-    </select>
+    <div>
+      {/* <select
+        onChange={(e) => column.setFilterValue(e.target.value)}
+        value={columnFilterValue?.toString()}
+      >
+        <option value="">All</option>
+        <option value="complicated">complicated</option>
+        <option value="relationship">relationship</option>
+        <option value="single">single</option>
+      </select> */}
+      <div>ssss</div>
+    </div>
   ) : (
     <TextFilter header={header} />
   );
 }
 
-function RangeFilter<T>({
-  header,
-  type,
-}: FilterProps<T> & { type: "number" | "date" }) {
+function RangeFilter<T>({ header }: FilterProps<T>) {
   const columnFilterValue = header.column.getFilterValue();
   const { lte, setLte, gte, setGte } = useMongoRange(
     columnFilterValue as any,
@@ -60,7 +62,7 @@ function RangeFilter<T>({
       <DebouncedTextInput
         className="w-full rounded border shadow"
         placeholder={`فیلتر...`}
-        type={type}
+        type="number"
         size="sm"
         value={lte}
         onValueChange={(v) => {
@@ -73,7 +75,7 @@ function RangeFilter<T>({
       <DebouncedTextInput
         className="w-full rounded border shadow"
         placeholder={`فیلتر...`}
-        type={type}
+        type="number"
         size="sm"
         value={gte}
         onValueChange={(v) => {
@@ -84,6 +86,30 @@ function RangeFilter<T>({
         onClick={(e) => e.stopPropagation()}
       />
     </>
+  );
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function DateRangeFilter<T>({ header }: FilterProps<T>) {
+  // const columnFilterValue = header.column.getFilterValue();
+
+  const [values, setValues] = useState<
+    [DateObject | undefined, DateObject | undefined] | undefined
+  >([undefined, undefined]);
+
+  useEffect(() => {
+    console.log("DateRangeFilter", values);
+  }, [values]);
+  return (
+    <DatepickerInput
+      className="w-full rounded border shadow"
+      placeholder={`فیلتر...`}
+      size="sm"
+      range
+      value={values}
+      onChange={setValues as any}
+      onClick={(e) => e.stopPropagation()}
+    />
   );
 }
 
@@ -106,22 +132,18 @@ function TextFilter<T>({ header }: FilterProps<T>) {
   );
 }
 
-function EnumFilter<T>({ header }: FilterProps<T>) {
+function SelectFilter<T>({ header }: FilterProps<T>) {
   const column = header.column;
   const columnFilterValue = column.getFilterValue();
   const { options: _options = {} } = column.columnDef.meta ?? {};
   const options = Object.entries(_options).filter(([k]) => k !== "default");
   return (
-    <select
+    <SelectInput
+      className="w-full rounded border shadow"
+      size="sm"
       onChange={(e) => column.setFilterValue(e.target.value)}
       value={columnFilterValue?.toString()}
-    >
-      <option value="">همه</option>
-      {options.map(([value, label]) => (
-        <option key={value} value={value}>
-          {label}
-        </option>
-      ))}
-    </select>
+      options={[["", "همه"], ...options]}
+    />
   );
 }

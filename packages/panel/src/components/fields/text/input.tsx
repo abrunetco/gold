@@ -1,6 +1,6 @@
+import { useDebounce } from "hooks/input";
 import { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
 import { inputTV, InputVariantProps } from "./variant";
-import { useDebounce } from "hooks/input";
 
 type ExternalInputVariantProps = Omit<InputVariantProps, "">;
 

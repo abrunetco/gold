@@ -1,7 +1,7 @@
 import { tv, VariantProps } from "tailwind-variants";
 
-export const inputTV = tv({
-  base: "mt-2 w-full items-center justify-center rounded-xl border bg-white/0 outline-none",
+export const selectTV = tv({
+  base: "mt-2 flex w-full items-center justify-center rounded-xl border bg-white/0 outline-none",
   variants: {
     variant: {
       th: "",
@@ -50,4 +50,4 @@ export const inputTV = tv({
   },
 });
 
-export type InputVariantProps = VariantProps<typeof inputTV>;
+export type SelectVariantProps = VariantProps<typeof selectTV>;

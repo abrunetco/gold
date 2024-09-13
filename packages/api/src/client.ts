@@ -92,3 +92,4 @@ export type EntityName =
   | typeof userPath
 
 export type { Common } from './shared/common'
+export type { Paginated } from '@feathersjs/feathers'

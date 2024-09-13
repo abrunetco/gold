@@ -1,18 +1,22 @@
 import { User } from "@gold/api";
 import { Genderypes } from "@gold/api/lib/shared/fragments/gender-types";
-import { ColumnHelper } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import ColCell from "components/table/ColCell";
 import ColHead from "components/table/ColHead";
 
-export default function useUserColumns(columnHelper: ColumnHelper<User>) {
+const columnHelper = createColumnHelper<User>();
+
+export default function useUserColumns() {
   return [
     columnHelper.accessor("firstName", {
       id: "firstName",
+      size: 150,
       header: (context) => <ColHead context={context} title="نام" />,
       cell: (context) => <ColCell context={context} accessor="firstName" />,
     }),
     columnHelper.accessor("lastName", {
       id: "lastName",
+      size: 150,
       // enableSorting: false,
       // enableColumnFilter: false,
       header: (context) => <ColHead context={context} title="فامیل" />,
@@ -26,6 +30,7 @@ export default function useUserColumns(columnHelper: ColumnHelper<User>) {
     }),
     columnHelper.accessor("gender", {
       id: "gender",
+      size: 70,
       header: (context) => <ColHead context={context} title="جنسیت" />,
       cell: (context) => <ColCell context={context} accessor="gender" />,
       meta: {
@@ -38,6 +43,7 @@ export default function useUserColumns(columnHelper: ColumnHelper<User>) {
     }),
     columnHelper.accessor("isVerified", {
       id: "isVerified",
+      size: 100,
       header: (context) => <ColHead context={context} title="تایید شده" />,
       cell: (context) => <ColCell context={context} accessor="isVerified" />,
       meta: {

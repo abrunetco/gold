@@ -6,6 +6,7 @@ export interface IconProps {
   size?: number;
   color?: string;
   bg?: string;
+  className?: string;
 }
 
 export type StrictIconProps = Required<IconProps>;

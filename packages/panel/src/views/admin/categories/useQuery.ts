@@ -1,15 +1,9 @@
-import { CategoryQuery } from "@gold/api";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import {
-  ColumnFiltersState,
-  PaginationState,
-  SortingState,
-} from "@tanstack/react-table";
+import { categoryPath, CategoryQuery } from "@gold/api";
+import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
+import { ColumnFiltersState, SortingState } from "@tanstack/react-table";
 import client from "api/client";
-import { categoryPath } from "@gold/api";
 
 export default function useCategoryQuery(
-  p: PaginationState,
   s: SortingState,
   f: ColumnFiltersState,
 ) {
@@ -21,15 +15,29 @@ export default function useCategoryQuery(
   f.forEach(({ id, value }) => {
     filter[id] = value;
   });
-  const query: CategoryQuery = {
-    $limit: p.pageSize,
-    $skip: p.pageIndex * p.pageSize,
-    $sort: sort,
-    ...filter,
-  };
-  return useQuery({
-    queryKey: ["data", p, s],
-    queryFn: () => client.service(categoryPath).find({ query }),
-    placeholderData: keepPreviousData, // don't have 0 rows flash while changing pages/loading next page
+
+  function query(page: number): CategoryQuery {
+    return {
+      $limit: 10,
+      $skip: page * 10,
+      $sort: sort as any,
+      ...filter,
+    };
+  }
+  return useInfiniteQuery({
+    queryKey: ["categories", s, f],
+    queryFn: ({ pageParam }) =>
+      client.service(categoryPath).find({
+        query: query(pageParam),
+        mongodb: {
+          collation: { locale: "fa" },
+        },
+      }),
+    placeholderData: keepPreviousData,
+    initialPageParam: 0,
+    maxPages: 100,
+    getPreviousPageParam: ({ skip, limit }) => ~~(skip / limit) - 1,
+    getNextPageParam: ({ skip, limit }) => ~~(skip / limit) + 1,
+    refetchOnWindowFocus: false,
   });
 }
