@@ -16,7 +16,7 @@ export function SelectInput(
   const cls = selectTV({ disabled: disabled, severity, size, className });
 
   return (
-    <select className={cls}>
+    <select className={cls} {...field}>
       {options.map(([value, label]) => (
         <option key={value} value={value}>
           {label}

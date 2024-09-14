@@ -1,16 +1,13 @@
+import { ApexOptions } from "apexcharts";
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 type ChartProps = {
-  // using `interface` is also ok
-  [x: string]: any;
-};
-type ChartState = {
-  chartData: any[];
-  chartOptions: any;
+  chartData: ApexOptions["series"];
+  chartOptions: ApexOptions;
 };
 
-class LineChart extends React.Component<ChartProps, ChartState> {
+class LineChart extends React.Component<ChartProps, ChartProps> {
   constructor(props: { chartData: any[]; chartOptions: any }) {
     super(props);
 

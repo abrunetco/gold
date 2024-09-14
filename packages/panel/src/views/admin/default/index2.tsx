@@ -1,4 +1,5 @@
 import MiniCalendar from "components/calendar/MiniCalendar";
+import WeeklyRevenue from "views/admin/default/components/WeeklyRevenue";
 import PieChartCard from "views/admin/default/components/PieChartCard";
 import { IoMdHome } from "react-icons/io";
 import { IoDocuments } from "react-icons/io5";
@@ -9,10 +10,9 @@ import CheckTable from "views/admin/default/components/CheckTable";
 import ComplexTable from "views/admin/default/components/ComplexTable";
 import DailyTraffic from "views/admin/default/components/DailyTraffic";
 import TaskCard from "views/admin/default/components/TaskCard";
+import TotalSpent from "views/admin/default/components/TotalSpent";
 import tableDataCheck from "./variables/tableDataCheck";
 import tableDataComplex from "./variables/tableDataComplex";
-import GoldPriceCandles from "./live-gold-price";
-import LivePriceSettings from "./live-price-settings";
 
 const Dashboard = () => {
   return (
@@ -55,8 +55,8 @@ const Dashboard = () => {
       {/* Charts */}
 
       <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
-        <GoldPriceCandles />
-        <LivePriceSettings />
+        <TotalSpent />
+        <WeeklyRevenue />
       </div>
 
       {/* Tables & Charts */}

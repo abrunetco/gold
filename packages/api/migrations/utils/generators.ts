@@ -50,14 +50,14 @@ export function addDemoPrices(ctxt: DataContext, count = 100): DataContext {
       v: value,
       jDate: {
         y: mj.jYear().toString(),
-        m: mj.jMonth().toString(),
+        m: (mj.jMonth() + 1).toString(),
         w: mj.jWeek().toString(),
         d: mj.jDate().toString(),
         hh: mj.hour().toString(),
         mm: mj.minute().toString()
       }
     })
-    value += ~~((Math.random() - 0.45) * 100000)
+    value += ~~((Math.random() - 0.5 + Math.sin(mj.jDate()) / 10 + Math.sin(mj.weekday()) / 10) * 10000)
     date += 3600000
   }
   return ctxt

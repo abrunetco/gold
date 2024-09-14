@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-type FormData2 = {
+type FormData = {
   strategy: "local";
   email: string;
   password: string;
@@ -12,7 +12,7 @@ type FormData2 = {
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const { handleSubmit, control } = useForm<FormData2>({
+  const { handleSubmit, control } = useForm<FormData>({
     defaultValues: { strategy: "local" },
   });
   const onSubmit = useCallback(

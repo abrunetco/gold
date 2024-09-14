@@ -15,7 +15,7 @@ export const up = async (db: Db) => {
   /** goldPrice */
   await db.createCollection(goldPricePath, { capped: true, size: 10485760, max: 10000 })
   await db.collection(goldPricePath).createIndex({ uid: 1 }, { unique: true })
-  await db.collection(goldPricePath).createIndex({ createdAt: 1 }, { unique: true })
+  await db.collection(goldPricePath).createIndex({ createdAt: 1 })
 }
 
 export const down = async (db: Db) => {

@@ -65,7 +65,7 @@ export default function Admin(props: { [x: string]: any }) {
           className={`mx-[12px] h-full flex-none transition-all md:pe-2 xl:ms-[313px]`}
         >
           {/* Routes */}
-          <div className="h-[100vh] overflow-y-hidden">
+          <div className="min-h-[100vh] overflow-y-hidden">
             <Navbar
               onOpenSidenav={() => setOpen((o) => !o)}
               brandText={currentRoute}

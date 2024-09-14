@@ -2,6 +2,7 @@ import React from "react";
 
 // Admin Imports
 import MainDashboard from "views/admin/default";
+import MainDashboard2 from "views/admin/default/index2";
 import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
 // import RTLDefault from "views/rtl/default";
@@ -25,6 +26,13 @@ const routes = [
     path: "default",
     icon: <MdHome className="h-6 w-6" />,
     component: <MainDashboard />,
+  },
+  {
+    name: "پیشخوان۲",
+    layout: "/admin",
+    path: "default2",
+    icon: <MdHome className="h-6 w-6" />,
+    component: <MainDashboard2 />,
   },
   {
     name: "فروشگاه",

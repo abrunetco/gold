@@ -13,6 +13,7 @@ import moment from 'moment-jalaali'
 const Formatter = Intl.NumberFormat('fa-IR', {
   currency: 'IRR',
   style: 'currency',
+  maximumFractionDigits: 0,
   roundingIncrement: 5000
 })
 

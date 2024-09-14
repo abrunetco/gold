@@ -13,7 +13,7 @@ const CandleTypeMap = {
   [CandleTypes.w]: makeConcatArray('m', 'w'),
   [CandleTypes.d]: makeConcatArray('m', 'd'),
   [CandleTypes.hh]: makeConcatArray('m', 'd', 'hh'),
-  [CandleTypes.mm]: makeConcatArray('m', 'w', 'hh', 'mm')
+  [CandleTypes.mm]: makeConcatArray('m', 'd', 'hh', 'mm')
 } as const
 
 export function getCandlePipeline(candle: CandleTypes = CandleTypes.m): Document[] {
@@ -22,7 +22,8 @@ export function getCandlePipeline(candle: CandleTypes = CandleTypes.m): Document
       $project: {
         candle: { $concat: CandleTypeMap[candle] },
         v: 1,
-        createdAt: 1
+        createdAt: 1,
+        jDate: 1
       }
     },
     { $sort: { createdAt: 1 } },
@@ -31,9 +32,8 @@ export function getCandlePipeline(candle: CandleTypes = CandleTypes.m): Document
         _id: '$candle',
         createdAt: { $first: '$createdAt' },
         s: { $sum: 1 },
-        o: { $first: '$v' },
-        c: { $last: '$v' },
-        v: { $last: '$v' },
+        c: { $first: '$v' },
+        o: { $last: '$v' },
         h: { $max: '$v' },
         l: { $min: '$v' }
       }
@@ -42,6 +42,7 @@ export function getCandlePipeline(candle: CandleTypes = CandleTypes.m): Document
       $set: {
         createdAt: { $toDate: '$createdAt' },
         uid: '$_id',
+        v: '$c',
         candle: {
           o: '$o',
           c: '$c',
