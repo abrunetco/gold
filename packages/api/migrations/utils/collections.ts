@@ -2,12 +2,22 @@ import assert from 'assert'
 import { Db } from 'mongodb'
 import { uid } from 'uid'
 import { Common } from '../../src/shared/common'
-import { Category, categoryPath, GoldPrice, goldPricePath, User, userPath } from '../../src/client'
+import {
+  Category,
+  categoryPath,
+  Config,
+  configPath,
+  GoldPrice,
+  goldPricePath,
+  User,
+  userPath
+} from '../../src/client'
 
 export const generatorUID = 'e139584c'
 
 export default function getColections(db: Db) {
   return {
+    configs: db.collection<Config>(configPath),
     users: db.collection<User>(userPath),
     categories: db.collection<Category>(categoryPath),
     goldPrices: db.collection<GoldPrice>(goldPricePath)

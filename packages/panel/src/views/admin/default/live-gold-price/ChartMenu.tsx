@@ -36,7 +36,7 @@ export function CandleTypesMenu(props: CandleTypesMenuProps) {
       animation={"origin-top-right transition-all duration-300 ease-in-out"}
       classNames={`top-11 end-0 w-max`}
       children={
-        <div className="z-50 w-max rounded-xl bg-white px-4 py-3 text-sm shadow-xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <div className="z-50 w-max rounded-xl bg-white px-4 py-3 text-sm shadow-xl shadow-shadow dark:!bg-navy-700 dark:shadow-none">
           {options.map(([v, l]) => (
             <p
               key={v}

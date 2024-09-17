@@ -1,24 +1,6 @@
 import { Updater } from "@tanstack/react-table";
 import { useState, useEffect } from "react";
 
-export function useDebounce<T>(i: T, cb: (value: T) => void, t = 500) {
-  const [value, setValue] = useState(i);
-
-  useEffect(() => {
-    setValue(i);
-  }, [i]);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      cb(value);
-    }, t);
-
-    return () => clearTimeout(timeout);
-  }, [value]);
-
-  return [value, setValue] as const;
-}
-
 interface IMongoRegex {
   $regex: string;
   $options: string;
@@ -74,5 +56,5 @@ export function useMongoRange(
     });
   }, [lte, gte]);
 
-  return { lte, setLte, gte, setGte };
+  return [[gte, lte], { setLte, setGte }] as const;
 }

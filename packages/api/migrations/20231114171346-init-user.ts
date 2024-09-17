@@ -3,11 +3,12 @@ import { Db } from 'mongodb'
 import getColections, { commons, generatorUID, userCommons } from './utils/collections'
 import { User, userPath } from '../src/services/users/shared'
 import { Genderypes } from '../src/shared/fragments/gender-types'
+import { Config, configPath } from '../src/client'
 
 const EMAIL = 'ali.double.plus@gmail.com'
 
 export const up = async (db: Db) => {
-  const { users } = getColections(db)
+  const { users, configs } = getColections(db)
 
   const userData: User = {
     ...commons(),
@@ -23,6 +24,22 @@ export const up = async (db: Db) => {
     ...userCommons
   }
 
+  const configData: Config = {
+    ...commons(),
+    uid: configPath,
+    __typename: configPath,
+    siteSeoConfig: {
+      title: 'صرافی جروقی',
+      description: 'فروش آنلاین طلا'
+    },
+    goldPriceConfig: {
+      mode: 'channel',
+      fixed: { value: 100000 },
+      percent: { value: 0 }
+    }
+  }
+
+  await configs.insertOne(configData)
   await users.insertOne(userData)
 }
 

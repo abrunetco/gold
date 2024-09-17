@@ -1,41 +1,25 @@
-import { ButtonHTMLAttributes, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { tv, VariantProps } from "tailwind-variants";
+// eslint-disable-next-line @typescript-eslint/no-restricted-imports
+import { ButtonProps, Button as FlowButton } from "flowbite-react";
 
 const button = tv({
-  base: "flex items-center justify-center rounded-xl px-4 py-2 text-base font-medium transition duration-200",
-  variants: {
-    variant: {
-      primary:
-        "bg-brand-500 text-white hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200",
-    },
-    size: {},
-    icon: {
-      true: "",
-    },
-    disabled: {
-      true: "",
-    },
-  },
+  base: ``,
+  variants: {},
   compoundVariants: [],
-  defaultVariants: {
-    variant: "primary",
-  },
+  defaultVariants: {},
 });
 
 type ButtonVariantProps = VariantProps<typeof button>;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
-
-export default function Button(
+export function Button(
   props: PropsWithChildren<ButtonProps & ButtonVariantProps>,
 ) {
-  const { variant, size, icon, className, ...restProps } = props;
-  const { disabled } = restProps;
-  const cls = button({ variant, size, icon, disabled, className });
+  const { className, ...restProps } = props;
+  const cls = button({ className });
   return (
-    <button className={cls} {...restProps}>
+    <FlowButton className={cls} {...restProps}>
       {props.children}
-    </button>
+    </FlowButton>
   );
 }

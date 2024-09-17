@@ -1,13 +1,10 @@
 import { Header } from "@tanstack/react-table";
 import { RowData } from "@tanstack/react-table";
-import {
-  DatepickerInput,
-  DebouncedTextInput,
-  SelectInput,
-} from "components/fields";
+import { DatepickerInput, SelectInput, TextInput } from "components/fields";
 import { useMongoRange, useMongoRegex } from "hooks/input";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { DateObject } from "react-multi-date-picker";
+import { debounce } from "utils/debounce";
 
 declare module "@tanstack/react-table" {
   //allows us to define custom properties for our columns
@@ -23,7 +20,7 @@ interface FilterProps<T> {
 
 export default function Filter<T>({ header }: FilterProps<T>) {
   const column = header.column;
-  const { filterVariant, options } = column.columnDef.meta ?? {};
+  const { filterVariant } = column.columnDef.meta ?? {};
 
   return filterVariant === "number" ? (
     <div className="flex flex-col">
@@ -31,21 +28,8 @@ export default function Filter<T>({ header }: FilterProps<T>) {
     </div>
   ) : filterVariant === "date" ? (
     <DateRangeFilter header={header} />
-  ) : filterVariant === "select" && options ? (
-    <SelectFilter header={header} />
   ) : filterVariant === "select" ? (
-    <div>
-      {/* <select
-        onChange={(e) => column.setFilterValue(e.target.value)}
-        value={columnFilterValue?.toString()}
-      >
-        <option value="">All</option>
-        <option value="complicated">complicated</option>
-        <option value="relationship">relationship</option>
-        <option value="single">single</option>
-      </select> */}
-      <div>ssss</div>
-    </div>
+    <SelectFilter header={header} />
   ) : (
     <TextFilter header={header} />
   );
@@ -53,36 +37,38 @@ export default function Filter<T>({ header }: FilterProps<T>) {
 
 function RangeFilter<T>({ header }: FilterProps<T>) {
   const columnFilterValue = header.column.getFilterValue();
-  const { lte, setLte, gte, setGte } = useMongoRange(
-    columnFilterValue as any,
+  const [[gte, lte], { setLte, setGte }] = useMongoRange(
+    columnFilterValue,
     header.column.setFilterValue,
+  );
+  const onChangeGte = useCallback(
+    debounce((e: ChangeEvent<HTMLInputElement>) => {
+      setGte(+new Date(e.target.value));
+    }),
+    [setGte],
+  );
+  const onChangeLte = useCallback(
+    debounce((e: ChangeEvent<HTMLInputElement>) => {
+      setLte(+new Date(e.target.value));
+    }),
+    [setLte],
   );
   return (
     <>
-      <DebouncedTextInput
-        className="w-full rounded border shadow"
+      <TextInput
         placeholder={`فیلتر...`}
         type="number"
-        size="sm"
-        value={lte}
-        onValueChange={(v) => {
-          console.log("on lte change", v, +new Date(v));
-
-          setLte(+new Date(v));
-        }}
+        sizing="sm"
+        value={gte}
+        onChange={onChangeGte}
         onClick={(e) => e.stopPropagation()}
       />
-      <DebouncedTextInput
-        className="w-full rounded border shadow"
+      <TextInput
         placeholder={`فیلتر...`}
         type="number"
-        size="sm"
-        value={gte}
-        onValueChange={(v) => {
-          console.log("on gte change", v, +new Date(v));
-
-          setGte(+new Date(v));
-        }}
+        sizing="sm"
+        value={lte}
+        onChange={onChangeLte}
         onClick={(e) => e.stopPropagation()}
       />
     </>
@@ -102,9 +88,8 @@ function DateRangeFilter<T>({ header }: FilterProps<T>) {
   }, [values]);
   return (
     <DatepickerInput
-      className="w-full rounded border shadow"
       placeholder={`فیلتر...`}
-      size="sm"
+      sizing="sm"
       range
       value={values}
       onChange={setValues as any}
@@ -119,14 +104,19 @@ function TextFilter<T>({ header }: FilterProps<T>) {
     columnFilterValue as any,
     header.column.setFilterValue,
   );
+  const onChange = useCallback(
+    debounce((e: ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value);
+    }),
+    [setValue],
+  );
   return (
-    <DebouncedTextInput
-      className="w-full rounded border shadow"
+    <TextInput
       placeholder={`فیلتر...`}
       type="text"
-      size="sm"
+      sizing="sm"
       value={value}
-      onValueChange={(v) => setValue(String(v))}
+      onChange={onChange}
       onClick={(e) => e.stopPropagation()}
     />
   );
@@ -135,15 +125,17 @@ function TextFilter<T>({ header }: FilterProps<T>) {
 function SelectFilter<T>({ header }: FilterProps<T>) {
   const column = header.column;
   const columnFilterValue = column.getFilterValue();
-  const { options: _options = {} } = column.columnDef.meta ?? {};
-  const options = Object.entries(_options).filter(([k]) => k !== "default");
+  const { options } = column.columnDef.meta ?? {};
+  const _options = {
+    "": "همه",
+    ...options,
+  };
   return (
     <SelectInput
-      className="w-full rounded border shadow"
-      size="sm"
+      sizing="sm"
       onChange={(e) => column.setFilterValue(e.target.value)}
       value={columnFilterValue?.toString()}
-      options={[["", "همه"], ...options]}
+      options={_options}
     />
   );
 }

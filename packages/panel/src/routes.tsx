@@ -1,5 +1,3 @@
-import React from "react";
-
 // Admin Imports
 import MainDashboard from "views/admin/default";
 import MainDashboard2 from "views/admin/default/index2";
@@ -11,13 +9,13 @@ import Profile from "views/admin/profile";
 
 // Icon Imports
 import {
+  MdBarChart,
   MdHome,
   MdOutlineShoppingCart,
-  MdBarChart,
   MdPerson,
 } from "react-icons/md";
-import UsersGridTable from "views/admin/users";
 import CategoriesGridTable from "views/admin/categories";
+import UsersGridTable from "views/admin/users";
 
 const routes = [
   {

@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import BrandLoading from "components/progress/BrandLoading";
 import AuthProvider from "providers/auth";
+import TestView from "views/Test";
 
 const AdminLayout = lazy(() => import("./layouts/admin"));
 const AuthLayout = lazy(() => import("./layouts/auth"));
@@ -32,6 +33,7 @@ function AuthRoute() {
 const App = () => {
   return (
     <Routes>
+      <Route path="test" Component={TestView} />
       <Route path="admin/*" Component={AdminRoute} />
       <Route path="auth/*" Component={AuthRoute} />
       <Route path="/" element={<Navigate to="/auth" replace />} />

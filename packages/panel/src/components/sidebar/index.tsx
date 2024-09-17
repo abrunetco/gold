@@ -23,7 +23,7 @@ const Sidebar = (props: {
       </span>
 
       <div className={`mx-[56px] mt-[50px] flex items-center`}>
-        <div className="-font-poppins ms-1 mt-1 h-2.5 text-[26px] font-bold uppercase text-navy-700 dark:text-white">
+        <div className="ms-1 mt-1 h-2.5 text-[26px] font-bold uppercase text-navy-700 dark:text-white">
           سیستم صرافی افق
         </div>
       </div>

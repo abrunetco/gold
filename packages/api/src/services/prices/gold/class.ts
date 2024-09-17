@@ -55,6 +55,7 @@ export class GoldPriceService<ServiceParams extends Params = GoldPriceParams> ex
 
 export const getOptions = (app: Application): MongoDBAdapterOptions => {
   return {
+    id: 'uid',
     paginate: app.get('paginate'),
     Model: app.get('mongodbClient').then((db) => db.collection(goldPricePath))
   }

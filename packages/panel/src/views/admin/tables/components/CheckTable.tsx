@@ -1,6 +1,6 @@
 import React from "react";
 import CardMenu from "components/card/CardMenu";
-import OldCheckbox from "components/fields/checkbox/old";
+import OldCheckbox from "components/fields/checkbox_old/old";
 import Card from "components/card";
 
 import {

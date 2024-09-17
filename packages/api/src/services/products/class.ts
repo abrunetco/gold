@@ -22,6 +22,7 @@ export class ProductService<ServiceParams extends Params = ProductParams> extend
 
 export const getOptions = (app: Application): MongoDBAdapterOptions => {
   return {
+    id: 'uid',
     paginate: app.get('paginate'),
     Model: app.get('mongodbClient').then((db) => db.collection('products'))
   }

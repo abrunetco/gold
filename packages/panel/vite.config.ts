@@ -17,6 +17,7 @@ export default defineConfig({
       variables: path.resolve(__dirname, "./src/variables"),
       providers: path.resolve(__dirname, "./src/providers"),
       hooks: path.resolve(__dirname, "./src/hooks"),
+      utils: path.resolve(__dirname, "./src/utils"),
     },
   },
 });

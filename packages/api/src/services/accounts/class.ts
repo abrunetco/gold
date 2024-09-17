@@ -22,6 +22,7 @@ export class AccountService<ServiceParams extends Params = AccountParams> extend
 
 export const getOptions = (app: Application): MongoDBAdapterOptions => {
   return {
+    id: 'uid',
     paginate: app.get('paginate'),
     Model: app.get('mongodbClient').then((db) => db.collection('accounts'))
   }

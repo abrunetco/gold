@@ -1,6 +1,6 @@
 import Card from "components/card";
 import CardMenu from "components/card/CardMenu";
-import OldSwitch from "components/fields/checkbox/switch.old";
+import OldSwitch from "components/fields/checkbox_old/switch.old";
 
 function Notification() {
   return (

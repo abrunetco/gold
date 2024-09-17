@@ -26,7 +26,7 @@ function CardMenu(props: { transparent?: boolean }) {
       animation={"origin-top-right transition-all duration-300 ease-in-out"}
       classNames={`${transparent ? "top-8" : "top-11"} end-0 w-max`}
       children={
-        <div className="z-50 w-max rounded-xl bg-white px-4 py-3 text-sm shadow-xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <div className="z-50 w-max rounded-xl bg-white px-4 py-3 text-sm shadow-xl shadow-shadow dark:!bg-navy-700 dark:shadow-none">
           <p className="hover:text-black flex cursor-pointer items-center gap-2 text-gray-600 hover:font-medium">
             <span>
               <AiOutlineUser />

@@ -8,16 +8,16 @@ import eslintConfigPrettier from "eslint-config-prettier";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 
 export default tseslint.config(
-  { ignores: ["dist"] },
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
   {
+    ignores: ["dist", "lib", "node_modules"],
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
     },
   },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
   {
     plugins: {
       "react-hooks": reactHooks,
@@ -32,6 +32,19 @@ export default tseslint.config(
       ],
       "@typescript-eslint/no-explicit-any": "warn",
       "unused-imports/no-unused-imports": "error",
+      "no-restricted-imports": "off",
+      "@typescript-eslint/no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "flowbite-react",
+              message: "Please import from components/ui instead.",
+              allowTypeImports: true,
+            },
+          ],
+        },
+      ],
     },
   },
   eslintConfigPrettier,

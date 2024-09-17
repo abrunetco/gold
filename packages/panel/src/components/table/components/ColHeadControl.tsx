@@ -1,6 +1,6 @@
 import { flexRender, Header } from "@tanstack/react-table";
 import Filter from "./Filter";
-import { CommonFieldset } from "components/fields";
+import { Fieldset } from "components/fields";
 import Icon from "components/icons";
 
 interface ColHeadControlProps<T> {
@@ -32,13 +32,13 @@ export default function ColHeadControl<T>({ header }: ColHeadControlProps<T>) {
   );
   return (
     <div className="flex flex-1 flex-col">
-      <CommonFieldset
+      <Fieldset
         label={label}
         htmlFor={header.id}
-        variant={isSorted ? "th" : undefined}
+        // variant={isSorted ? "th" : undefined}
       >
         {header.column.getCanFilter() ? <Filter header={header} /> : null}
-      </CommonFieldset>
+      </Fieldset>
     </div>
   );
 }

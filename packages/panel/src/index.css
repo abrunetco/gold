@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+pre {
+  direction: ltr!important;
+  text-align: left!important;
+}
+
 input.defaultCheckbox::before {
   content: url(../src/assets/svg/checked.svg);
   color: white;

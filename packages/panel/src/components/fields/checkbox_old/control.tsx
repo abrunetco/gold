@@ -5,7 +5,6 @@ import {
   FieldValues,
   UseFormStateReturn,
 } from "react-hook-form";
-import { FieldMeta } from "../common/meta";
 import { CheckboxField, CheckboxFieldProps } from "./field";
 import { ReactNode } from "react";
 
@@ -28,7 +27,7 @@ export function CheckboxFieldControl<
 >(props: CheckboxFieldControlProps<T, N>) {
   const { renderProps, ...rest } = props;
   const { fieldState, field } = renderProps;
-  const { invalid, isDirty, isTouched, error } = fieldState;
+  const { invalid, isDirty, isTouched } = fieldState;
   const severity = invalid
     ? "error"
     : isDirty && isTouched
@@ -36,8 +35,6 @@ export function CheckboxFieldControl<
       : "default";
 
   return (
-    <CheckboxField {...rest} {...field} severity={severity}>
-      <FieldMeta {...error} />
-    </CheckboxField>
+    <CheckboxField {...rest} {...field} severity={severity}></CheckboxField>
   );
 }

@@ -39,6 +39,16 @@ import { userPath } from './services/users/shared'
 import { userClient } from './services/users/shared'
 export type { User, UserData, UserQuery, UserPatch } from './services/users/shared'
 
+export { configPath } from './services/configs/shared'
+import { configPath } from './services/configs/shared'
+import { configClient } from './services/configs/shared'
+export type { Config, ConfigData, ConfigQuery, ConfigPatch } from './services/configs/shared'
+
+export { settingPath } from './services/settings/shared'
+import { settingPath } from './services/settings/shared'
+import { settingClient } from './services/settings/shared'
+export type { Setting, SettingData, SettingQuery, SettingPatch } from './services/settings/shared'
+
 export interface Configuration {
   connection: TransportConnection<ServiceTypes>
 }
@@ -76,6 +86,8 @@ export const createClient = (
   client.configure(goldPriceClient)
   client.configure(productClient)
   client.configure(userClient)
+  client.configure(configClient)
+  client.configure(settingClient)
   return client
 }
 
@@ -90,6 +102,8 @@ export type EntityName =
   | typeof goldPricePath
   | typeof productPath
   | typeof userPath
+  | typeof configPath
+  | typeof settingPath
 
 export type { Common } from './shared/common'
 export type { Paginated } from '@feathersjs/feathers'
