@@ -7,6 +7,6 @@ export const TextareaInput = forwardRef(
   (props: TextareaProps & InputVariantProps, ref: ForwardedRef<any>) => {
     const { className, ...field } = props;
     const cls = inputTV({ className });
-    return <FlowTextarea {...field} className={cls} ref={ref} />;
+    return <FlowTextarea {...field} className={cls} ref={ref} rows={5} />;
   },
 );

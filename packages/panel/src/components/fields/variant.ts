@@ -51,6 +51,15 @@ export const selectTV = tv({
 
 export type SelectVariantProps = VariantProps<typeof selectTV>;
 
+export const btnGroupTV = tv({
+  base: `flex flex-row-reverse justify-end`,
+  variants: {},
+  compoundVariants: [],
+  defaultVariants: {},
+});
+
+export type BtnGroupVariantProps = VariantProps<typeof btnGroupTV>;
+
 export const checkboxTV = tv({
   base: ``,
   variants: {},

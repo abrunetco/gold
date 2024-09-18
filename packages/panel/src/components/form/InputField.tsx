@@ -10,6 +10,7 @@ import {
   FieldLabel,
   SwitchInput,
   RadioInput,
+  BtnGroupInput,
 } from "components/fields";
 import { DateObject } from "react-multi-date-picker";
 import { fieldsetTV } from "components/fields/variant";
@@ -85,6 +86,13 @@ function SelectInputField<T extends FieldValues>(
   return <SelectInput {...attrs} />;
 }
 
+function BtnGroupInputField<T extends FieldValues>(
+  props: ControledFieldProps<T>,
+) {
+  const attrs = useCtrlAttrs(props);
+  return <BtnGroupInput {...attrs} />;
+}
+
 function RadioInputField<T extends FieldValues>({
   options,
   ...props
@@ -145,6 +153,9 @@ export function GenericInputRouter<T extends FieldValues>({
 
   if (type === "textarea")
     return <TextareaInputField {...props} control={control} />;
+
+  if (type === "btngroup")
+    return <BtnGroupInputField {...props} control={control} />;
 
   if (type === "radio") return <RadioInputField {...props} control={control} />;
 

@@ -11,8 +11,8 @@ export default function (props: StrictIconProps) {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M17 20.75C17.4142 20.75 17.75 20.4143 17.75 20V6.25005L19.4 8.45005C19.6485 8.78142 20.1186 8.84858 20.45 8.60005C20.7814 8.35152 20.8485 7.88142 20.6 7.55005L17.6 3.55005C17.4063 3.29179 17.0691 3.18645 16.7628 3.28854C16.4566 3.39062 16.25 3.67723 16.25 4.00005V20C16.25 20.4143 16.5858 20.75 17 20.75Z"
         fill={props.color}
       />

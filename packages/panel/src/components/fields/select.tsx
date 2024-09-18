@@ -1,7 +1,12 @@
 import { forwardRef, ReactNode, useMemo } from "react";
-import { selectTV, SelectVariantProps } from "./variant";
+import {
+  btnGroupTV,
+  BtnGroupVariantProps,
+  selectTV,
+  SelectVariantProps,
+} from "./variant";
 // eslint-disable-next-line @typescript-eslint/no-restricted-imports
-import { Select as FlowSelect, SelectProps } from "flowbite-react";
+import { Button, Select as FlowSelect, SelectProps } from "flowbite-react";
 
 interface SelectInputProps extends SelectProps {
   options?: Record<string, ReactNode>;
@@ -26,6 +31,41 @@ export const SelectInput = forwardRef(
             ))
           : children}
       </FlowSelect>
+    );
+  },
+);
+
+interface BtnGroupInputProps extends SelectProps {
+  options?: Record<string, ReactNode>;
+  className?: string;
+}
+
+export const BtnGroupInput = forwardRef(
+  (props: BtnGroupInputProps & BtnGroupVariantProps, ref) => {
+    const { className, options, size = "sm" } = props;
+    const optionsPairs = useMemo(
+      () => Object.entries(options ?? {}),
+      [options],
+    );
+    const cls = btnGroupTV({ className });
+
+    return (
+      <Button.Group outline className={cls} ref={ref as any}>
+        {optionsPairs.map(([value, label]) => (
+          <Button
+            value={value}
+            key={value}
+            size={size}
+            className="flex-1"
+            color={props.value === value ? "blue" : "light"}
+            onClick={(e: any) => {
+              props.onChange({ ...e, target: { value } });
+            }}
+          >
+            {label}
+          </Button>
+        ))}
+      </Button.Group>
     );
   },
 );

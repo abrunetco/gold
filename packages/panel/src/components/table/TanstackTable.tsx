@@ -8,6 +8,7 @@ interface TanstackTableProps<T extends Common> {
   table: Table<T>;
   fetchMore: (elem?: HTMLDivElement | null) => void;
 }
+
 export default function TanstackTable<T extends Common>({
   table,
   fetchMore,
@@ -49,7 +50,7 @@ export default function TanstackTable<T extends Common>({
               className="!border-px flex w-full !border-gray-400"
             >
               <th
-                className="flex overflow-hidden border-b border-gray-200 pb-2 pe-4 pt-4 text-start"
+                className="flex border-b border-gray-200 pb-2 pe-4 pt-4 text-start"
                 style={{ width: indexColumnWidth }}
               >
                 #
@@ -60,7 +61,7 @@ export default function TanstackTable<T extends Common>({
                     key={header.id}
                     colSpan={header.colSpan}
                     onClick={header.column.getToggleSortingHandler()}
-                    className="flex overflow-hidden border-b border-gray-200 pb-2 pe-4 pt-4 text-start"
+                    className="flex border-b border-gray-200 pb-2 pe-4 pt-4 text-start"
                     style={{ width: header.getSize() }}
                   >
                     <ColHeadControl header={header} />
@@ -90,7 +91,7 @@ export default function TanstackTable<T extends Common>({
                     width: indexColumnWidth,
                   }}
                 >
-                  {virtualRow.index + 1}
+                  {(virtualRow.index + 1).toLocaleString("fa-IR")}
                 </td>
                 {row.getVisibleCells().map((cell) => {
                   return (

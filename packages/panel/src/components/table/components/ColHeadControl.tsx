@@ -30,6 +30,7 @@ export default function ColHeadControl<T>({ header }: ColHeadControlProps<T>) {
   ) : (
     textLabel
   );
+  const canfilter = header.column.getCanFilter();
   return (
     <div className="flex flex-1 flex-col">
       <Fieldset
@@ -37,7 +38,7 @@ export default function ColHeadControl<T>({ header }: ColHeadControlProps<T>) {
         htmlFor={header.id}
         // variant={isSorted ? "th" : undefined}
       >
-        {header.column.getCanFilter() ? <Filter header={header} /> : null}
+        {canfilter ? <Filter column={header.column} /> : null}
       </Fieldset>
     </div>
   );

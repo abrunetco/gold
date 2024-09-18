@@ -1,129 +1,81 @@
-import { Header } from "@tanstack/react-table";
-import { RowData } from "@tanstack/react-table";
+import { Column, RowData } from "@tanstack/react-table";
 import { DatepickerInput, SelectInput, TextInput } from "components/fields";
-import { useMongoRange, useMongoRegex } from "hooks/input";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { DateObject } from "react-multi-date-picker";
-import { debounce } from "utils/debounce";
+import { useDebounced, useMongoDateRange, useMongoRegex } from "hooks/input";
+import { useEffect, useMemo } from "react";
 
 declare module "@tanstack/react-table" {
   //allows us to define custom properties for our columns
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface ColumnMeta<TData extends RowData, TValue> {
-    filterVariant?: "text" | "number" | "select" | "date";
+    filterVariant?: "text" | "number" | "select" | "date-range";
   }
 }
 
 interface FilterProps<T> {
-  header: Header<T, unknown>;
+  column: Column<T>;
 }
 
-export default function Filter<T>({ header }: FilterProps<T>) {
-  const column = header.column;
-  const { filterVariant } = column.columnDef.meta ?? {};
+export default function Filter<T>({ column }: FilterProps<T>) {
+  const filterVariant = useMemo(
+    () => column.columnDef.meta?.filterVariant,
+    [column],
+  );
 
   return filterVariant === "number" ? (
-    <div className="flex flex-col">
-      <RangeFilter header={header} />
-    </div>
-  ) : filterVariant === "date" ? (
-    <DateRangeFilter header={header} />
+    <div className="flex flex-col">{/* <RangeFilter header={header} /> */}</div>
+  ) : filterVariant === "date-range" ? (
+    <DateRangeFilter column={column} />
   ) : filterVariant === "select" ? (
-    <SelectFilter header={header} />
+    <SelectFilter column={column} />
   ) : (
-    <TextFilter header={header} />
+    <TextFilter column={column} />
   );
 }
 
-function RangeFilter<T>({ header }: FilterProps<T>) {
-  const columnFilterValue = header.column.getFilterValue();
-  const [[gte, lte], { setLte, setGte }] = useMongoRange(
-    columnFilterValue,
-    header.column.setFilterValue,
-  );
-  const onChangeGte = useCallback(
-    debounce((e: ChangeEvent<HTMLInputElement>) => {
-      setGte(+new Date(e.target.value));
-    }),
-    [setGte],
-  );
-  const onChangeLte = useCallback(
-    debounce((e: ChangeEvent<HTMLInputElement>) => {
-      setLte(+new Date(e.target.value));
-    }),
-    [setLte],
-  );
+function DateRangeFilter<T>({ column }: FilterProps<T>) {
+  const columnFilterValue = column.getFilterValue();
+  const [filter, range, setRange] = useMongoDateRange(columnFilterValue as any);
+
+  function submit() {
+    column.setFilterValue(filter);
+  }
+
+  useEffect(submit, [filter]);
+
   return (
-    <>
-      <TextInput
+    <div onClick={(e) => e.stopPropagation()}>
+      <DatepickerInput
         placeholder={`فیلتر...`}
-        type="number"
         sizing="sm"
-        value={gte}
-        onChange={onChangeGte}
-        onClick={(e) => e.stopPropagation()}
+        range
+        value={range}
+        onChange={setRange}
+        // onBlur={submit}
       />
-      <TextInput
-        placeholder={`فیلتر...`}
-        type="number"
-        sizing="sm"
-        value={lte}
-        onChange={onChangeLte}
-        onClick={(e) => e.stopPropagation()}
-      />
-    </>
+    </div>
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function DateRangeFilter<T>({ header }: FilterProps<T>) {
-  // const columnFilterValue = header.column.getFilterValue();
-
-  const [values, setValues] = useState<
-    [DateObject | undefined, DateObject | undefined] | undefined
-  >([undefined, undefined]);
-
+function TextFilter<T>({ column }: FilterProps<T>) {
+  const columnFilterValue = column.getFilterValue();
+  const [filter, keyword, setKeyword] = useMongoRegex(columnFilterValue as any);
+  const debouncedFilter = useDebounced(filter);
   useEffect(() => {
-    console.log("DateRangeFilter", values);
-  }, [values]);
-  return (
-    <DatepickerInput
-      placeholder={`فیلتر...`}
-      sizing="sm"
-      range
-      value={values}
-      onChange={setValues as any}
-      onClick={(e) => e.stopPropagation()}
-    />
-  );
-}
-
-function TextFilter<T>({ header }: FilterProps<T>) {
-  const columnFilterValue = header.column.getFilterValue();
-  const [value, setValue] = useMongoRegex(
-    columnFilterValue as any,
-    header.column.setFilterValue,
-  );
-  const onChange = useCallback(
-    debounce((e: ChangeEvent<HTMLInputElement>) => {
-      setValue(e.target.value);
-    }),
-    [setValue],
-  );
+    column.setFilterValue(debouncedFilter);
+  }, [debouncedFilter]);
   return (
     <TextInput
       placeholder={`فیلتر...`}
       type="text"
       sizing="sm"
-      value={value}
-      onChange={onChange}
+      value={keyword}
+      onChange={(e) => setKeyword(e.target.value)}
       onClick={(e) => e.stopPropagation()}
     />
   );
 }
 
-function SelectFilter<T>({ header }: FilterProps<T>) {
-  const column = header.column;
+function SelectFilter<T>({ column }: FilterProps<T>) {
   const columnFilterValue = column.getFilterValue();
   const { options } = column.columnDef.meta ?? {};
   const _options = {

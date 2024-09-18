@@ -32,7 +32,7 @@ export interface GenericFieldProps<
     | "textarea"
     | "select"
     | "datetime"
-    | "group"
+    | "btngroup"
     | "remote"
     | "switch";
   rules?: RegisterOptions<TFieldValues, TFieldName>;

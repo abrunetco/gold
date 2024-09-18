@@ -30,7 +30,7 @@ export default function useUserColumns() {
     }),
     columnHelper.accessor("gender", {
       id: "gender",
-      size: 70,
+      size: 100,
       header: (context) => <ColHead context={context} title="جنسیت" />,
       cell: (context) => <ColCell context={context} accessor="gender" />,
       meta: {
@@ -59,7 +59,7 @@ export default function useUserColumns() {
       header: (context) => <ColHead context={context} title="ت.‌ثبت" />,
       cell: (context) => <ColCell context={context} accessor="createdAt" />,
       meta: {
-        filterVariant: "date",
+        filterVariant: "date-range",
         format: "date",
       },
     }),

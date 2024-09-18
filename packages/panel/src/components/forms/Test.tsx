@@ -85,10 +85,9 @@ export default function TestForm(
             options={genderOptions}
           />
           <GenericField
-            inline
             name="options"
             label="گزینه ها"
-            type="radio"
+            type="btngroup"
             options={opOptions}
           />
           <GenericField name="aggrement" label="aggrement" type="checkbox" />
