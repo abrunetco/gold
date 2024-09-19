@@ -12,7 +12,7 @@ const DateFormatter = Intl.DateTimeFormat("fa-IR", {
 
 const KycDcouments = () => {
   return (
-    <Card extra={"w-full p-5 h-full"}>
+    <Card className="h-full w-full p-5">
       <div className="mb-8 w-full">
         <h4 className="text-xl font-bold text-navy-700 dark:text-white">
           مدارک ارسال شه

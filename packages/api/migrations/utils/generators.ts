@@ -6,6 +6,7 @@ import { Mediatypes } from '../../src/shared/fragments/media'
 import { commons, userCommons, DataContext } from './collections'
 import { userPath } from '../../src/services/users/shared'
 import moment from 'moment-jalaali'
+import { RoleTypes } from '../../src/shared/fragments/role-types'
 
 function makeDemoUser(): User {
   const email = faker.internet.email({ provider: 'test.gold.me' }),
@@ -17,6 +18,7 @@ function makeDemoUser(): User {
     __typename: userPath,
     firstName: faFaker.person.firstName(),
     lastName: faFaker.person.lastName(),
+    role: RoleTypes.CUSTOMER,
     avatar: [
       {
         id: 'external',

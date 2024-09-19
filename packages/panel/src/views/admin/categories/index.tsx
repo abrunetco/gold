@@ -79,7 +79,7 @@ function CategoriesGridTable() {
   });
 
   return (
-    <Card extra="w-full pb-10 p-4 h-full">
+    <Card className="h-full w-full p-4 pb-10">
       <header className="relative mb-2 flex items-center justify-between">
         <div className="text-xl font-bold text-navy-700 dark:text-white">
           {MARKUP_MAP[categoryPath].polar}

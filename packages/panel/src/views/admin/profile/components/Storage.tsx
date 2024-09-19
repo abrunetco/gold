@@ -3,7 +3,7 @@ import CardMenu from "components/card/CardMenu";
 import { BsCloudCheck } from "react-icons/bs";
 const Storage = () => {
   return (
-    <Card extra={"w-full h-full p-4"}>
+    <Card className="w-full h-full p-4">
       <div className="ms-auto">
         <CardMenu />
       </div>

@@ -33,7 +33,7 @@ export function ConfigForm(props: PropsWithChildren<ConfigFormProviderProps>) {
   );
 
   return (
-    <Card extra={props.className}>
+    <Card className={props.className}>
       <SmartForm<Config[Keys]>
         className="h-full w-full gap-10"
         onSubmit={onSubmit}

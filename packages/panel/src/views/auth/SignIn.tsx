@@ -3,7 +3,7 @@ import SignInForm, { type SignInSchema } from "components/forms/SignIn";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function SignIn() {
+export default function SignInView() {
   const navigate = useNavigate();
   const onSubmit = useCallback(
     async (data: SignInSchema) => {

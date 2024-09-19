@@ -1,11 +1,11 @@
 import React, { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import BrandLoading from "components/progress/BrandLoading";
+import { BrandLoading } from "components/brand/Loading";
 import AuthProvider from "providers/auth";
-import TestView from "views/Test";
+import TestView from "views/public";
 
-const AdminLayout = lazy(() => import("./layouts/admin"));
-const AuthLayout = lazy(() => import("./layouts/auth"));
+const AdminLayout = lazy(() => import("./views/admin/Layout"));
+const AuthLayout = lazy(() => import("./views/auth/Layout"));
 
 function AdminRoute() {
   return (

@@ -1,10 +1,12 @@
 import bcrypt from 'bcryptjs'
+import { faker } from '@faker-js/faker'
 import { Db } from 'mongodb'
 import getColections, { commons, generatorUID, userCommons } from './utils/collections'
 import { User, userPath } from '../src/services/users/shared'
 import { Genderypes } from '../src/shared/fragments/gender-types'
 import { Config, configPath } from '../src/client'
 import { RoleTypes } from '../src/shared/fragments/role-types'
+import { Mediatypes } from '../lib/shared/fragments/media'
 
 const EMAIL = 'ali.double.plus@gmail.com'
 
@@ -20,6 +22,15 @@ export const up = async (db: Db) => {
     gender: Genderypes.MAN,
     role: RoleTypes.ADMIN,
     email: EMAIL,
+    avatar: [
+      {
+        id: 'external',
+        type: Mediatypes.IMAGE,
+        external: {
+          path: faker.image.avatar()
+        }
+      }
+    ],
     password: await bcrypt.hash('123456', 10),
     googleId: '107831611195665651928',
     // avatar: "https://lh3.googleusercontent.com/a/ACg8ocLSEQRH4QsfCDrniJbZQmQG2gyW_8L-WiFVGtMGX0efwDE=s96-c",

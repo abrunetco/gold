@@ -1,28 +1,22 @@
-import { User } from "@gold/api";
+import { UserPatch } from "@gold/api";
 import { SubmitBtn } from "components/form/controls";
 import GenericField from "components/form/InputField";
 import SmartForm from "components/form/SmartForm";
-import { useAuth } from "providers/auth";
-import { ComponentProps } from "react";
+import SmartMutateProvider from "providers/mutate";
 
-export default function UserForm(
-  props: ComponentProps<typeof SmartForm<User>>,
-) {
-  const auth = useAuth();
-
-  const onSubmit = (d: User) => {
-    console.log("onSubmit ProfileForm", d);
-  };
-
+export default function UserForm(props: { uid: string }) {
   return (
-    <SmartForm onSubmit={onSubmit} defaultValues={auth.user} {...props}>
-      <GenericField name="firstName" label="نام" rules={{ required: true }} />
-      <GenericField
-        name="lastName"
-        label="نام خانوادگی"
-        rules={{ required: true }}
-      />
-      <SubmitBtn type="save" />
-    </SmartForm>
+    <SmartMutateProvider service="users" uid={props.uid}>
+      <SmartForm className="grid grid-cols-2 gap-x-3 gap-y-0 px-2">
+        <GenericField<UserPatch> name="firstName" label="نام" />
+        <GenericField<UserPatch> name="lastName" label="نام خانوادگی" />
+        <GenericField<UserPatch>
+          name="email"
+          label="ایمیل"
+          className="col-span-2"
+        />
+        <SubmitBtn type="save" />
+      </SmartForm>
+    </SmartMutateProvider>
   );
 }

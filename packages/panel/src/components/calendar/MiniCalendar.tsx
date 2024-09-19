@@ -10,7 +10,7 @@ const MiniCalendar = () => {
 
   return (
     <div>
-      <Card extra="flex w-full h-full flex-col px-3 py-3">
+      <Card className="flex w-full h-full flex-col px-3 py-3">
         <Calendar
           onChange={onChange}
           value={value}

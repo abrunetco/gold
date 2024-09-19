@@ -4,7 +4,7 @@ import { BsCheckSquare, BsExclamationSquare } from "react-icons/bs";
 
 const KycCard = () => {
   return (
-    <Card extra={"w-full h-full p-4"}>
+    <Card className="w-full h-full p-4">
       <div className="mb-auto flex flex-col items-center justify-center">
         <div className="mt-2 flex items-center justify-center rounded-full bg-lightPrimary p-[26px] text-5xl font-bold text-brand-500 dark:!bg-navy-700 dark:text-white">
           <KycCircleCheck progress={100} accepted />

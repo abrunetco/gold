@@ -1,21 +1,22 @@
 import Card from "components/card";
 import SmartForm from "components/form/SmartForm";
-import { useAuth } from "providers/auth";
+import { useAuth } from "hooks/auth";
 import SmartMutateProvider from "providers/mutate";
 import GenericField from "components/form/InputField";
 import { UserPatch } from "@gold/api";
 import { SubmitBtn } from "components/form/controls";
+
 const ProfileForm = () => {
   const auth = useAuth();
   return (
-    <Card extra={"w-full h-full px-5 py-8"}>
+    <Card className="h-full w-full px-5 py-8">
       {/* Header */}
       <div className="mb-8 mt-2 w-full">
         <h4 className="px-2 text-xl font-bold text-navy-700 dark:text-white">
           مشخصات
         </h4>
         <p className="mt-2 px-2 text-base text-gray-600">
-          اطلاعات هویتی خود را به درستی وارد کنید. مشخصات شخصی شما پس ا پیرایش
+          اطلاعات هویتی خود را به درستی وارد کنید. مشخصات شخصی شما پس از ویرایش
           توسط مدیر سیستم بررسی خواهد شد
         </p>
       </div>

@@ -10,7 +10,7 @@ interface UserCardProps {
 
 const UserCard = ({ data }: UserCardProps) => {
   return (
-    <Card extra={"items-center w-full h-full p-[16px] bg-cover"}>
+    <Card className="items-center w-full h-full p-[16px] bg-cover">
       {/* Background and profile */}
       <div
         className="relative mt-1 flex h-32 w-full justify-center rounded-xl bg-cover"

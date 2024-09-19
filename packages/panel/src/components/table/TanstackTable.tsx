@@ -1,6 +1,6 @@
-import { flexRender, Table } from "@tanstack/react-table";
+import { Column, flexRender, Table } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useEffect, useRef } from "react";
+import { CSSProperties, useEffect, useRef } from "react";
 import ColHeadControl from "./components/ColHeadControl";
 import { Common } from "@gold/api";
 
@@ -34,13 +34,11 @@ export default function TanstackTable<T extends Common>({
 
   const height = rowVirtualizer.getTotalSize();
 
-  const indexColumnWidth = ~~(Math.log10(rows.length) * 10) + 15;
-
   return (
     <div
       ref={ref}
       onScroll={(e) => fetchMore(e.target as HTMLDivElement)}
-      className="relative h-[600px] overflow-auto"
+      className="relative h-[calc(100vh-190px)] overflow-auto"
     >
       <table className="w-full">
         <thead className="sticky top-0 z-[1] grid bg-white dark:!bg-navy-800 dark:text-white">
@@ -49,20 +47,14 @@ export default function TanstackTable<T extends Common>({
               key={headerGroup.id}
               className="!border-px flex w-full !border-gray-400"
             >
-              <th
-                className="flex border-b border-gray-200 pb-2 pe-4 pt-4 text-start"
-                style={{ width: indexColumnWidth }}
-              >
-                #
-              </th>
               {headerGroup.headers.map((header) => {
                 return (
                   <th
                     key={header.id}
                     colSpan={header.colSpan}
                     onClick={header.column.getToggleSortingHandler()}
-                    className="flex border-b border-gray-200 pb-2 pe-4 pt-4 text-start"
-                    style={{ width: header.getSize() }}
+                    className="flex border-b border-gray-200 px-2 pb-2 pt-4 text-start"
+                    style={{ width: header.column.getSize() }}
                   >
                     <ColHeadControl header={header} />
                   </th>
@@ -85,22 +77,12 @@ export default function TanstackTable<T extends Common>({
                   transform: `translateY(${virtualRow.start}px)`, //this should always be a `style` as it changes on scroll
                 }}
               >
-                <td
-                  className="flex overflow-hidden border-white/0 py-3 pe-4"
-                  style={{
-                    width: indexColumnWidth,
-                  }}
-                >
-                  {(virtualRow.index + 1).toLocaleString("fa-IR")}
-                </td>
                 {row.getVisibleCells().map((cell) => {
                   return (
                     <td
                       key={cell.id}
-                      className="flex overflow-hidden border-white/0 py-3 pe-4"
-                      style={{
-                        width: cell.column.getSize(),
-                      }}
+                      className="flex overflow-hidden bg-white/50 px-2 pb-2 pt-4 backdrop-blur-md dark:bg-navy-700/50"
+                      style={getCommonPinningStyles(cell.column)}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -117,4 +99,25 @@ export default function TanstackTable<T extends Common>({
       </table>
     </div>
   );
+}
+
+function getCommonPinningStyles<T>(column: Column<T>): CSSProperties {
+  const isPinned = column.getIsPinned();
+  const isLastLeftPinnedColumn =
+    isPinned === "left" && column.getIsLastColumn("left");
+  const isFirstRightPinnedColumn =
+    isPinned === "right" && column.getIsFirstColumn("right");
+
+  return {
+    boxShadow: isLastLeftPinnedColumn
+      ? "4px 0 4px -4px lightgray inset"
+      : isFirstRightPinnedColumn
+        ? "-4px 0 4px -4px lightgray inset"
+        : undefined,
+    left: isPinned === "right" ? `${column.getStart("right")}px` : undefined,
+    right: isPinned === "left" ? `${column.getAfter("left")}px` : undefined,
+    position: isPinned ? "sticky" : "relative",
+    width: column.getSize(),
+    zIndex: isPinned ? 1 : 0,
+  };
 }

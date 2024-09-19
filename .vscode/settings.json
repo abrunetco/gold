@@ -6,5 +6,9 @@
   "tailwindCSS.experimental.classRegex": [
     ["([`][^`]*.*?[`])", "[`]([^`]*).*?[`]"]
   ],
-  "tailwindCSS.classAttributes": ["class", "className", "extra"]
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "extra"
+  ]
 }

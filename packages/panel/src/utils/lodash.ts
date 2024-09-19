@@ -36,3 +36,7 @@ export function deepEqual(x: any, y: any) {
     return true;
   } else return false;
 }
+
+export function identity(x: any) {
+  return !!x;
+}

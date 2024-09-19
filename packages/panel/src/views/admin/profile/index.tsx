@@ -1,6 +1,6 @@
 import UserCard from "./components/UserCard";
 import Upload from "./components/Upload";
-import { useAuth } from "providers/auth";
+import { useAuth } from "hooks/auth";
 import ProfileForm from "./components/ProfileForm";
 import KycCard from "./components/KycCard";
 import KycDcouments from "./components/KycDcouments";

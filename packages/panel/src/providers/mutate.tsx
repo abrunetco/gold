@@ -8,7 +8,7 @@ import {
   UseMutationOptions,
 } from "@tanstack/react-query";
 import client from "api/client";
-import BrandLoading from "components/progress/BrandLoading";
+import { BrandLoading } from "components/brand/Loading";
 import React, { PropsWithChildren, useCallback, useMemo } from "react";
 
 interface MutateProviderProps<

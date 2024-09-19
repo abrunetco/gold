@@ -3,11 +3,23 @@ import { Genderypes } from "@gold/api/lib/shared/fragments/gender-types";
 import { createColumnHelper } from "@tanstack/react-table";
 import ColCell from "components/table/ColCell";
 import ColHead from "components/table/ColHead";
+import RowControls from "./RowControls";
+import {
+  ROLETYPE_MAP,
+  RoleTypes,
+} from "@gold/api/lib/shared/fragments/role-types";
 
 const columnHelper = createColumnHelper<User>();
 
 export default function useUserColumns() {
   return [
+    columnHelper.accessor("uid", {
+      id: "index",
+      size: 50,
+      enableColumnFilter: false,
+      header: "",
+      cell: (context) => (context.row.index + 1).toLocaleString("fa-IR"),
+    }),
     columnHelper.accessor("firstName", {
       id: "firstName",
       size: 150,
@@ -21,6 +33,20 @@ export default function useUserColumns() {
       // enableColumnFilter: false,
       header: (context) => <ColHead context={context} title="فامیل" />,
       cell: (context) => <ColCell context={context} accessor="lastName" />,
+    }),
+    columnHelper.accessor("role", {
+      id: "role",
+      size: 100,
+      header: (context) => <ColHead context={context} title="نقش" />,
+      cell: (context) => <ColCell context={context} accessor="role" />,
+      meta: {
+        filterVariant: "select",
+        options: {
+          [RoleTypes.ADMIN]: ROLETYPE_MAP.ADMIN.label,
+          [RoleTypes.USER]: ROLETYPE_MAP.USER.label,
+          [RoleTypes.CUSTOMER]: ROLETYPE_MAP.CUSTOMER.label,
+        },
+      },
     }),
     columnHelper.accessor("email", {
       id: "email",
@@ -62,6 +88,13 @@ export default function useUserColumns() {
         filterVariant: "date-range",
         format: "date",
       },
+    }),
+    columnHelper.accessor("uid", {
+      id: "controls",
+      size: 50,
+      enableColumnFilter: false,
+      header: (context) => <ColHead context={context} title="" />,
+      cell: (context) => <RowControls context={context} accessor="createdAt" />,
     }),
   ];
 }

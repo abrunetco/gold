@@ -7,7 +7,7 @@ import Card from "components/card";
 
 const Project = () => {
   return (
-    <Card extra={"w-full p-4 h-full"}>
+    <Card className="w-full p-4 h-full">
       <div className="mb-8 w-full">
         <h4 className="text-xl font-bold text-navy-700 dark:text-white">
           All projects

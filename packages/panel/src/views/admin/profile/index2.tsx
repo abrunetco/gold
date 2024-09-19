@@ -4,7 +4,7 @@ import Notification from "./components/Notification";
 import Project from "./components/Project";
 import Storage from "./components/Storage";
 import Upload from "./components/Upload";
-import { useAuth } from "providers/auth";
+import { useAuth } from "hooks/auth";
 
 const ProfileOverview = () => {
   const auth = useAuth();

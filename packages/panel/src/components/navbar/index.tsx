@@ -8,12 +8,12 @@ import { RiMoonFill, RiSunFill } from "react-icons/ri";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import avatar from "assets/img/avatars/avatar4.png";
 import client from "api/client";
-import { useAuth } from "providers/auth";
+import { useAuth } from "hooks/auth";
 import { Button } from "components/button";
 
 const Navbar = (props: {
   onOpenSidenav: () => void;
-  brandText: string;
+  brandText?: string;
   secondary?: boolean | string;
 }) => {
   const auth = useAuth();
@@ -27,19 +27,15 @@ const Navbar = (props: {
   }, []);
 
   return (
-    <nav className="sticky top-0 z-40 flex flex-row flex-wrap items-center justify-between rounded-e-full bg-white/10 p-2 pe-4 backdrop-blur-xl dark:bg-[#0b14374d]">
+    <nav className="sticky top-0 z-40 flex flex-row flex-wrap items-center justify-between border-b border-gray-200 bg-white/80 p-2 pe-4 shadow-white/5 backdrop-blur-xl dark:border-[#ffffff33] dark:bg-navy-900/80">
       <div className="ms-[6px]">
         <div className="h-6 w-[224px] pt-1">
-          <a
-            className="text-sm font-normal text-navy-700 hover:underline dark:text-white dark:hover:text-white"
-            href=" "
-          >
-            برگه ها
+          <span className="text-sm font-normal text-navy-700 dark:text-white dark:hover:text-white">
+            پنل مدیریت
             <span className="mx-1 text-sm text-navy-700 hover:text-navy-700 dark:text-white">
-              {" "}
-              /{" "}
+              /
             </span>
-          </a>
+          </span>
           <Link
             className="text-sm font-normal capitalize text-navy-700 hover:underline dark:text-white dark:hover:text-white"
             to="#"
@@ -47,17 +43,12 @@ const Navbar = (props: {
             {brandText}
           </Link>
         </div>
-        <p className="shrink text-[33px] capitalize text-navy-700 dark:text-white">
-          <Link
-            to="#"
-            className="font-bold capitalize hover:text-navy-700 dark:hover:text-white"
-          >
-            {brandText}
-          </Link>
+        <p className="shrink text-[33px] font-bold capitalize text-navy-700 dark:text-white">
+          {brandText}
         </p>
       </div>
 
-      <div className="relative mt-[3px] flex h-[61px] w-[355px] flex-grow items-center justify-around gap-2 rounded-full bg-white px-2 py-2 shadow-xl shadow-shadow dark:!bg-navy-800 dark:shadow-none md:w-[365px] md:flex-grow-0 md:gap-1 xl:w-[365px] xl:gap-2">
+      <div className="relative mt-[3px] flex h-[61px] w-[355px] flex-grow items-center justify-around gap-3 rounded-full bg-white px-2 py-2 shadow-xl shadow-shadow dark:!bg-navy-800 dark:shadow-none md:w-[365px] md:flex-grow-0 md:gap-1 xl:w-[365px] xl:gap-2">
         <div className="flex h-full items-center rounded-full bg-lightPrimary text-navy-700 dark:bg-navy-900 dark:text-white xl:w-[225px]">
           <p className="pe-2 ps-3 text-xl">
             <FiSearch className="h-4 w-4 text-gray-400 dark:text-white" />

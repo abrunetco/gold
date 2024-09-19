@@ -11,7 +11,7 @@ export default function KycCircleCheck({ accepted, progress }: KycCircleCheck) {
     <svg
       stroke="currentColor"
       fill="currentColor"
-      stroke-width="0"
+      strokeWidth="0"
       viewBox="0 0 16 16"
       height="120"
       width="120"
@@ -19,13 +19,13 @@ export default function KycCircleCheck({ accepted, progress }: KycCircleCheck) {
     >
       <path
         d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14 8 15"
-        stroke-width="0.8"
+        strokeWidth="0.8"
         fill="none"
         stroke="#ddd"
       />
       <path
         d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14 8 15"
-        stroke-width="0.8"
+        strokeWidth="0.8"
         strokeLinecap="round"
         fill="none"
         stroke={`hsl(${hue}deg 100% 40.63%)`}

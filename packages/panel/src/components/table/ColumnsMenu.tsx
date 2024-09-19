@@ -24,7 +24,7 @@ function ColumnsMenu<T>({ table }: ColumnsMenuProps<T>) {
       animation={"origin-top-end transition-all duration-300 ease-in-out"}
       classNames="top-11 end-0 w-max"
     >
-      <Card extra="p-4">
+      <Card className="p-4">
         {/* task header */}
         <h4 className="ms-4 text-xl font-bold text-navy-700 dark:text-white">
           ستون ها

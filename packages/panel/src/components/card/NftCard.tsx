@@ -15,7 +15,7 @@ const NftCard = (props: {
   const [heart, setHeart] = useState(true);
   return (
     <Card
-      extra={`flex flex-col w-full h-full !p-4 3xl:p-![18px] bg-white ${extra}`}
+      className={`flex flex-col w-full h-full !p-4 3xl:p-![18px] bg-white ${extra}`}
     >
       <div className="h-full w-full">
         <div className="relative w-full">
