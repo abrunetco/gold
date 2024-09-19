@@ -1,19 +1,22 @@
 import React, { useCallback } from "react";
 import Dropdown from "components/dropdown";
 import { FiAlignJustify } from "react-icons/fi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BsArrowBarUp } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { RiMoonFill, RiSunFill } from "react-icons/ri";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import avatar from "assets/img/avatars/avatar4.png";
 import client from "api/client";
+import { useAuth } from "providers/auth";
+import { Button } from "components/button";
 
 const Navbar = (props: {
   onOpenSidenav: () => void;
   brandText: string;
   secondary?: boolean | string;
 }) => {
+  const auth = useAuth();
   const navigate = useNavigate();
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
@@ -54,7 +57,7 @@ const Navbar = (props: {
         </p>
       </div>
 
-      <div className="shadow-shadow relative mt-[3px] flex h-[61px] w-[355px] flex-grow items-center justify-around gap-2 rounded-full bg-white px-2 py-2 shadow-xl dark:!bg-navy-800 dark:shadow-none md:w-[365px] md:flex-grow-0 md:gap-1 xl:w-[365px] xl:gap-2">
+      <div className="relative mt-[3px] flex h-[61px] w-[355px] flex-grow items-center justify-around gap-2 rounded-full bg-white px-2 py-2 shadow-xl shadow-shadow dark:!bg-navy-800 dark:shadow-none md:w-[365px] md:flex-grow-0 md:gap-1 xl:w-[365px] xl:gap-2">
         <div className="flex h-full items-center rounded-full bg-lightPrimary text-navy-700 dark:bg-navy-900 dark:text-white xl:w-[225px]">
           <p className="pe-2 ps-3 text-xl">
             <FiSearch className="h-4 w-4 text-gray-400 dark:text-white" />
@@ -80,7 +83,7 @@ const Navbar = (props: {
           }
           animation="origin-[65%_0%] md:origin-top-right transition-all duration-300 ease-in-out"
           children={
-            <div className="shadow-shadow flex w-[360px] flex-col gap-3 rounded-[20px] bg-white p-4 shadow-xl dark:!bg-navy-700 dark:text-white dark:shadow-none sm:w-[460px]">
+            <div className="flex w-[360px] flex-col gap-3 rounded-[20px] bg-white p-4 shadow-xl shadow-shadow dark:!bg-navy-700 dark:text-white dark:shadow-none sm:w-[460px]">
               <div className="flex items-center justify-between">
                 <p className="text-base font-bold text-navy-700 dark:text-white">
                   Notification
@@ -148,41 +151,36 @@ const Navbar = (props: {
               alt="Elon Musk"
             />
           }
-          children={
-            <div className="shadow-shadow flex h-48 w-56 flex-col justify-start rounded-[20px] bg-white bg-cover bg-no-repeat shadow-xl dark:!bg-navy-700 dark:text-white dark:shadow-none">
-              <div className="ms-4 mt-3">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm font-bold text-navy-700 dark:text-white">
-                    👋 Hey, Adela
-                  </p>{" "}
-                </div>
-              </div>
-              <div className="mt-3 h-px w-full bg-gray-200 dark:bg-white/20" />
-
-              <div className="ms-4 mt-3 flex flex-col">
-                <a
-                  href=" "
-                  className="text-sm text-gray-800 dark:text-white hover:dark:text-white"
-                >
-                  Profile Settings
-                </a>
-                <a
-                  href=" "
-                  className="mt-3 text-sm text-gray-800 dark:text-white hover:dark:text-white"
-                >
-                  Newsletter Settings
-                </a>
-                <button
-                  onClick={logout}
-                  className="mt-3 text-sm font-medium text-red-500 hover:text-red-500"
-                >
-                  خروج
-                </button>
+          classNames="py-2 top-8 -start-[180px] w-max"
+        >
+          <div className="flex w-56 flex-col justify-start rounded-[20px] bg-white bg-cover bg-no-repeat pb-4 shadow-xl shadow-shadow dark:!bg-navy-700 dark:text-white dark:shadow-none">
+            <div className="ms-4 mt-3">
+              <div className="flex items-center gap-2">
+                <p className="text-sm font-bold text-navy-700 dark:text-white">
+                  👋 سلام، {auth.user?.stringified}
+                </p>{" "}
               </div>
             </div>
-          }
-          classNames={"py-2 top-8 -start-[180px] w-max"}
-        />
+            <div className="mt-3 h-px w-full bg-gray-200 dark:bg-white/20" />
+
+            <div className="ms-4 mt-3 flex flex-col">
+              <NavLink className="my-2" to="/admin/profile">
+                پروفایل
+              </NavLink>
+              <NavLink className="my-2" to="/admin/profile">
+                تنظیمات
+              </NavLink>
+              <hr />
+              <Button
+                type="button"
+                onClick={logout}
+                className="text-sm font-medium"
+              >
+                خروج
+              </Button>
+            </div>
+          </div>
+        </Dropdown>
       </div>
     </nav>
   );

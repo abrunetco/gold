@@ -173,10 +173,10 @@ export default function GenericField<T extends FieldValues>({
   const id = props.id ?? id2;
   const isCheckbox = ["checkbox", "switch"].includes(props.type);
   const layout = isCheckbox ? "checkbox" : inline ? "inline" : "default";
-  const cls = fieldsetTV({ className, layout });
+  const cls = fieldsetTV({ layout });
 
   return (
-    <div className="relative">
+    <div className={"relative " + className}>
       <div className={cls}>
         <FieldLabel
           htmlFor={id}

@@ -1,8 +1,14 @@
+import { User } from "@gold/api";
+import { ROLETYPE_MAP } from "@gold/api/lib/shared/fragments/role-types";
 import avatar from "assets/img/avatars/avatar11.png";
 import banner from "assets/img/profile/banner.png";
 import Card from "components/card";
 
-const Banner = () => {
+interface UserCardProps {
+  data: User;
+}
+
+const UserCard = ({ data }: UserCardProps) => {
   return (
     <Card extra={"items-center w-full h-full p-[16px] bg-cover"}>
       {/* Background and profile */}
@@ -18,32 +24,34 @@ const Banner = () => {
       {/* Name and position */}
       <div className="mt-16 flex flex-col items-center">
         <h4 className="text-xl font-bold text-navy-700 dark:text-white">
-          Adela Parkson
+          {data.stringified}
         </h4>
-        <p className="text-base font-normal text-gray-600">Product Manager</p>
+        <p className="text-base font-normal text-gray-600">
+          {ROLETYPE_MAP[data.role].label}
+        </p>
       </div>
 
       {/* Post followers */}
       <div className="mb-3 mt-6 flex gap-4 md:!gap-14">
         <div className="flex flex-col items-center justify-center">
           <p className="text-2xl font-bold text-navy-700 dark:text-white">17</p>
-          <p className="text-sm font-normal text-gray-600">Posts</p>
+          <p className="text-sm font-normal text-gray-600">کیف پول</p>
         </div>
         <div className="flex flex-col items-center justify-center">
           <p className="text-2xl font-bold text-navy-700 dark:text-white">
             9.7K
           </p>
-          <p className="text-sm font-normal text-gray-600">Followers</p>
+          <p className="text-sm font-normal text-gray-600">تعداد خرید</p>
         </div>
         <div className="flex flex-col items-center justify-center">
           <p className="text-2xl font-bold text-navy-700 dark:text-white">
             434
           </p>
-          <p className="text-sm font-normal text-gray-600">Following</p>
+          <p className="text-sm font-normal text-gray-600">سفارشات</p>
         </div>
       </div>
     </Card>
   );
 };
 
-export default Banner;
+export default UserCard;

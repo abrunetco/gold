@@ -1,3 +1,4 @@
+import { User, userPath } from "@gold/api";
 import client, { AuthenticationResult } from "api/client";
 import BrandLoading from "components/progress/BrandLoading";
 import {
@@ -44,9 +45,22 @@ export default function AuthProvider(
       .finally(setLoading.bind(null, false));
   }, [setValue, setLoading]);
 
+  useEffect(() => {
+    function listener(user?: User) {
+      if (user?.uid === value.user?.uid) {
+        setValue((ctx) => ({ ...ctx, user }));
+      }
+    }
+    client.service(userPath).on("patched", listener);
+    return () => {
+      client.service(userPath).off("patched", listener);
+    };
+  }, [setValue, value]);
+
   const isValid = useMemo(() => validate(value), [validate, value]);
 
   if (_loading) return loading;
   if (!isValid) return onFaild;
+
   return <Ctxt.Provider value={value}>{children}</Ctxt.Provider>;
 }

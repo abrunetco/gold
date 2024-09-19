@@ -4,6 +4,7 @@ import getColections, { commons, generatorUID, userCommons } from './utils/colle
 import { User, userPath } from '../src/services/users/shared'
 import { Genderypes } from '../src/shared/fragments/gender-types'
 import { Config, configPath } from '../src/client'
+import { RoleTypes } from '../src/shared/fragments/role-types'
 
 const EMAIL = 'ali.double.plus@gmail.com'
 
@@ -17,6 +18,7 @@ export const up = async (db: Db) => {
     firstName: 'علی',
     lastName: 'قربانی',
     gender: Genderypes.MAN,
+    role: RoleTypes.ADMIN,
     email: EMAIL,
     password: await bcrypt.hash('123456', 10),
     googleId: '107831611195665651928',

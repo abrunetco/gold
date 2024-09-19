@@ -24,7 +24,7 @@ export interface GenericFieldProps<
     | "children"
   > {
   inline?: true;
-  name?: TFieldName;
+  name: TFieldName;
   service?: EntityName;
   options?: Record<string, ReactNode>;
   type?:

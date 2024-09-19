@@ -13,6 +13,7 @@ import { userPath } from './shared'
 import { gendertypeSchema } from '../../shared/fragments/gender-types'
 import { AnyMediaSchema } from '../../shared/fragments/media'
 import { querySyntax } from '../../shared/query'
+import { roletypeSchema } from '../../shared/fragments/role-types'
 
 // Main data model schema
 export const userSchema = Type.Composite(
@@ -24,6 +25,7 @@ export const userSchema = Type.Composite(
       avatar: Type.Optional(AnyMediaSchema('single', { title: 'تصویر' })),
       gender: Type.Optional(gendertypeSchema),
       email: Type.String(),
+      role: roletypeSchema,
       password: Type.Optional(Type.String()),
       googleId: Type.Optional(Type.String())
     }),

@@ -3,6 +3,7 @@ import MainDashboard from "views/admin/default";
 import MainDashboard2 from "views/admin/default/index2";
 import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
+import Profile2 from "views/admin/profile/index2";
 // import RTLDefault from "views/rtl/default";
 
 // Auth Imports
@@ -26,7 +27,7 @@ const routes = [
     component: <MainDashboard />,
   },
   {
-    name: "پیشخوان۲",
+    name: "پیشخوان ۲",
     layout: "/admin",
     path: "default2",
     icon: <MdHome className="h-6 w-6" />,
@@ -60,6 +61,13 @@ const routes = [
     path: "profile",
     icon: <MdPerson className="h-6 w-6" />,
     component: <Profile />,
+  },
+  {
+    name: "پروفایل ۲",
+    layout: "/admin",
+    path: "profile2",
+    icon: <MdPerson className="h-6 w-6" />,
+    component: <Profile2 />,
   },
 ];
 export default routes;

@@ -20,7 +20,7 @@ const formats: FormatsPluginOptions = [
   'regex'
 ]
 
-export const dataValidator: Ajv = addFormats(new Ajv({ strict: false }), formats)
+export const dataValidator: Ajv = addFormats(new Ajv({ removeAdditional: true, strict: false }), formats)
 
 export const queryValidator: Ajv = addFormats(
   new Ajv({

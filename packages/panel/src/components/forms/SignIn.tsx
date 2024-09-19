@@ -18,7 +18,6 @@ export default function SignInForm(
 
   return (
     <SmartForm<SignInSchema>
-      className="ffffffffffffffffffffffffffffffffff"
       onSubmit={onSubmit}
       defaultValues={{
         strategy: "local",
@@ -34,7 +33,7 @@ export default function SignInForm(
       />
       <GenericField
         name="password"
-        label="رمز علور"
+        label="رمز عبور"
         type="password"
         about="شامل حروف و اعداد"
         rules={{ required: true }}
