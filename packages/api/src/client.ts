@@ -4,11 +4,6 @@ import type { TransportConnection, Application, ServiceMixin } from '@feathersjs
 import authenticationClient from '@feathersjs/authentication-client'
 import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
 
-export { accountPath } from './services/accounts/shared'
-import { Account, accountPath } from './services/accounts/shared'
-import { accountClient } from './services/accounts/shared'
-export type { Account, AccountData, AccountQuery, AccountPatch } from './services/accounts/shared'
-
 export { balancePath } from './services/balances/shared'
 import { Balance, balancePath } from './services/balances/shared'
 import { balanceClient } from './services/balances/shared'
@@ -79,7 +74,6 @@ export const createClient = (
   client.configure(authenticationClient(authenticationOptions))
   client.set('connection', connection)
 
-  client.configure(accountClient)
   client.configure(balanceClient)
   client.configure(categoryClient)
   client.configure(invoiceClient)
@@ -95,7 +89,6 @@ export type ClientMixin = ServiceMixin<ClientApplication>
 export type { AuthenticationParams } from './declarations'
 
 interface EntitiesMap {
-  [accountPath]: Account
   [balancePath]: Balance
   [categoryPath]: Category
   [invoicePath]: Invoice

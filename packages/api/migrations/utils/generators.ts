@@ -7,6 +7,8 @@ import { commons, userCommons, DataContext } from './collections'
 import { userPath } from '../../src/services/users/shared'
 import moment from 'moment-jalaali'
 import { RoleTypes } from '../../src/shared/fragments/role-types'
+import { uid } from 'uid'
+import { balancePath } from '../../lib/client'
 
 function makeDemoUser(): User {
   const email = faker.internet.email({ provider: 'test.gold.me' }),
@@ -83,5 +85,43 @@ export function addDemoCategories(ctxt: DataContext): DataContext {
       title: 'طلای آب شده'
     }
   )
+  return ctxt
+}
+
+function shuffle<T>(array: Array<T>) {
+  let currentIndex = array.length
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+    // Pick a remaining element...
+    const randomIndex = Math.floor(Math.random() * currentIndex)
+    currentIndex--
+
+    // And swap it with the current element.
+    ;[array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
+  }
+}
+
+export function addDemoBalances(ctxt: DataContext, count = 100): DataContext {
+  shuffle(ctxt.users)
+  const users = ctxt.users.slice(0, 10)
+
+  for (let i = 1; i <= count; i++) {
+    const useIndex = i % users.length,
+      user = users[useIndex],
+      value = (Math.random() - 0.5) * (Math.random() + 0.3) * 10000
+    ctxt.balances.push({
+      ...commons(),
+      __typename: balancePath,
+      user: user.uid,
+      number: i,
+      value: Math.round(value) * 1000,
+      userLabel: '',
+      src: {
+        invoice: uid(16)
+      }
+    })
+  }
+
   return ctxt
 }

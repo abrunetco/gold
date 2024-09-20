@@ -1,30 +1,36 @@
 // // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
 import { resolve, virtual } from '@feathersjs/schema'
-import { Type, getValidator } from '@feathersjs/typebox'
 import type { Static } from '@feathersjs/typebox'
-import { passwordHash } from '@feathersjs/authentication-local'
+import { Type, getValidator } from '@feathersjs/typebox'
 
+import { GeneralError } from '@feathersjs/errors'
+import { invoicePath, userPath } from '../../client'
 import type { HookContext } from '../../declarations'
+import { commonSchema } from '../../shared/common'
+import { querySyntax } from '../../shared/query'
+import { RelationSchema } from '../../shared/relation'
 import { dataValidator, queryValidator } from '../../validators'
 import type { BalanceService } from './class'
-import { commonSchema } from '../../shared/common'
 import { balancePath } from './shared'
-import { gendertypeSchema } from '../../shared/fragments/gender-types'
-import { AnyMediaSchema } from '../../shared/fragments/media'
-import { querySyntax } from '../../shared/query'
-
+const Formatter = Intl.NumberFormat('en', {
+  minimumIntegerDigits: 8,
+  maximumFractionDigits: 0,
+  useGrouping: false
+})
 // Main data model schema
 export const balanceSchema = Type.Composite(
   [
     Type.Object({
       __typename: Type.Literal(balancePath),
-      firstName: Type.Optional(Type.String({ title: 'نام' })),
-      lastName: Type.Optional(Type.String({ title: 'نام خانوادگی' })),
-      avatar: Type.Optional(AnyMediaSchema('single', { title: 'تصویر' })),
-      gender: Type.Optional(gendertypeSchema),
-      email: Type.String(),
-      password: Type.Optional(Type.String()),
-      googleId: Type.Optional(Type.String())
+      number: Type.Readonly(Type.Number()),
+      user: RelationSchema(userPath),
+      userLabel: Type.Readonly(Type.String()),
+      value: Type.Number(),
+      src: Type.Union([
+        Type.Object({
+          invoice: RelationSchema(invoicePath)
+        })
+      ])
     }),
     commonSchema
   ],
@@ -34,25 +40,30 @@ export type Balance = Static<typeof balanceSchema>
 export const balanceValidator = getValidator(balanceSchema, dataValidator)
 export const balanceResolver = resolve<Balance, HookContext<BalanceService>>({
   __typename: virtual(async () => balancePath),
-  stringified: virtual(async (u) =>
-    u.firstName || u.lastName ? `${u.firstName} ${u.lastName}`.trim() : (u.email ?? u.uid)
-  )
+  stringified: virtual(async (u) => `BLN-${Formatter.format(u.number + 1000)}`)
 })
 
 export const balanceExternalResolver = resolve<Balance, HookContext<BalanceService>>({
   // The password should never be visible externally
-  password: async () => undefined
 })
 
 // Schema for creating new entries
-export const balanceDataSchema = Type.Pick(balanceSchema, ['email', 'password', 'googleId'], {
+export const balanceDataSchema = Type.Pick(balanceSchema, ['number', 'user', 'value', 'src'], {
   $id: 'BalanceData'
 })
 export type BalanceData = Static<typeof balanceDataSchema>
 export const balanceDataValidator = getValidator(balanceDataSchema, dataValidator)
 export const balanceDataResolver = resolve<Balance, HookContext<BalanceService>>({
-  password: passwordHash({ strategy: 'local' })
-  // needPwdOnVerify: virtual(async (balance, ctx) => balance.password ? true : undefined),
+  number: virtual(async (_, context) => {
+    const SeqModel = await context.app.get('mongodbClient').then((db) => db.collection('_seq'))
+    const doc = await SeqModel.findOneAndUpdate(
+      { model: balancePath },
+      { $inc: { seq: 1 } },
+      { upsert: true, returnDocument: 'after' }
+    )
+    if (!doc) throw new GeneralError(`can't set seq for: ${balancePath}!`)
+    return +doc.seg
+  })
 })
 
 // Schema for updating existing entries
@@ -61,17 +72,20 @@ export const balancePatchSchema = Type.Partial(balanceSchema, {
 })
 export type BalancePatch = Static<typeof balancePatchSchema>
 export const balancePatchValidator = getValidator(balancePatchSchema, dataValidator)
-export const balancePatchResolver = resolve<Balance, HookContext<BalanceService>>({
-  password: passwordHash({ strategy: 'local' })
-})
+export const balancePatchResolver = resolve<Balance, HookContext<BalanceService>>({})
 
 // Schema for allowed query properties
-export const balanceQueryProperties = Type.Pick(balanceSchema, ['uid', 'email', 'googleId'])
+export const balanceQueryProperties = Type.Pick(balanceSchema, ['uid', 'number', 'number', 'value', 'user'])
 export const balanceQuerySchema = Type.Composite(
   [
     querySyntax(balanceQueryProperties),
     // Add additional query properties here
-    Type.Object({}, { additionalProperties: false })
+    Type.Object(
+      {
+        net: Type.Optional(Type.Literal(true))
+      },
+      { additionalProperties: false }
+    )
   ],
   { additionalProperties: false }
 )

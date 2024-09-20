@@ -7,35 +7,13 @@ import { useTickTock } from "hooks/clock";
 import LineChart from "components/charts/LineChart";
 import { ApexOptions } from "apexcharts";
 import { CandleTypesMenu } from "./ChartMenu";
-
-const PercentFormatter = new Intl.NumberFormat("fa-IR", {
-  style: "percent",
-  signDisplay: "always",
-});
-
-const DateTimeFormatter = Intl.DateTimeFormat("fa-IR", {
-  month: "long",
-  day: "numeric",
-  hour: "2-digit",
-  minute: "2-digit",
-});
-
-const DateFormatter = Intl.DateTimeFormat("fa-IR", {
-  month: "long",
-  day: "numeric",
-});
-
-const TimeFormatter = Intl.DateTimeFormat("fa-IR", {
-  hour: "2-digit",
-  minute: "2-digit",
-});
-
-const PriceFormatter = Intl.NumberFormat("fa-IR", {
-  currency: "IRR",
-  style: "currency",
-  maximumFractionDigits: 0,
-  roundingIncrement: 5000,
-});
+import {
+  DateTimeFormatter,
+  PercentFormatter,
+  TimeFormatter,
+  ShortDateFormatter,
+  PriceFormatter,
+} from "utils/formatters";
 
 export default function GoldPriceCandles() {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -83,7 +61,7 @@ export default function GoldPriceCandles() {
   useEffect(() => setRefreshKey((k) => k + 1), [lastPoint]);
 
   return (
-    <Card className="!p-[20px] texcenter h-[400px]">
+    <Card className="texcenter h-[400px] !p-[20px]">
       <div className="relative flex">
         <CandleTypesMenu value={candle} onChange={setCandle} />
       </div>
@@ -125,7 +103,7 @@ const lineChartOptions = (
 ): ApexOptions => {
   const Formatter = ["hh", "mm"].includes(candle)
     ? TimeFormatter
-    : DateFormatter;
+    : ShortDateFormatter;
 
   return {
     chart: {

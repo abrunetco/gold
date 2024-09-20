@@ -1,9 +1,12 @@
-import { userPath, UserQuery } from "@gold/api";
+import { balancePath, BalanceQuery } from "@gold/api";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { ColumnFiltersState, SortingState } from "@tanstack/react-table";
 import client from "api/client";
 
-export default function useUserQuery(s: SortingState, f: ColumnFiltersState) {
+export default function useBalanceQuery(
+  s: SortingState,
+  f: ColumnFiltersState,
+) {
   let sort: { [k: string]: -1 | 1 };
   s.forEach(({ id, desc }) => {
     sort = { ...sort, [id]: desc ? 1 : -1 };
@@ -13,7 +16,7 @@ export default function useUserQuery(s: SortingState, f: ColumnFiltersState) {
     filter[id] = value;
   });
 
-  function query(page: number): UserQuery {
+  function query(page: number): BalanceQuery {
     return {
       $limit: 10,
       $skip: page * 10,
@@ -21,11 +24,10 @@ export default function useUserQuery(s: SortingState, f: ColumnFiltersState) {
       ...filter,
     };
   }
-
   return useInfiniteQuery({
-    queryKey: ["users", s, f],
+    queryKey: ["balances", s, f],
     queryFn: ({ pageParam }) =>
-      client.service(userPath).find({
+      client.service(balancePath).find({
         query: query(pageParam),
         mongodb: {
           collation: { locale: "fa" },

@@ -3,12 +3,7 @@ import image1 from "assets/img/profile/image1.png";
 import Card from "components/card";
 // eslint-disable-next-line @typescript-eslint/no-restricted-imports
 import { Badge } from "flowbite-react";
-
-const DateFormatter = Intl.DateTimeFormat("fa-IR", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+import { DateFormatter } from "utils/formatters";
 
 const KycDcouments = () => {
   return (

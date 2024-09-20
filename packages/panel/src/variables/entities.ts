@@ -1,12 +1,13 @@
 import {
   type EntityName,
-  accountPath,
   balancePath,
   categoryPath,
   invoicePath,
   goldPricePath,
   productPath,
   userPath,
+  configPath,
+  settingPath,
 } from "@gold/api";
 import { IconName } from "components/icons/type";
 
@@ -17,14 +18,19 @@ interface EntityMarkup {
 }
 
 export const MARKUP_MAP: Record<EntityName, EntityMarkup> = {
-  [accountPath]: {
-    single: "حساب",
-    polar: "حساب‌ها",
+  [configPath]: {
+    single: "تنظیمات",
+    polar: "تنظیمات",
+    icon: "Profile",
+  },
+  [settingPath]: {
+    single: "تنظیمات",
+    polar: "تنظیمات",
     icon: "Profile",
   },
   [balancePath]: {
-    single: "بالانس",
-    polar: "بالانس‌ها",
+    single: "تراکنش",
+    polar: "تراکنش‌ها",
     icon: "Profile",
   },
   [categoryPath]: {

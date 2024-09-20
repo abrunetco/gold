@@ -18,6 +18,7 @@ import type { Application } from '../../declarations'
 import { BalanceService, getOptions } from './class'
 import { balancePath, balanceMethods } from './shared'
 import { commonDataResolver, commonPatchResolver } from '../../resolvers/common'
+import { netPpipeline, pipeline } from './pipeline'
 
 export * from './class'
 export * from './schema'
@@ -35,7 +36,7 @@ export const balance = (app: Application) => {
   app.service(balancePath).hooks({
     around: {
       all: [
-        authenticate('jwt'),
+        // authenticate('jwt'),
         // schemaHooks.resolveExternal(authManagementExternalResolver),
         schemaHooks.resolveExternal(balanceExternalResolver),
         schemaHooks.resolveResult(balanceResolver)
@@ -48,7 +49,14 @@ export const balance = (app: Application) => {
       remove: []
     },
     before: {
-      all: [schemaHooks.validateQuery(balanceQueryValidator), schemaHooks.resolveQuery(balanceQueryResolver)],
+      all: [
+        (ctxt) => {
+          ctxt.params.pipeline = ctxt.params.query?.net ? netPpipeline : pipeline
+          delete ctxt.params.query?.net
+        },
+        schemaHooks.validateQuery(balanceQueryValidator),
+        schemaHooks.resolveQuery(balanceQueryResolver)
+      ],
       find: [],
       get: [],
       create: [

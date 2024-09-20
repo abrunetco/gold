@@ -7,11 +7,12 @@ import { BrandSuspense } from "components/brand/Suspend";
 import { Outlet, useLocation } from "react-router-dom";
 import { identity } from "utils/lodash";
 import { MARKUP_MAP } from "variables/entities";
-import { categoryPath } from "@gold/api";
+import { balancePath, categoryPath } from "@gold/api";
 import { userPath } from "@gold/api";
 
 const brandMap: Record<string, string> = {
   admin: "پیشخوان",
+  "admin/balances": MARKUP_MAP[balancePath].polar,
   "admin/users": MARKUP_MAP[userPath].polar,
   "admin/categories": MARKUP_MAP[categoryPath].polar,
 };

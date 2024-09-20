@@ -1,8 +1,10 @@
 // Admin Imports
 // import RTLDefault from "views/rtl/default";
 
+import { balancePath, categoryPath, userPath } from "@gold/api";
 import { LinkType } from "components/sidebar/components/Links";
-import { MdPerson, MdBarChart, MdHome } from "react-icons/md";
+import { MdPerson, MdBarChart, MdHome, MdBalance } from "react-icons/md";
+import { MARKUP_MAP } from "variables/entities";
 
 // Auth Imports
 
@@ -20,12 +22,17 @@ export const sidebarLinks: LinkType[] = [
   //   Icon: MdOutlineShoppingCart,
   // },
   {
-    name: "کاربران",
+    name: MARKUP_MAP[userPath].polar,
     Icon: MdPerson,
     path: "/admin/users",
   },
   {
-    name: "دسته‌بندی‌ها",
+    name: MARKUP_MAP[balancePath].polar,
+    Icon: MdBalance,
+    path: "/admin/balances",
+  },
+  {
+    name: MARKUP_MAP[categoryPath].polar,
     Icon: MdBarChart,
     path: "/admin/categories",
   },
