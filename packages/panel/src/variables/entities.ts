@@ -30,7 +30,7 @@ export const MARKUP_MAP: Record<EntityName, EntityMarkup> = {
   },
   [balancePath]: {
     single: "تراکنش",
-    polar: "تراکنش‌ها",
+    polar: "دفتر مالی",
     icon: "Profile",
   },
   [categoryPath]: {

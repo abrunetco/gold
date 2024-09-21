@@ -74,6 +74,7 @@ export const userQueryProperties = Type.Pick(userSchema, [
   'uid',
   'firstName',
   'lastName',
+  'role',
   'isVerified',
   'gender',
   'email',

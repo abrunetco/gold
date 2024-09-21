@@ -1,7 +1,7 @@
 import Card from "components/card";
-import React from "react";
+import React, { useEffect } from "react";
 
-import { User, userPath } from "@gold/api";
+import { User } from "@gold/api";
 import {
   ColumnFiltersState,
   ColumnOrderState,
@@ -11,18 +11,20 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import TanstackTable from "components/table/TanstackTable";
-import ColumnsMenu from "components/table/ColumnsMenu";
 import useUserColumns from "./useColumns";
 import useUserQuery from "./useQuery";
 import Icon from "components/icons";
 import { TableContext } from "providers/table";
-import { MARKUP_MAP } from "variables/entities";
+// eslint-disable-next-line @typescript-eslint/no-restricted-imports
+import { Tabs } from "flowbite-react";
+import { RoleTypes } from "@gold/api/lib/shared/fragments/role-types";
 
 export default function UsersGridTable() {
   const columns = useUserColumns();
+  const [activeTab, setActiveTab] = React.useState(0);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [filters, setFilters] = React.useState<ColumnFiltersState>([]);
-  const [visibility, setVisibility] = React.useState<VisibilityState>({});
+  const [visibility, setVisibility] = React.useState<VisibilityState>();
   const [order, setOrder] = React.useState<ColumnOrderState>([]);
 
   const query = useUserQuery(sorting, filters);
@@ -84,26 +86,46 @@ export default function UsersGridTable() {
     debugTable: true,
   });
 
+  useEffect(() => {
+    setFilters((filters) =>
+      filters.filter(({ id }) => !["role", "isVerified"].includes(id)),
+    );
+    /** */
+    setVisibility((v) => ({ ...v, role: false, isVerified: false }));
+    if (activeTab === 1) {
+      setFilters((f) => [...f, { id: "role", value: RoleTypes.ADMIN }]);
+    } else if (activeTab === 2) {
+      setFilters((f) => [...f, { id: "role", value: RoleTypes.USER }]);
+    } else if (activeTab === 3) {
+      setFilters((f) => [...f, { id: "role", value: RoleTypes.CUSTOMER }]);
+    }
+    /** */
+    if (activeTab === 4 || activeTab === 0) {
+      setFilters((f) => [...f, { id: "isVerified", value: false }]);
+      setVisibility((v) => ({ ...v, role: true, isVerified: true }));
+    } else {
+      setFilters((f) => [...f, { id: "isVerified", value: true }]);
+    }
+  }, [activeTab, setFilters, setVisibility]);
+
   return (
     <Card className="grid h-full w-full grid-rows-[40px_auto] gap-2 p-4">
       <header className="relative flex items-center justify-between">
-        <div className="text-xl font-bold text-navy-700 dark:text-white">
-          {MARKUP_MAP[userPath].polar}
-        </div>
-        {/* <Tabs
-            aria-label="Default tabs"
-            variant="underline"
-            className="mb-0 flex-1 pb-0"
-            ref={tabsRef}
-            onActiveTabChange={(tab) => setActiveTab(tab)}
-            theme={{ tabpanel: "", base: "" }}
-          >
-            <Tabs.Item title="فعال" active />
-            <Tabs.Item title="آرشیو" />
-            <Tabs.Item title="+" />
-          </Tabs> */}
+        <Tabs
+          aria-label="Default tabs"
+          variant="underline"
+          className="mb-0 flex-1 border-b-0 pb-0"
+          onActiveTabChange={(tab) => setActiveTab(tab)}
+          theme={{ tabpanel: "", base: "" }}
+        >
+          <Tabs.Item title="همه" active />
+          <Tabs.Item title="مدیران" />
+          <Tabs.Item title="کاربران" />
+          <Tabs.Item title="مشتریان" />
+          <Tabs.Item title="تایید نشده" />
+        </Tabs>
         <div className="flex flex-row-reverse gap-2">
-          <ColumnsMenu table={table} />
+          {/* <ColumnsMenu table={table} /> */}
 
           <button
             onClick={() => query.refetch()}

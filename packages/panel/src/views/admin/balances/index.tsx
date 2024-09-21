@@ -89,7 +89,6 @@ export default function BalancesGridTable() {
   useEffect(() => {
     setFilters((filters) => filters.filter((f) => f.id !== "net"));
     if (activeTab === 1) {
-      console.log("effect active tab", activeTab, typeof activeTab);
       setFilters((filters) => [...filters, { id: "net", value: true }]);
     }
   }, [activeTab, setFilters]);

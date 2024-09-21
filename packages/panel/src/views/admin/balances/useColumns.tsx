@@ -26,7 +26,7 @@ export default function useBalanceColumns() {
       size: 150,
       // enableSorting: false,
       // enableColumnFilter: false,
-      header: (context) => <ColHead context={context} title="فی" />,
+      header: (context) => <ColHead context={context} title="بستانکاری" />,
       cell: (context) => <ColCell context={context} accessor="value" />,
       meta: {
         format: "currency",
