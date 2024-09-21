@@ -4,9 +4,9 @@ import { Db } from 'mongodb'
 import getColections, { commons, generatorUID, userCommons } from './utils/collections'
 import { User, userPath } from '../src/services/users/shared'
 import { Genderypes } from '../src/shared/fragments/gender-types'
+import { Mediatypes } from '../src/shared/fragments/media'
 import { Config, configPath } from '../src/client'
 import { RoleTypes } from '../src/shared/fragments/role-types'
-import { Mediatypes } from '../lib/shared/fragments/media'
 
 const EMAIL = 'ali.double.plus@gmail.com'
 
@@ -16,7 +16,7 @@ export const up = async (db: Db) => {
   const userData: User = {
     ...commons(),
     uid: generatorUID,
-    __typename: userPath,
+    _typename: userPath,
     firstName: 'علی',
     lastName: 'قربانی',
     gender: Genderypes.MAN,
@@ -40,7 +40,7 @@ export const up = async (db: Db) => {
   const configData: Config = {
     ...commons(),
     uid: configPath,
-    __typename: configPath,
+    _typename: configPath,
     siteSeoConfig: {
       title: 'صرافی جروقی',
       description: 'فروش آنلاین طلا'

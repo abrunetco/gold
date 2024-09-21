@@ -18,6 +18,7 @@ import type { Application } from '../../declarations'
 import { ProductService, getOptions } from './class'
 import { productPath, productMethods } from './shared'
 import { commonDataResolver, commonPatchResolver } from '../../resolvers/common'
+import { pipeline } from './pipeline'
 
 export * from './class'
 export * from './schema'
@@ -35,7 +36,7 @@ export const product = (app: Application) => {
   app.service(productPath).hooks({
     around: {
       all: [
-        authenticate('jwt'),
+        // authenticate('jwt'),
         // schemaHooks.resolveExternal(authManagementExternalResolver),
         schemaHooks.resolveExternal(productExternalResolver),
         schemaHooks.resolveResult(productResolver)
@@ -48,7 +49,13 @@ export const product = (app: Application) => {
       remove: []
     },
     before: {
-      all: [schemaHooks.validateQuery(productQueryValidator), schemaHooks.resolveQuery(productQueryResolver)],
+      all: [
+        (ctxt) => {
+          ctxt.params.pipeline = pipeline
+        },
+        schemaHooks.validateQuery(productQueryValidator),
+        schemaHooks.resolveQuery(productQueryResolver)
+      ],
       find: [],
       get: [],
       create: [

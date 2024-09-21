@@ -4,19 +4,19 @@ import { authenticate } from '@feathersjs/authentication'
 import { hooks as schemaHooks } from '@feathersjs/schema'
 
 import {
-  balanceDataValidator,
-  balancePatchValidator,
-  balanceQueryValidator,
-  balanceResolver,
-  balanceExternalResolver,
-  balanceDataResolver,
-  balancePatchResolver,
-  balanceQueryResolver
+  mediaDataValidator,
+  mediaPatchValidator,
+  mediaQueryValidator,
+  mediaResolver,
+  mediaExternalResolver,
+  mediaDataResolver,
+  mediaPatchResolver,
+  mediaQueryResolver
 } from './schema'
 
 import type { Application } from '../../declarations'
-import { BalanceService, getOptions } from './class'
-import { balancePath, balanceMethods } from './shared'
+import { MediaService, getOptions } from './class'
+import { mediaPath, mediaMethods } from './shared'
 import { commonDataResolver, commonPatchResolver } from '../../resolvers/common'
 import { netPpipeline, pipeline } from './pipeline'
 
@@ -24,22 +24,22 @@ export * from './class'
 export * from './schema'
 
 // A configure function that registers the service and its hooks via `app.configure`
-export const balance = (app: Application) => {
+export const media = (app: Application) => {
   // Register our service on the Feathers application
-  app.use(balancePath, new BalanceService(getOptions(app)), {
+  app.use(mediaPath, new MediaService(getOptions(app)), {
     // A list of all methods this service exposes externally
-    methods: balanceMethods,
+    methods: mediaMethods,
     // You can add additional custom events to be sent to clients here
     events: []
   })
   // Initialize hooks
-  app.service(balancePath).hooks({
+  app.service(mediaPath).hooks({
     around: {
       all: [
         authenticate('jwt'),
         // schemaHooks.resolveExternal(authManagementExternalResolver),
-        schemaHooks.resolveExternal(balanceExternalResolver),
-        schemaHooks.resolveResult(balanceResolver)
+        schemaHooks.resolveExternal(mediaExternalResolver),
+        schemaHooks.resolveResult(mediaResolver)
       ],
       find: [],
       get: [],
@@ -54,19 +54,19 @@ export const balance = (app: Application) => {
           ctxt.params.pipeline = ctxt.params.query?.net ? netPpipeline : pipeline
           delete ctxt.params.query?.net
         },
-        schemaHooks.validateQuery(balanceQueryValidator),
-        schemaHooks.resolveQuery(balanceQueryResolver)
+        schemaHooks.validateQuery(mediaQueryValidator),
+        schemaHooks.resolveQuery(mediaQueryResolver)
       ],
       find: [],
       get: [],
       create: [
-        schemaHooks.validateData(balanceDataValidator),
-        schemaHooks.resolveData(balanceDataResolver),
+        schemaHooks.validateData(mediaDataValidator),
+        schemaHooks.resolveData(mediaDataResolver),
         schemaHooks.resolveData(commonDataResolver)
       ],
       patch: [
-        schemaHooks.validateData(balancePatchValidator),
-        schemaHooks.resolveData(balancePatchResolver),
+        schemaHooks.validateData(mediaPatchValidator),
+        schemaHooks.resolveData(mediaPatchResolver),
         schemaHooks.resolveData(commonPatchResolver)
       ],
       remove: []
@@ -83,6 +83,6 @@ export const balance = (app: Application) => {
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    [balancePath]: BalanceService
+    [mediaPath]: MediaService
   }
 }

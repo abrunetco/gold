@@ -38,6 +38,6 @@ export const commonQueryProperties = Type.Omit(commonSchema, ['stringified'])
 export type TCommonQueryProperties = typeof commonQueryProperties
 export type CommonQueryProperties = Static<TCommonQueryProperties>
 
-export function isCommon<T extends Common>(data?: T): data is T & { __typename: string } {
-  return !!data && '__typename' in data
+export function isCommon<T extends Common>(data?: T): data is T & { _typename: string } {
+  return !!data && '_typename' in data
 }

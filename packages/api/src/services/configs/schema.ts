@@ -34,7 +34,7 @@ const configMapSchema = Type.Object({
 export const configSchema = Type.Composite(
   [
     Type.Object({
-      __typename: Type.Literal(configPath)
+      _typename: Type.Literal(configPath)
     }),
     configMapSchema,
     commonSchema
@@ -44,7 +44,7 @@ export const configSchema = Type.Composite(
 export type Config = Static<typeof configSchema>
 export const configValidator = getValidator(configSchema, dataValidator)
 export const configResolver = resolve<Config, HookContext<ConfigService>>({
-  __typename: virtual(async () => configPath),
+  _typename: virtual(async () => configPath),
   stringified: virtual(async () => String(configPath))
 })
 

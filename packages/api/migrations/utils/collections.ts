@@ -11,6 +11,8 @@ import {
   EntityName,
   GoldPrice,
   goldPricePath,
+  Product,
+  productPath,
   User,
   userPath
 } from '../../src/client'
@@ -30,7 +32,8 @@ export default function getColections(db: Db) {
     users: db.collection<User>(userPath),
     categories: db.collection<Category>(categoryPath),
     goldPrices: db.collection<GoldPrice>(goldPricePath),
-    balances: db.collection<Balance>(balancePath)
+    balances: db.collection<Balance>(balancePath),
+    products: db.collection<Product>(productPath)
   }
 }
 
@@ -65,6 +68,7 @@ export interface DataContext {
   categories: Array<Category & TestMeta>
   goldPrices: Array<GoldPrice & TestMeta>
   balances: Array<Balance & TestMeta>
+  products: Array<Product & TestMeta>
 }
 
 export const makeContext = (migrateKey: string): DataContext => ({
@@ -72,6 +76,7 @@ export const makeContext = (migrateKey: string): DataContext => ({
   users: [],
   categories: [],
   goldPrices: [],
+  products: [],
   balances: []
 })
 
@@ -81,12 +86,14 @@ export async function applyContext(db: Db, ctxt: DataContext) {
   assert(ctxt.users.length)
   assert(ctxt.categories.length)
   assert(ctxt.goldPrices.length)
+  assert(ctxt.products.length)
   assert(ctxt.balances.length)
 
   await Promise.all([
     cols.users.insertMany(ctxt.users.map((u) => ({ ...u, __mk: ctxt.migrateKey }))),
     cols.categories.insertMany(ctxt.categories.map((u) => ({ ...u, __mk: ctxt.migrateKey }))),
     cols.goldPrices.insertMany(ctxt.goldPrices.map((u) => ({ ...u, __mk: ctxt.migrateKey }))),
+    cols.products.insertMany(ctxt.products.map((u) => ({ ...u, __mk: ctxt.migrateKey }))),
     cols.balances.insertMany(ctxt.balances.map((u) => ({ ...u, __mk: ctxt.migrateKey }))),
     /** update seq */
     cols.seq.findOneAndUpdate(
@@ -105,6 +112,7 @@ export async function revertContext(db: Db, migrateKey: string) {
     cols.users.deleteMany({ __mk: migrateKey }),
     cols.categories.deleteMany({ __mk: migrateKey }),
     cols.goldPrices.deleteMany({ __mk: migrateKey }),
+    cols.products.deleteMany({ __mk: migrateKey }),
     cols.balances.deleteMany({ __mk: migrateKey })
   ])
   return res

@@ -1,14 +1,15 @@
 import type { Db } from 'mongodb'
 import { applyContext, makeContext, revertContext } from './utils/collections'
-import { addDemoBalances, addDemoCategories, addDemoPrices, addDemoUsers } from './utils/generators'
+import * as g from './utils/generators'
 
 const migrateKey = '20240909171346-generate-data'
 export const up = async (db: Db) => {
   const context = makeContext(migrateKey)
-  addDemoUsers(context, 500)
-  addDemoCategories(context)
-  addDemoPrices(context, 10000)
-  addDemoBalances(context, 500)
+  g.addDemoUsers(context, 500)
+  g.addDemoCategories(context)
+  g.addDemoPrices(context, 10000)
+  g.addDemoBalances(context, 500)
+  g.addDemoProducts(context, 100)
   await applyContext(db, context).then((ctxt) => console.log(`${ctxt.users.length} added`))
 }
 

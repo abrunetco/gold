@@ -14,7 +14,7 @@ import { settingPath } from './shared'
 export const settingSchema = Type.Composite(
   [
     Type.Object({
-      __typename: Type.Literal(settingPath)
+      _typename: Type.Literal(settingPath)
     }),
     commonSchema
   ],
@@ -23,7 +23,7 @@ export const settingSchema = Type.Composite(
 export type Setting = Static<typeof settingSchema>
 export const settingValidator = getValidator(settingSchema, dataValidator)
 export const settingResolver = resolve<Setting, HookContext<SettingService>>({
-  __typename: virtual(async () => settingPath),
+  _typename: virtual(async () => settingPath),
   stringified: virtual(async (u) => u.uid)
 })
 

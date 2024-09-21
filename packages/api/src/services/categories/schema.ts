@@ -15,7 +15,7 @@ import { categoryPath } from './shared'
 export const categorySchema = Type.Composite(
   [
     Type.Object({
-      __typename: Type.Literal(categoryPath),
+      _typename: Type.Literal(categoryPath),
       title: Type.Optional(Type.String()),
       body: Type.Optional(Type.String()),
       image: Type.Optional(AnyMediaSchema('single'))
@@ -27,7 +27,7 @@ export const categorySchema = Type.Composite(
 export type Category = Static<typeof categorySchema>
 export const categoryValidator = getValidator(categorySchema, dataValidator)
 export const categoryResolver = resolve<Category, HookContext<CategoryService>>({
-  __typename: virtual(async () => categoryPath),
+  _typename: virtual(async () => categoryPath),
   stringified: virtual(async (u) => u.title)
 })
 

@@ -12,6 +12,7 @@ import { userPath } from "@gold/api";
 
 const brandMap: Record<string, string> = {
   admin: "پیشخوان",
+  "admin/market": "گالری",
   "admin/balances": MARKUP_MAP[balancePath].polar,
   "admin/users": MARKUP_MAP[userPath].polar,
   "admin/categories": MARKUP_MAP[categoryPath].polar,

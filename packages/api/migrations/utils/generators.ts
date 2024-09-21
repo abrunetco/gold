@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { faker as faFaker } from '@faker-js/faker/locale/fa'
-import { categoryPath, goldPricePath, User } from '../../src/client'
+import { categoryPath, goldPricePath, productPath, User, balancePath } from '../../src/client'
 import { Genderypes } from '../../src/shared/fragments/gender-types'
 import { Mediatypes } from '../../src/shared/fragments/media'
 import { commons, userCommons, DataContext } from './collections'
@@ -8,7 +8,6 @@ import { userPath } from '../../src/services/users/shared'
 import moment from 'moment-jalaali'
 import { RoleTypes } from '../../src/shared/fragments/role-types'
 import { uid } from 'uid'
-import { balancePath } from '../../lib/client'
 
 function makeDemoUser(): User {
   const email = faker.internet.email({ provider: 'test.gold.me' }),
@@ -17,10 +16,10 @@ function makeDemoUser(): User {
   return {
     ...commons(),
     ...userCommons,
-    __typename: userPath,
+    _typename: userPath,
     firstName: faFaker.person.firstName(),
     lastName: faFaker.person.lastName(),
-    role: RoleTypes.CUSTOMER,
+    role: Math.random() > 0.1 ? RoleTypes.CUSTOMER : RoleTypes.USER,
     avatar: [
       {
         id: 'external',
@@ -49,7 +48,7 @@ export function addDemoPrices(ctxt: DataContext, count = 100): DataContext {
     const mj = moment(date).add(3.5, 'h')
     ctxt.goldPrices.push({
       ...commons(),
-      __typename: goldPricePath,
+      _typename: goldPricePath,
       createdAt: date,
       v: value,
       jDate: {
@@ -71,17 +70,20 @@ export function addDemoCategories(ctxt: DataContext): DataContext {
   ctxt.categories.push(
     {
       ...commons(),
-      __typename: categoryPath,
+      _typename: categoryPath,
+      body: faFaker.lorem.paragraph(),
       title: 'طلای ۱۸ عیار'
     },
     {
       ...commons(),
-      __typename: categoryPath,
+      _typename: categoryPath,
+      body: faFaker.lorem.paragraph(),
       title: 'طلای ۲۴ عیار'
     },
     {
       ...commons(),
-      __typename: categoryPath,
+      _typename: categoryPath,
+      body: faFaker.lorem.paragraph(),
       title: 'طلای آب شده'
     }
   )
@@ -112,7 +114,7 @@ export function addDemoBalances(ctxt: DataContext, count = 100): DataContext {
       value = (Math.random() - 0.5) * (Math.random() + 0.3) * 10000
     ctxt.balances.push({
       ...commons(),
-      __typename: balancePath,
+      _typename: balancePath,
       user: user.uid,
       number: i,
       value: Math.round(value) * 1000,
@@ -120,6 +122,25 @@ export function addDemoBalances(ctxt: DataContext, count = 100): DataContext {
       src: {
         invoice: uid(16)
       }
+    })
+  }
+
+  return ctxt
+}
+
+export function addDemoProducts(ctxt: DataContext, count = 100): DataContext {
+  for (let i = 1; i <= count; i++) {
+    const catIndex = i % ctxt.categories.length,
+      category = ctxt.categories[catIndex]
+
+    ctxt.products.push({
+      ...commons(),
+      _typename: productPath,
+      category: category.uid,
+      _category: undefined as any,
+      title: 'شمش طلای ' + faFaker.person.firstName(),
+      description: faFaker.lorem.paragraph(),
+      content: faFaker.lorem.paragraphs(3)
     })
   }
 

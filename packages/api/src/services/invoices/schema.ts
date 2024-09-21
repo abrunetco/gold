@@ -17,7 +17,7 @@ import { querySyntax } from '../../shared/query'
 export const invoiceSchema = Type.Composite(
   [
     Type.Object({
-      __typename: Type.Literal(invoicePath),
+      _typename: Type.Literal(invoicePath),
       firstName: Type.Optional(Type.String({ title: 'نام' })),
       lastName: Type.Optional(Type.String({ title: 'نام خانوادگی' })),
       avatar: Type.Optional(AnyMediaSchema('single', { title: 'تصویر' })),
@@ -33,7 +33,7 @@ export const invoiceSchema = Type.Composite(
 export type Invoice = Static<typeof invoiceSchema>
 export const invoiceValidator = getValidator(invoiceSchema, dataValidator)
 export const invoiceResolver = resolve<Invoice, HookContext<InvoiceService>>({
-  __typename: virtual(async () => invoicePath),
+  _typename: virtual(async () => invoicePath),
   stringified: virtual(async (u) =>
     u.firstName || u.lastName ? `${u.firstName} ${u.lastName}`.trim() : (u.email ?? u.uid)
   )

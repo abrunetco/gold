@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "market",
-        lazy: () => import("views/admin/marketplace/lazy"),
+        lazy: () => import("views/admin/market/lazy"),
       },
       {
         path: "users",
@@ -49,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "default",
         Component: Dashboard2,
+      },
+      {
+        path: "marketplace",
+        lazy: () => import("views/admin/marketplace/lazy"),
       },
     ],
   },

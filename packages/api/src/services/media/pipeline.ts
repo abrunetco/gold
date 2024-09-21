@@ -39,7 +39,7 @@ export const netPpipeline = [
     $set: {
       userLabel: { $concat: ['$u.firstName', ' ', '$u.lastName'] },
       readonly: true,
-      _typename: 'balances'
+      _typename: 'medias'
     }
   },
   { $project: { u: 0 } },

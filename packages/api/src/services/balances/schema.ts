@@ -21,7 +21,7 @@ const Formatter = Intl.NumberFormat('en', {
 export const balanceSchema = Type.Composite(
   [
     Type.Object({
-      __typename: Type.Literal(balancePath),
+      _typename: Type.Literal(balancePath),
       number: Type.Readonly(Type.Number()),
       user: RelationSchema(userPath),
       userLabel: Type.Readonly(Type.String()),
@@ -39,7 +39,7 @@ export const balanceSchema = Type.Composite(
 export type Balance = Static<typeof balanceSchema>
 export const balanceValidator = getValidator(balanceSchema, dataValidator)
 export const balanceResolver = resolve<Balance, HookContext<BalanceService>>({
-  __typename: virtual(async () => balancePath),
+  _typename: virtual(async () => balancePath),
   stringified: virtual(async (u) => `BLN-${Formatter.format(u.number + 1000)}`)
 })
 

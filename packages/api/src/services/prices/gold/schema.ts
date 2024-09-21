@@ -21,7 +21,7 @@ const Formatter = Intl.NumberFormat('fa-IR', {
 export const goldPriceSchema = Type.Composite(
   [
     Type.Object({
-      __typename: Type.Literal(goldPricePath),
+      _typename: Type.Literal(goldPricePath),
       v: Type.Number(),
       jDate: Type.Object({
         y: Type.String(),
@@ -47,7 +47,7 @@ export const goldPriceSchema = Type.Composite(
 export type GoldPrice = Static<typeof goldPriceSchema>
 export const goldPriceValidator = getValidator(goldPriceSchema, dataValidator)
 export const goldPriceResolver = resolve<GoldPrice, HookContext<GoldPriceService>>({
-  __typename: virtual(async () => goldPricePath),
+  _typename: virtual(async () => goldPricePath),
   stringified: virtual(async (u) => Formatter.format(u.v))
 })
 

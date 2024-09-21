@@ -19,7 +19,7 @@ import { roletypeSchema } from '../../shared/fragments/role-types'
 export const userSchema = Type.Composite(
   [
     Type.Object({
-      __typename: Type.Literal(userPath),
+      _typename: Type.Literal(userPath),
       firstName: Type.Optional(Type.String({ title: 'نام' })),
       lastName: Type.Optional(Type.String({ title: 'نام خانوادگی' })),
       avatar: Type.Optional(AnyMediaSchema('single', { title: 'تصویر' })),
@@ -37,7 +37,7 @@ export const userSchema = Type.Composite(
 export type User = Static<typeof userSchema>
 export const userValidator = getValidator(userSchema, dataValidator)
 export const userResolver = resolve<User, HookContext<UserService>>({
-  __typename: virtual(async () => userPath),
+  _typename: virtual(async () => userPath),
   stringified: virtual(async (u) =>
     u.firstName || u.lastName ? `${u.firstName} ${u.lastName}`.trim() : (u.email ?? u.uid)
   )

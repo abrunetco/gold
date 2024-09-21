@@ -3,7 +3,13 @@
 
 import { balancePath, categoryPath, userPath } from "@gold/api";
 import { LinkType } from "components/sidebar/components/Links";
-import { MdPerson, MdBarChart, MdHome, MdBalance } from "react-icons/md";
+import {
+  MdPerson,
+  MdBarChart,
+  MdHome,
+  MdBalance,
+  MdOutlineShoppingCart,
+} from "react-icons/md";
 import { MARKUP_MAP } from "variables/entities";
 
 // Auth Imports
@@ -16,11 +22,11 @@ export const sidebarLinks: LinkType[] = [
     path: "/admin/",
     Icon: MdHome,
   },
-  // {
-  //   name: "فروشگاه",
-  //   path: "/admin/market",
-  //   Icon: MdOutlineShoppingCart,
-  // },
+  {
+    name: "گالری",
+    path: "/admin/market",
+    Icon: MdOutlineShoppingCart,
+  },
   {
     name: MARKUP_MAP[userPath].polar,
     Icon: MdPerson,

@@ -15,8 +15,8 @@ export const sidebarExtraLinks: LinkType[] = [
     Icon: MdHome,
   },
   {
-    name: "فروشگاه",
-    path: "/admin/market",
+    name: "فروشگاه ۲",
+    path: "/admin/marketplace",
     Icon: MdOutlineShoppingCart,
   },
   {
