@@ -4,7 +4,7 @@ import type { Static } from '@feathersjs/typebox'
 import { Type, getValidator } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
-import { commonSchema } from '../../shared/common'
+import { Common, commonSchema } from '../../shared/common'
 import { querySyntax } from '../../shared/query'
 import { RelationSchema } from '../../shared/relation'
 import { dataValidator, queryValidator } from '../../validators'
@@ -12,6 +12,7 @@ import { categorySchema } from '../categories'
 import { categoryPath } from '../categories/shared'
 import type { ProductService } from './class'
 import { productPath } from './shared'
+import { mediaPath } from '../medias/shared'
 
 // Main data model schema
 export const productSchema = Type.Composite(
@@ -22,6 +23,7 @@ export const productSchema = Type.Composite(
       _category: Type.Readonly(Type.Pick(categorySchema, ['title'], { $id: 'ProductCategory' })),
       title: Type.String(),
       description: Type.String(),
+      images: Type.Optional(Type.Array(RelationSchema(mediaPath))),
       content: Type.String()
     }),
     commonSchema
@@ -29,6 +31,7 @@ export const productSchema = Type.Composite(
   { $id: 'Product', additionalProperties: false }
 )
 export type Product = Static<typeof productSchema>
+export const mediaFieldsInProductSchema: Array<Exclude<keyof Product, keyof Common>> = ['images']
 export const productValidator = getValidator(productSchema, dataValidator)
 export const productResolver = resolve<Product, HookContext<ProductService>>({
   _typename: virtual(async () => productPath),

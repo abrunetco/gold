@@ -1,13 +1,12 @@
 import { faker } from '@faker-js/faker'
 import { faker as faFaker } from '@faker-js/faker/locale/fa'
-import { categoryPath, goldPricePath, productPath, User, balancePath } from '../../src/client'
-import { Genderypes } from '../../src/shared/fragments/gender-types'
-import { Mediatypes } from '../../src/shared/fragments/media'
-import { commons, userCommons, DataContext } from './collections'
-import { userPath } from '../../src/services/users/shared'
 import moment from 'moment-jalaali'
-import { RoleTypes } from '../../src/shared/fragments/role-types'
 import { uid } from 'uid'
+import { balancePath, categoryPath, goldPricePath, productPath, User } from '../../src/client'
+import { userPath } from '../../src/services/users/shared'
+import { Genderypes } from '../../src/shared/fragments/gender-types'
+import { RoleTypes } from '../../src/shared/fragments/role-types'
+import { commons, DataContext, userCommons } from './collections'
 
 function makeDemoUser(): User {
   const email = faker.internet.email({ provider: 'test.gold.me' }),
@@ -20,15 +19,6 @@ function makeDemoUser(): User {
     firstName: faFaker.person.firstName(),
     lastName: faFaker.person.lastName(),
     role: Math.random() > 0.1 ? RoleTypes.CUSTOMER : RoleTypes.USER,
-    avatar: [
-      {
-        id: 'external',
-        type: Mediatypes.IMAGE,
-        external: {
-          path: faFaker.image.avatar()
-        }
-      }
-    ],
     gender: Math.random() > 0.5 ? Genderypes.MAN : Genderypes.WOMAN,
     isVerified: Math.random() > 0.2,
     email,

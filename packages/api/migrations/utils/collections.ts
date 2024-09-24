@@ -14,7 +14,8 @@ import {
   Product,
   productPath,
   User,
-  userPath
+  userPath,
+  Media
 } from '../../src/client'
 import { Common } from '../../src/shared/common'
 
@@ -33,7 +34,8 @@ export default function getColections(db: Db) {
     categories: db.collection<Category>(categoryPath),
     goldPrices: db.collection<GoldPrice>(goldPricePath),
     balances: db.collection<Balance>(balancePath),
-    products: db.collection<Product>(productPath)
+    products: db.collection<Product>(productPath),
+    medias: db.collection<Media>('medias')
   }
 }
 
@@ -69,6 +71,7 @@ export interface DataContext {
   goldPrices: Array<GoldPrice & TestMeta>
   balances: Array<Balance & TestMeta>
   products: Array<Product & TestMeta>
+  medias: Array<Media & TestMeta>
 }
 
 export const makeContext = (migrateKey: string): DataContext => ({
@@ -77,7 +80,8 @@ export const makeContext = (migrateKey: string): DataContext => ({
   categories: [],
   goldPrices: [],
   products: [],
-  balances: []
+  balances: [],
+  medias: []
 })
 
 export async function applyContext(db: Db, ctxt: DataContext) {
@@ -102,6 +106,9 @@ export async function applyContext(db: Db, ctxt: DataContext) {
       { upsert: true }
     )
   ])
+  if (ctxt.medias.length) {
+    cols.medias.insertMany(ctxt.medias.map((u) => ({ ...u, __mk: ctxt.migrateKey })))
+  }
   return ctxt
 }
 
@@ -113,7 +120,8 @@ export async function revertContext(db: Db, migrateKey: string) {
     cols.categories.deleteMany({ __mk: migrateKey }),
     cols.goldPrices.deleteMany({ __mk: migrateKey }),
     cols.products.deleteMany({ __mk: migrateKey }),
-    cols.balances.deleteMany({ __mk: migrateKey })
+    cols.balances.deleteMany({ __mk: migrateKey }),
+    cols.medias.deleteMany({ __mk: migrateKey })
   ])
   return res
 }

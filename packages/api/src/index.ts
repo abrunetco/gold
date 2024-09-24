@@ -5,6 +5,8 @@ const port = app.get('port')
 const host = app.get('host')
 
 process.on('unhandledRejection', (reason) => {
+  console.log(reason)
+
   logger.error('Unhandled Rejection %O', reason)
 
   console.log(JSON.stringify({ reason }, null, 2))

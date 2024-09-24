@@ -11,6 +11,9 @@ import { mongodb } from './mongodb'
 import { authentication } from './authentication'
 import { services } from './services/index'
 import { channels } from './channels'
+import { tasks } from './tasks'
+import { redis } from './redis'
+import { cronsMiddleware } from './tasks/crons/middleware'
 
 const app: Application = koa(feathers())
 
@@ -35,8 +38,11 @@ app.configure(
   })
 )
 app.configure(mongodb)
+app.configure(redis)
 app.configure(authentication)
 app.configure(services)
+app.configure(tasks)
+app.configure(cronsMiddleware)
 app.configure(channels)
 
 // Register hooks that run on all service methods
@@ -46,10 +52,10 @@ app.hooks({
   },
   before: {
     all: [
-      (ctxt) => {
-        const m = ctxt.params.mongodb
-        ctxt.params.mongodb = { ...m, collation: { ...m?.collation, locale: 'fa' } }
-      }
+      // (ctxt) => {
+      // const m = ctxt.params.mongodb
+      // ctxt.params.mongodb = { ...m, collation: { ...m?.collation, locale: 'fa' } }
+      // }
     ]
   },
   after: {},

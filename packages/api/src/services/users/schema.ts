@@ -7,13 +7,14 @@ import { passwordHash } from '@feathersjs/authentication-local'
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../validators'
 import type { UserService } from './class'
-import { commonSchema } from '../../shared/common'
+import { Common, commonSchema } from '../../shared/common'
 import { authManagementSchema } from './auth.schema'
 import { userPath } from './shared'
 import { gendertypeSchema } from '../../shared/fragments/gender-types'
-import { AnyMediaSchema } from '../../shared/fragments/media'
 import { querySyntax } from '../../shared/query'
 import { roletypeSchema } from '../../shared/fragments/role-types'
+import { RelationSchema } from '../../shared/relation'
+import { mediaPath } from '../medias/shared'
 
 // Main data model schema
 export const userSchema = Type.Composite(
@@ -22,7 +23,8 @@ export const userSchema = Type.Composite(
       _typename: Type.Literal(userPath),
       firstName: Type.Optional(Type.String({ title: 'نام' })),
       lastName: Type.Optional(Type.String({ title: 'نام خانوادگی' })),
-      avatar: Type.Optional(AnyMediaSchema('single', { title: 'تصویر' })),
+      avatar: Type.Optional(RelationSchema(mediaPath)),
+      cover: Type.Optional(RelationSchema(mediaPath)),
       gender: Type.Optional(gendertypeSchema),
       email: Type.String(),
       role: roletypeSchema,
@@ -34,7 +36,10 @@ export const userSchema = Type.Composite(
   ],
   { $id: 'User', additionalProperties: false }
 )
+
 export type User = Static<typeof userSchema>
+export const mediaFieldsInUserSchema: Array<Exclude<keyof User, keyof Common>> = ['avatar', 'cover']
+
 export const userValidator = getValidator(userSchema, dataValidator)
 export const userResolver = resolve<User, HookContext<UserService>>({
   _typename: virtual(async () => userPath),

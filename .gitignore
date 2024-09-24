@@ -152,6 +152,10 @@ dist
 
 .mongodb/
 
+# uploads Local files
+
+.uploads/
+
 # Parse server files
 .redis/
 

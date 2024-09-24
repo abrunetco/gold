@@ -4,21 +4,27 @@ import { authenticate } from '@feathersjs/authentication'
 import { hooks as schemaHooks } from '@feathersjs/schema'
 
 import {
-  mediaDataValidator,
-  mediaPatchValidator,
-  mediaQueryValidator,
-  mediaResolver,
-  mediaExternalResolver,
+  Media,
   mediaDataResolver,
+  mediaDataValidator,
+  mediaExternalResolver,
   mediaPatchResolver,
-  mediaQueryResolver
+  mediaPatchValidator,
+  mediaQueryResolver,
+  mediaQueryValidator,
+  mediaResolver
 } from './schema'
 
 import type { Application } from '../../declarations'
-import { MediaService, getOptions } from './class'
-import { mediaPath, mediaMethods } from './shared'
 import { commonDataResolver, commonPatchResolver } from '../../resolvers/common'
-import { netPpipeline, pipeline } from './pipeline'
+import { MediaService, getOptions } from './class'
+import { uploadParser } from './multer/parser'
+import koaMulterUploader from './multer/uploader'
+import { mediaMethods, mediaPath } from './shared'
+import { checkAuthenticate } from './multer/auth'
+import { ONBOARD_MEDIA_TASK } from '../../tasks/onboard-media/schema'
+import { alterItems, iff } from 'feathers-hooks-common'
+import { serveAsFile } from './multer/serve'
 
 export * from './class'
 export * from './schema'
@@ -30,13 +36,16 @@ export const media = (app: Application) => {
     // A list of all methods this service exposes externally
     methods: mediaMethods,
     // You can add additional custom events to be sent to clients here
-    events: []
+    events: [],
+    koa: {
+      before: [checkAuthenticate(app), koaMulterUploader, uploadParser],
+      after: [serveAsFile]
+    }
   })
   // Initialize hooks
   app.service(mediaPath).hooks({
     around: {
       all: [
-        authenticate('jwt'),
         // schemaHooks.resolveExternal(authManagementExternalResolver),
         schemaHooks.resolveExternal(mediaExternalResolver),
         schemaHooks.resolveResult(mediaResolver)
@@ -50,29 +59,40 @@ export const media = (app: Application) => {
     },
     before: {
       all: [
-        (ctxt) => {
-          ctxt.params.pipeline = ctxt.params.query?.net ? netPpipeline : pipeline
-          delete ctxt.params.query?.net
-        },
+        iff(authenticate('jwt')),
+        // (ctxt) => {
+        //   ctxt.params.pipeline = ctxt.params.query?.net ? netPpipeline : pipeline
+        //   delete ctxt.params.query?.net
+        // },
         schemaHooks.validateQuery(mediaQueryValidator),
         schemaHooks.resolveQuery(mediaQueryResolver)
       ],
-      find: [],
+      find: [authenticate('jwt')],
       get: [],
       create: [
+        authenticate('jwt'),
         schemaHooks.validateData(mediaDataValidator),
         schemaHooks.resolveData(mediaDataResolver),
         schemaHooks.resolveData(commonDataResolver)
       ],
       patch: [
+        authenticate('jwt'),
         schemaHooks.validateData(mediaPatchValidator),
         schemaHooks.resolveData(mediaPatchResolver),
         schemaHooks.resolveData(commonPatchResolver)
       ],
-      remove: []
+      remove: [authenticate('jwt')]
     },
     after: {
-      all: []
+      all: [],
+      create: [
+        alterItems((item: Media, ctxt) => {
+          const queue = ctxt.app.get(ONBOARD_MEDIA_TASK)
+
+          const job = queue.createJob({ media: item.uid })
+          job.save()
+        })
+      ]
     },
     error: {
       all: []

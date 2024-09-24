@@ -18,6 +18,8 @@ import type { Application } from '../../declarations'
 import { UserService, getOptions } from './class'
 import { userPath, userMethods } from './shared'
 import { commonDataResolver, commonPatchResolver } from '../../resolvers/common'
+import { alterItems } from 'feathers-hooks-common'
+import connectMedia from '../../tasks/connect-media/hooks'
 
 export * from './class'
 export * from './schema'
@@ -39,6 +41,7 @@ export const user = (app: Application) => {
         // schemaHooks.resolveExternal(authManagementExternalResolver),
         schemaHooks.resolveExternal(userExternalResolver),
         schemaHooks.resolveResult(userResolver)
+        // ConnectMedia('avatar', 'cover')
       ],
       find: [],
       get: [],
@@ -64,7 +67,9 @@ export const user = (app: Application) => {
       remove: []
     },
     after: {
-      all: []
+      all: [],
+      create: [alterItems(connectMedia())],
+      patch: [alterItems(connectMedia())]
     },
     error: {
       all: []

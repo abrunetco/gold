@@ -1,0 +1,1 @@
+0 0 * * * wget -O - --header 'apikey: iKo7j5zVy5QuvHFFkfewENMUd1IWL2ro' --header 'task: daily' http://api:3030/cron >/dev/null 2>&1

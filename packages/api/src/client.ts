@@ -44,6 +44,11 @@ import { Setting, settingPath } from './services/settings/shared'
 import { settingClient } from './services/settings/shared'
 export type { Setting, SettingData, SettingQuery, SettingPatch } from './services/settings/shared'
 
+export { mediaPath } from './services/medias/shared'
+import { Media, mediaPath } from './services/medias/shared'
+import { mediaClient } from './services/medias/shared'
+export type { Media, MediaData, MediaQuery, MediaPatch } from './services/medias/shared'
+
 export interface Configuration {
   connection: TransportConnection<ServiceTypes>
 }
@@ -82,6 +87,7 @@ export const createClient = (
   client.configure(userClient)
   client.configure(configClient)
   client.configure(settingClient)
+  client.configure(mediaClient)
   return client
 }
 
@@ -97,18 +103,10 @@ interface EntitiesMap {
   [userPath]: User
   [configPath]: Config
   [settingPath]: Setting
+  [mediaPath]: Media
 }
 
 export type EntityName = keyof EntitiesMap
-// | typeof accountPath
-// | typeof balancePath
-// | typeof categoryPath
-// | typeof invoicePath
-// | typeof goldPricePath
-// | typeof productPath
-// | typeof userPath
-// | typeof configPath
-// | typeof settingPath
 
 export type { Common } from './shared/common'
 export type { Paginated } from '@feathersjs/feathers'

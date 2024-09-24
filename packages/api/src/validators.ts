@@ -30,5 +30,14 @@ export const queryValidator: Ajv = addFormats(
   formats
 )
 
+export const taskValidator: Ajv = addFormats(
+  new Ajv({
+    strict: false,
+    coerceTypes: true
+  }),
+  formats
+)
+
 dataValidator.addKeyword(keywordObjectId)
 queryValidator.addKeyword(keywordObjectId)
+taskValidator.addKeyword(keywordObjectId)

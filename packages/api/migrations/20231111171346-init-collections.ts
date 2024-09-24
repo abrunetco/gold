@@ -1,5 +1,13 @@
 import { Db } from 'mongodb'
-import { userPath, categoryPath, goldPricePath, configPath, balancePath, productPath } from '../src/client'
+import {
+  userPath,
+  categoryPath,
+  goldPricePath,
+  configPath,
+  balancePath,
+  productPath,
+  mediaPath
+} from '../src/client'
 
 export const up = async (db: Db) => {
   /** config */
@@ -33,6 +41,8 @@ export const up = async (db: Db) => {
   await db.collection(balancePath).createIndex({ user: 1 })
   await db.collection(balancePath).createIndex({ createdAt: 1 })
   await db.collection('_seq').insertOne({ model: balancePath, seq: 0 })
+  /** medias */
+  await db.collection(mediaPath).createIndex({ uid: 1 }, { unique: true })
 }
 
 export const down = async (db: Db) => {
@@ -43,4 +53,5 @@ export const down = async (db: Db) => {
   await db.dropCollection(productPath)
   await db.dropCollection(goldPricePath)
   await db.dropCollection(balancePath)
+  await db.dropCollection(mediaPath)
 }

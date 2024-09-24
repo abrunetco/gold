@@ -8,7 +8,8 @@ export const configurationSchema = Type.Composite([
   Type.Object({
     host: Type.String(),
     port: Type.Number(),
-    public: Type.String()
+    public: Type.String(),
+    redis: Type.String()
   })
 ])
 

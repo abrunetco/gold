@@ -10,6 +10,7 @@
     "max": 50
   },
   "mongodb": "mongodb://mongo1:27017/gold",
+  "redis": "redis://redis:6379",
   "authentication": {
     "entity": "user",
     "service": "users",

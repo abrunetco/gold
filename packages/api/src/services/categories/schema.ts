@@ -4,10 +4,11 @@ import type { Static } from '@feathersjs/typebox'
 import { Type, getValidator } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
-import { commonSchema } from '../../shared/common'
-import { AnyMediaSchema } from '../../shared/fragments/media'
+import { Common, commonSchema } from '../../shared/common'
 import { querySyntax } from '../../shared/query'
+import { RelationSchema } from '../../shared/relation'
 import { dataValidator, queryValidator } from '../../validators'
+import { mediaPath } from '../medias/shared'
 import type { CategoryService } from './class'
 import { categoryPath } from './shared'
 
@@ -18,13 +19,15 @@ export const categorySchema = Type.Composite(
       _typename: Type.Literal(categoryPath),
       title: Type.Optional(Type.String()),
       body: Type.Optional(Type.String()),
-      image: Type.Optional(AnyMediaSchema('single'))
+      image: Type.Optional(RelationSchema(mediaPath)),
+      cover: Type.Optional(RelationSchema(mediaPath))
     }),
     commonSchema
   ],
   { $id: 'Category', additionalProperties: false }
 )
 export type Category = Static<typeof categorySchema>
+export const mediaFieldsInCategorySchema: Array<Exclude<keyof Category, keyof Common>> = ['image', 'cover']
 export const categoryValidator = getValidator(categorySchema, dataValidator)
 export const categoryResolver = resolve<Category, HookContext<CategoryService>>({
   _typename: virtual(async () => categoryPath),
